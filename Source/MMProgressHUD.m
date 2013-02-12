@@ -1,0 +1,739 @@
+//
+//  MMProgressHUD.m
+//  MMProgressHUD
+//
+//  Created by Lars Anderson on 10/7/11.
+//  Copyright 2011 Mutual Mobile. All rights reserved.
+//
+
+#import <QuartzCore/QuartzCore.h>
+
+#import "MMProgressHUD.h"
+#import "MMProgressHUD+Animations.h"
+
+#import "MMProgressHUDWindow.h"
+#import "MMProgressHUDViewController.h"
+
+#import "MMProgressHUDOverlayView.h"
+
+#if __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_5_0
+#error MMProgressHUD uses APIs only available in iOS 5.0+
+#endif
+
+#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 60000 // iOS 6.0 or later
+#define NEEDS_DISPATCH_RETAIN_RELEASE 0
+#else                                         // iOS 5.X or earlier
+#define NEEDS_DISPATCH_RETAIN_RELEASE 1
+#endif
+
+static const BOOL kMMProgressHUDDebugMode = NO;
+
+NSString * const MMProgressHUDDefaultConfirmationMessage    = @"Cancel?";
+NSString * const MMProgressHUDAnimationShow                 = @"mm-progress-hud-present-animation";
+NSString * const MMProgressHUDAnimationDismiss              = @"mm-progress-hud-dismiss-animation";
+NSString * const MMProgressHUDAnimationWindowFadeOut        = @"mm-progress-hud-window-fade-out";
+NSString * const MMProgressHUDAnimationKeyShowAnimation     = @"show";
+NSString * const MMProgressHUDAnimationKeyDismissAnimation  = @"dismiss";
+
+NSUInteger const MMProgressHUDConfirmationPulseCount = 8;//Keep this number even
+
+CGFloat const MMProgressHUDStandardDismissDelay = 0.75f;
+
+#pragma mark - MMProgressHUD
+@interface MMProgressHUD () <MMHudDelegate>
+
+@property (nonatomic, strong) UIView *gradientView;
+@property (nonatomic, strong) MMProgressHUDWindow *window;
+@property (nonatomic, readwrite, getter = isVisible)  BOOL visible;
+@property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) NSString *status;
+@property (nonatomic, strong) UIImage *image;
+@property (nonatomic, copy) NSArray *animationImages;
+@property (nonatomic, strong) CAAnimation *queuedShowAnimation;
+@property (nonatomic, strong) CAAnimation *queuedDismissAnimation;
+//@property (nonatomic) MMProgressHUDCompletionState completionState;
+@property (nonatomic, readwrite, strong) MMProgressHUDOverlayView *overlayView;
+@property (nonatomic, strong) NSMutableSet *windowExclusionClasses;
+@property (nonatomic, strong) NSTimer *dismissDelayTimer;
+@property (nonatomic, copy) NSString *tempStatus;
+@property (nonatomic, strong) NSTimer *confirmationTimer;
+@property (nonatomic, getter = isConfirmed) BOOL confirmed;
+
+@end
+
+@implementation MMProgressHUD
+
+#pragma mark - Class Methods
++ (id)sharedHUD{
+    static MMProgressHUD *__sharedHUD = nil;
+    
+    static dispatch_once_t mmSharedHUDOnceToken;
+    dispatch_once(&mmSharedHUDOnceToken, ^{        
+        __sharedHUD = [[MMProgressHUD alloc] init];
+    });
+    
+    return __sharedHUD;
+}
+
+#pragma mark - Instance Presentation Methods
+- (void)showWithTitle:(NSString *)title
+              status:(NSString *)status
+  confirmationMessage:(NSString *)confirmationMessage
+          cancelBlock:(void(^)(void))cancelBlock
+               images:(NSArray *)images{
+
+    self.image = nil;
+    self.animationImages = nil;
+    
+    if (images.count == 1) {
+        self.image = images[0];
+    }
+    else if(images.count > 0){
+        self.animationImages = images;
+    }
+    
+    [self showWithTitle:title
+                 status:status
+    confirmationMessage:confirmationMessage
+            cancelBlock:cancelBlock
+          progressStyle:self.progressStyle];
+}
+
+- (void)showWithTitle:(NSString *)title
+               status:(NSString *)status
+  confirmationMessage:(NSString *)confirmationMessage
+          cancelBlock:(void(^)(void))cancelBlock
+        progressStyle:(MMProgressHUDProgressStyle)progressStyle{
+    
+    MMHudLog(@"Beginning %@ show...", NSStringFromClass(self.class));
+    
+    self.progressStyle = progressStyle;
+    self.cancelBlock = cancelBlock;
+    self.title = title;
+    self.status = status;
+    
+    if (confirmationMessage.length > 0) {
+        self.confirmationMessage = confirmationMessage;
+    }
+    else{
+        self.confirmationMessage = MMProgressHUDDefaultConfirmationMessage;
+    }
+    
+    if ((self.isVisible == YES) &&
+        (self.window != nil) &&
+        ([self.hud.layer animationForKey:MMProgressHUDAnimationKeyDismissAnimation] == nil)) {
+        [self _updateHUDAnimated:YES withCompletion:nil];
+    }
+    else{
+        [self show];
+    }
+}
+
+- (void)dismissWithCompletionState:(MMProgressHUDCompletionState)completionState
+                             title:(NSString *)title
+                           status:(NSString *)status
+                        afterDelay:(float)delay{
+    if (title) {
+        self.title = title;
+    }
+    
+    if (status) {
+        self.status = status;
+    }
+    
+    self.hud.completionState = completionState;
+    
+    if (self.isVisible) {
+        [self _updateHUDAnimated:YES withCompletion:^(BOOL completed) {
+            if (delay != INFINITY && delay != DISPATCH_TIME_FOREVER) {
+                //create a timer in order to be cancellable
+                [self.dismissDelayTimer invalidate];
+                self.dismissDelayTimer = [NSTimer scheduledTimerWithTimeInterval:delay
+                                                                          target:self
+                                                                        selector:@selector(dismiss)
+                                                                        userInfo:nil
+                                                                         repeats:NO];
+            }
+        }];
+    }
+    else{
+        [self.dismissDelayTimer invalidate];
+        self.dismissDelayTimer = [NSTimer scheduledTimerWithTimeInterval:delay
+                                                                  target:self
+                                                                selector:@selector(dismiss)
+                                                                userInfo:nil
+                                                                 repeats:NO];
+    }
+}
+
+#pragma mark - Initializers
+- (id)init{
+    if( (self = [super initWithFrame:CGRectZero]) ){
+        self.hud = [[MMHud alloc] init];
+        self.hud.delegate = self;
+        
+        NSBundle *bundle = [NSBundle bundleForClass:self.class];
+        NSString *errorImageLocation = [bundle pathForResource:@"MMProgressHUD.bundle/error" ofType:@"png"];
+        NSString *successImageLocation = [bundle pathForResource:@"MMProgressHUD.bundle/success" ofType:@"png"];
+
+        self.errorImage = [UIImage imageWithContentsOfFile:errorImageLocation];
+        self.successImage = [UIImage imageWithContentsOfFile:successImageLocation];
+        _windowExclusionClasses = [[NSMutableSet alloc] init];
+        
+        [self setAutoresizingMask:
+         UIViewAutoresizingFlexibleHeight | 
+         UIViewAutoresizingFlexibleWidth];
+    }
+    
+    return self;
+}
+
+- (void)dealloc{
+    MMHudLog(@"dealloc");
+    
+    if (_window) {
+        [_window resignKeyWindow];
+    }
+    _window = nil;
+
+    _hud = nil;
+    _image = nil;
+    _windowExclusionClasses = nil;
+    _animationImages = nil;
+    _gradientView = nil;
+    _successImage = nil;
+    _errorImage = nil;
+    _overlayView = nil;
+    
+}
+
+- (void)forceCleanup{
+    //Do not invoke this method unless you are in a unit test environment
+    if (_window) {
+        [_window resignKeyWindow];
+    }
+    _window.rootViewController = nil;
+    _window = nil;
+}
+
+#pragma mark - Other Public Instance Methods
+- (void)registerWindowExclusionClass:(Class)windowClass{
+    if (self.window) {
+        [self.window.windowExclusionClasses addObject:windowClass];
+    }
+    
+    [self.windowExclusionClasses addObject:windowClass];
+}
+
+- (void)unregisterWindowExclusionClass:(Class)windowClass{
+    if (self.window) {
+        [self.window.windowExclusionClasses removeObject:windowClass];
+    }
+    
+    [self.windowExclusionClasses removeObject:windowClass];
+}
+
+#pragma mark - Passthrough Properties
+- (void)setOverlayMode:(MMProgressHUDWindowOverlayMode)overlayMode{
+    self.overlayView.overlayMode = overlayMode;
+}
+
+- (MMProgressHUDWindowOverlayMode)overlayMode{
+    return self.overlayView.overlayMode;
+}
+
+- (void)setAnimationLoopDuration:(CGFloat)animationLoopDuration{
+    self.hud.animationLoopDuration = animationLoopDuration;
+}
+
+- (CGFloat)animationLoopDuration{
+    return self.hud.animationLoopDuration;
+}
+
+- (void)setProgress:(CGFloat)progress{
+    [self.hud setProgress:progress animated:YES];
+    
+    self.hud.accessibilityValue = [NSString stringWithFormat:@"%i%%", (int)(progress/1.f*100)];
+    UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, [NSString stringWithFormat:@"%@ %@", self.hud.accessibilityLabel, self.hud.accessibilityValue]);
+}
+
+- (CGFloat)progress{
+    return self.hud.progress;
+}
+
+- (void)setProgressStyle:(MMProgressHUDProgressStyle)progressStyle{
+    self.hud.progressStyle = progressStyle;
+    
+    if ((progressStyle == MMProgressHUDProgressStyleLinear) ||
+        (progressStyle == MMProgressHUDProgressStyleRadial)) {
+        self.accessibilityTraits |= UIAccessibilityTraitUpdatesFrequently;
+    }
+    else{
+        self.accessibilityTraits &= ~UIAccessibilityTraitUpdatesFrequently;
+    }
+}
+
+- (MMProgressHUDProgressStyle)progressStyle{
+    return self.hud.progressStyle;
+}
+
+- (void)setTitle:(NSString *)title{
+    self.hud.titleText = title;
+}
+
+- (NSString *)title{
+    return self.hud.titleText;
+}
+
+- (void)setStatus:(NSString *)status{
+    self.hud.messageText = status;
+}
+
+- (NSString *)status{
+    return self.hud.messageText;
+}
+
+#pragma mark - Property Overrides
+
+- (MMProgressHUDOverlayView *)overlayView{
+    if (!_overlayView) {
+        _overlayView = [[MMProgressHUDOverlayView alloc] init];
+        _overlayView.alpha = 0.f;
+    }
+    
+    return _overlayView;
+}
+
+- (CGColorRef)glowColor{
+    if (_glowColor == NULL) {
+        CGColorRef redColor = CGColorRetain([UIColor redColor].CGColor);
+        self.glowColor = redColor;
+        CGColorRelease(redColor);
+    }
+    
+    return _glowColor;
+}
+
+- (MMHud *)hud {
+    if (_hud == nil) {
+        _hud = [[MMHud alloc] init];
+    }
+    
+    return _hud;
+}
+
+- (void)setProgressCompletion:(void (^)(void))progressCompletion{
+    if (progressCompletion != nil) {
+        typeof(self) __weak weakSelf = self;
+        _progressCompletion = ^(void){
+            progressCompletion();
+            
+            weakSelf.progressCompletion = nil;
+        };
+    }
+    else{
+        _progressCompletion = nil;
+    }
+}
+
+- (void)setCancelBlock:(void (^)(void))cancelBlock{
+    _cancelBlock = cancelBlock;
+    
+    if (cancelBlock != nil) {
+        self.hud.accessibilityTraits |=
+        (UIAccessibilityTraitAllowsDirectInteraction |
+        UIAccessibilityTraitButton);
+    }
+    else{
+        self.hud.accessibilityTraits &= ~(UIAccessibilityTraitAllowsDirectInteraction |
+                                         UIAccessibilityTraitButton);
+    }
+}
+
+#pragma mark - Builders
+- (void)_buildHUDWindow {
+    if (!_window) {
+        self.window = [[MMProgressHUDWindow alloc] init];
+        
+        MMProgressHUDViewController *vc = [[MMProgressHUDViewController alloc] init];
+        [vc setView:self];
+        
+        [self.window setRootViewController:vc];
+        
+        [self.window.windowExclusionClasses addObjectsFromArray:[self.windowExclusionClasses allObjects]];
+        
+        [self _buildOverlayViewForMode:self.overlayMode inView:self.window];
+        [self.window makeKeyAndVisible];
+    }
+}
+
+- (void)_buildOverlayViewForMode:(MMProgressHUDWindowOverlayMode)overlayMode inView:(UIView *)view{
+    
+    self.overlayView.frame = view.bounds;
+    self.overlayView.overlayMode = overlayMode;
+    
+    [view insertSubview:self.overlayView atIndex:0];
+}
+
+- (void)_buildHUD{
+    [self setAutoresizingMask:
+     UIViewAutoresizingFlexibleHeight | 
+     UIViewAutoresizingFlexibleWidth];
+    
+    [self _buildHUDWindow];
+    
+    UITapGestureRecognizer *tapToDismiss = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_handleTap:)];
+    [tapToDismiss setNumberOfTapsRequired:1];
+    [tapToDismiss setNumberOfTouchesRequired:1];
+    [self addGestureRecognizer:tapToDismiss];
+    
+    self.hud.image = self.image;
+    self.hud.animationImages = self.animationImages;
+    
+    self.hud.layer.transform = CATransform3DIdentity;
+    
+    [self.hud applyLayoutFrames];
+    
+    [self addSubview:self.hud];
+}
+
+#pragma mark - Layout
+- (void)_updateMessageLabelsAnimated:(BOOL)animated{
+    [self.hud updateTitle:self.title message:self.status animated:animated];
+}
+
+- (void)_updateHUDAnimated:(BOOL)animated withCompletion:(void(^)(BOOL completed))completionBlock{
+    MMHudLog(@"Updating %@ with completion...", NSStringFromClass(self.class));
+    
+    if (_dismissDelayTimer != nil) {
+        [_dismissDelayTimer invalidate], _dismissDelayTimer = nil;
+    }
+    
+    if (animated) {
+        [UIView
+         animateWithDuration:0.15
+         delay:0.1f
+         options:UIViewAnimationOptionCurveLinear
+         animations:^{
+             [self _updateHUD];
+         }
+         completion:completionBlock];
+    }
+    else{
+        [self _updateHUD];
+        
+        if (completionBlock != nil) {
+            completionBlock(YES);
+        }
+    }
+}
+
+- (void)_updateHUD{
+    [self.hud updateLayoutFrames];
+    
+    [self.hud updateAnimated:YES withCompletion:nil];
+    
+    self.hud.center = [self _windowCenterForHUDAnchor:self.hud.layer.anchorPoint];
+}
+
+- (CGPoint)_windowCenterForHUDAnchor:(CGPoint)anchor{
+    
+    CGFloat hudHeight = CGRectGetHeight(self.hud.frame);
+    
+    CGPoint position;
+    if (UIInterfaceOrientationIsPortrait([[[[UIApplication sharedApplication] keyWindow] rootViewController] interfaceOrientation])) {
+        
+        CGFloat y = roundf(self.window.center.y + (anchor.y - 0.5f) * hudHeight);
+        CGFloat x = roundf(self.window.center.x);
+        
+        position = CGPointMake(x, y);
+    }
+    else{
+        CGFloat x = roundf(self.window.center.y);
+        CGFloat y = roundf(self.window.center.x + (anchor.y - 0.5f) * hudHeight);
+        
+        position = CGPointMake(x, y);
+    }
+    
+    return [self _antialiasedPositionPointForPoint:position forLayer:self.hud.layer];
+}
+
+#pragma mark - Presentation
+- (void)show{
+    if (_dismissDelayTimer != nil) {
+        [_dismissDelayTimer invalidate], _dismissDelayTimer = nil;
+    }
+    
+    NSAssert([NSThread isMainThread], @"Show should be run on main thread!");
+    
+    [self _buildHUD];
+    
+    presentedAnimated_ = YES;
+    switch (self.presentationStyle) {
+        case MMProgressHUDPresentationStyleDrop:
+            [self _showWithDropAnimation];
+            break;
+        case MMProgressHUDPresentationStyleExpand:
+            [self _showWithExpandAnimation];
+            break;
+        case MMProgressHUDPresentationStyleShrink:
+            [self _showWithShrinkAnimation];
+            break;
+        case MMProgressHUDPresentationStyleSwingLeft:
+            [self _showWithSwingInAnimationFromLeft:YES];
+            break;
+        case MMProgressHUDPresentationStyleSwingRight:
+            [self _showWithSwingInAnimationFromLeft:NO];
+            break;
+        case MMProgressHUDPresentationStyleBalloon:
+            [self _showWithBalloonAnimation];
+            break;
+        case MMProgressHUDPresentationStyleFade:
+            [self _showWithFadeAnimation];
+            break;
+        /*case MMProgressHUDPresentationStyleOrigami:
+        case MMProgressHUDPresentationStyleTVBlip:
+            NSAssert(NO, @"Animations not yet implemented!");*/
+        case MMProgressHUDPresentationStyleNone:
+        default:
+            presentedAnimated_ = NO;
+            [CATransaction begin];
+            [CATransaction setDisableActions:YES];
+        {
+            CGPoint newCenter = [self _windowCenterForHUDAnchor:self.hud.layer.anchorPoint];
+            
+            self.hud.center = newCenter;
+            self.hud.layer.transform = CATransform3DIdentity;
+            self.overlayView.alpha = 1.0f;
+        }
+            [CATransaction commit];
+            break;
+    }
+    
+    [UIView
+     animateWithDuration:(self.presentationStyle == MMProgressHUDPresentationStyleNone) ? 0.f : 0.5
+     animations:^{
+         self.overlayView.alpha = 1.0f;
+     }];
+    
+    UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, self.hud.accessibilityLabel);
+}
+
+- (void)dismiss{
+    NSAssert([NSThread isMainThread], @"Dismiss method should be run on main thread!");
+    
+    MMHudLog(@"dismissing...");
+    
+    switch (self.presentationStyle) {
+        case MMProgressHUDPresentationStyleDrop:
+            [self _dismissWithDropAnimation];
+            break;
+        case MMProgressHUDPresentationStyleExpand:
+            [self _dismissWithExpandAnimation];
+            break;
+        case MMProgressHUDPresentationStyleShrink:
+            [self _dismissWithShrinkAnimation];
+            break;
+        case MMProgressHUDPresentationStyleSwingLeft:
+            [self _dismissWithSwingLeftAnimation];
+            break;
+        case MMProgressHUDPresentationStyleSwingRight:
+            [self _dismissWithSwingRightAnimation];
+            break;
+        case MMProgressHUDPresentationStyleBalloon:
+            [self _dismissWithBalloonAnimation];
+            break;
+        case MMProgressHUDPresentationStyleFade:
+            [self _dismissWithFadeAnimation];
+            break;
+        case MMProgressHUDPresentationStyleNone:
+        default:
+            self.hud.layer.opacity = 0.f;
+            self.overlayView.layer.opacity = 0.f;
+            
+            [self removeFromSuperview];
+            
+            self.visible = NO;
+            [self.window resignKeyWindow];
+            _window = nil;
+            break;
+    }
+    
+    [UIView
+     animateWithDuration:(self.presentationStyle == MMProgressHUDPresentationStyleNone) ? 0.f : 0.75
+     delay:(self.presentationStyle == MMProgressHUDPresentationStyleDrop) ? 0.33 : 0.f
+     options:UIViewAnimationOptionCurveEaseIn | UIViewAnimationOptionBeginFromCurrentState
+     animations:^{
+         self.overlayView.alpha = 0.f;
+     }
+     completion:^(BOOL finished) {
+         
+         self.image = nil;
+         self.animationImages = nil;
+         self.progress = 0.f;
+         self.hud.completionState = MMProgressHUDCompletionStateNone;
+         
+         [self.window resignKeyWindow], _window = nil;
+     }];
+    
+    UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, nil);
+}
+
+- (CGPoint)_antialiasedPositionPointForPoint:(CGPoint)oldCenter forLayer:(CALayer *)layer{
+    CGPoint newCenter = oldCenter;
+    
+    CGSize viewSize = layer.bounds.size;
+    CGPoint anchor = layer.anchorPoint;
+    
+    double intPart;
+    CGFloat viewXRemainder = modf(viewSize.width/2,&intPart);
+    CGFloat viewCenterXRemainder = modf(oldCenter.x/2, &intPart);
+    
+    if (anchor.x != 0.f && anchor.x != 1.f) {
+        if (((viewXRemainder == 0) &&//if view width is even
+            (viewCenterXRemainder != 0)) ||//and if center x is odd
+            ((viewXRemainder != 0) &&//if view width is odd
+             (viewCenterXRemainder == 0))) {//and if center x is even
+                newCenter.x = oldCenter.x + viewXRemainder;
+            }
+    }
+
+    CGFloat viewYRemainder = modf(viewSize.height/2,&intPart);
+    CGFloat viewCenterYRemainder = modf(oldCenter.y/2, &intPart);
+    
+    if (anchor.y != 0.f && anchor.y != 1.f) {
+        if (((viewYRemainder == 0) &&//if view width is even
+             (viewCenterYRemainder != 0)) ||//and if center x is odd
+            ((viewYRemainder != 0) &&//if view width is odd
+             (viewCenterYRemainder == 0))) {//and if center x is even
+                newCenter.y = oldCenter.y + viewYRemainder;
+            }
+    }
+    
+    return newCenter;
+}
+
+//- (void)stopAllAnimations
+
+#pragma mark - Animation Delegate
+- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag{
+    
+    NSString *animKey = [anim valueForKey:@"name"];
+
+    if ([animKey isEqualToString:MMProgressHUDAnimationShow]) {
+        MMHudLog(@"Show animation ended: %@", self.hud);
+        
+        self.queuedShowAnimation = nil;
+        
+        if (self.queuedDismissAnimation != nil) {
+            [self _executeDismissAnimation:self.queuedDismissAnimation];
+            self.queuedDismissAnimation = nil;
+        }
+    }
+    else if([animKey isEqualToString:MMProgressHUDAnimationDismiss]){
+        MMHudLog(@"Dismiss animation ended");
+        
+        if (self.dismissAnimationCompletion != nil) {
+            self.dismissAnimationCompletion();
+        }
+        
+        [self.hud removeFromSuperview];
+        
+        self.queuedDismissAnimation = nil;
+        
+        //reset for next presentation
+        [self.hud prepareForReuse];
+        
+        if (self.queuedShowAnimation != nil) {
+            [self show];
+            self.queuedShowAnimation = nil;
+        }
+    }
+    else{
+        MMHudLog(@"Unknown animation completed: %@", animKey);
+    }
+}
+
+#pragma mark - Gestures
+- (void)_handleTap:(UITapGestureRecognizer *)recognizer{
+    MMHudLog(@"Handling tap");
+    
+    if((self.cancelBlock != nil) &&
+       (self.confirmed == NO)){
+        MMHudLog(@"Asking to confirm cancel");
+        
+        self.tempStatus = [self.status copy];
+        CGFloat timerDuration = MMProgressHUDAnimateInDurationNormal*MMProgressHUDConfirmationPulseCount;
+        self.confirmationTimer = [NSTimer scheduledTimerWithTimeInterval:timerDuration
+                                                                  target:self
+                                                                selector:@selector(_resetConfirmationTimer:)
+                                                                userInfo:nil
+                                                                 repeats:NO];
+        self.status = self.confirmationMessage;
+    
+        [self.hud updateTitle:self.hud.titleText message:self.confirmationMessage animated:YES];
+        
+        self.confirmed = YES;
+        
+        [self _beginGlowAnimation];
+    }
+    else if(self.confirmed){
+        MMHudLog(@"confirmed to dismiss!");
+        
+        [self.confirmationTimer invalidate], self.confirmationTimer = nil;
+        
+        if(self.cancelBlock != nil){
+            self.cancelBlock();
+        }
+        
+        [self dismiss];
+        _confirmed = NO;
+    }
+}
+
+- (void)_resetConfirmationTimer:(NSTimer *)timer{
+    MMHudLog(@"Resetting confirmation timer");
+    
+    [_confirmationTimer invalidate], _confirmationTimer = nil;
+    self.status = self.tempStatus;
+    self.tempStatus = nil;
+    
+    self.confirmed = NO;
+    
+    [self _endGlowAnimation];
+    
+    [self.hud updateTitle:self.hud.titleText message:self.status animated:YES];
+}
+
+- (UIImage *)_imageForCompletionState:(MMProgressHUDCompletionState)completionState{
+    switch (completionState) {
+        case MMProgressHUDCompletionStateError:
+            return self.errorImage;
+            break;
+        case MMProgressHUDCompletionStateSuccess:
+            return self.successImage;
+            break;
+        case MMProgressHUDCompletionStateNone:
+            return nil;
+            break;
+    }
+}
+
+#pragma mark - MMHud Delegate
+- (void)hudDidCompleteProgress:(MMHud *)hud{
+    if(self.progressCompletion != nil){
+        self.progressCompletion();
+    }
+    
+    self.hud.accessibilityValue = nil;
+}
+
+- (UIImage *)hud:(MMHud *)hud imageForCompletionState:(MMProgressHUDCompletionState)completionState{
+    return [self _imageForCompletionState:completionState];
+}
+
+- (CGPoint)hudCenterPointForDisplay:(MMHud *)hud{
+    return [self _windowCenterForHUDAnchor:hud.layer.anchorPoint];
+}
+
+@end

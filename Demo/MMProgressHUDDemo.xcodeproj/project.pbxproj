@@ -1,0 +1,845 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		463AE40716B105B300A93EED /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 463AE40616B105B300A93EED /* Default-568h@2x.png */; };
+		4645AF0016BB74AD000316D9 /* MMAutolayoutHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 4645AEFF16BB74AD000316D9 /* MMAutolayoutHUD.m */; };
+		4645AF0116BB74AD000316D9 /* MMAutolayoutHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 4645AEFF16BB74AD000316D9 /* MMAutolayoutHUD.m */; };
+		46A19B37155492E000D65BB8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A19B36155492E000D65BB8 /* UIKit.framework */; };
+		46A19B39155492E000D65BB8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A19B38155492E000D65BB8 /* Foundation.framework */; };
+		46A19B3B155492E000D65BB8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A19B3A155492E000D65BB8 /* CoreGraphics.framework */; };
+		46A19B41155492E000D65BB8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 46A19B3F155492E000D65BB8 /* InfoPlist.strings */; };
+		46A19B43155492E000D65BB8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A19B42155492E000D65BB8 /* main.m */; };
+		46A19B47155492E000D65BB8 /* MMAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A19B46155492E000D65BB8 /* MMAppDelegate.m */; };
+		46A19B4A155492E000D65BB8 /* MMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A19B49155492E000D65BB8 /* MMViewController.m */; };
+		46A19B5D155493B500D65BB8 /* MMProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A19B5C155493B500D65BB8 /* MMProgressHUD.m */; };
+		46A19B6015549B0300D65BB8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A19B5F15549B0300D65BB8 /* QuartzCore.framework */; };
+		46A19B6815549F5200D65BB8 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A19B6215549F5200D65BB8 /* 1.png */; };
+		46A19B6915549F5200D65BB8 /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A19B6315549F5200D65BB8 /* 2.png */; };
+		46A19B6A15549F5200D65BB8 /* 3.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A19B6415549F5200D65BB8 /* 3.png */; };
+		46A19B6B15549F5200D65BB8 /* 4.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A19B6515549F5200D65BB8 /* 4.png */; };
+		46A19B6C15549F5200D65BB8 /* 5.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A19B6615549F5200D65BB8 /* 5.png */; };
+		46A19B6D15549F5200D65BB8 /* 6.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A19B6715549F5200D65BB8 /* 6.png */; };
+		550D5048155D8FBE0092B975 /* MMProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 550D5047155D8FBE0092B975 /* MMProgressHUD.bundle */; };
+		550D504C15615BEF0092B975 /* MMRadialProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 550D504B15615BEF0092B975 /* MMRadialProgressView.m */; };
+		5527AEFB159CD7650037D67D /* MMHud.m in Sources */ = {isa = PBXBuildFile; fileRef = 5527AEFA159CD7650037D67D /* MMHud.m */; };
+		5527AEFF159CD7D50037D67D /* MMProgressHUDWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 5527AEFE159CD7D50037D67D /* MMProgressHUDWindow.m */; };
+		5527AF03159CD8200037D67D /* MMProgressHUDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5527AF02159CD8200037D67D /* MMProgressHUDViewController.m */; };
+		5527AF07159CD97A0037D67D /* MMHudTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5527AF06159CD97A0037D67D /* MMHudTests.m */; };
+		5554BE701558877F0096B7B9 /* generateAppledoc.sh in Resources */ = {isa = PBXBuildFile; fileRef = 5554BE6F1558877F0096B7B9 /* generateAppledoc.sh */; };
+		5599E188159B84B200DA786A /* MMProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 550D5047155D8FBE0092B975 /* MMProgressHUD.bundle */; };
+		55AC1A0515A602A500D64C1F /* MMProgressHUDOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55AC1A0415A602A500D64C1F /* MMProgressHUDOverlayView.m */; };
+		55AC1A0615A602A500D64C1F /* MMProgressHUDOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55AC1A0415A602A500D64C1F /* MMProgressHUDOverlayView.m */; };
+		55AC1A0815A62B6900D64C1F /* MMProgressHUDOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55AC1A0415A602A500D64C1F /* MMProgressHUDOverlayView.m */; };
+		55F0587E159E02DD00A47983 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A19B36155492E000D65BB8 /* UIKit.framework */; };
+		55F0587F159E02DD00A47983 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A19B38155492E000D65BB8 /* Foundation.framework */; };
+		55F05880159E02DD00A47983 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A19B3A155492E000D65BB8 /* CoreGraphics.framework */; };
+		55F05892159E039800A47983 /* GHUnitIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F05891159E039800A47983 /* GHUnitIOS.framework */; };
+		55F05897159E048F00A47983 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F05895159E048F00A47983 /* main.m */; };
+		55F05899159E04E200A47983 /* MMProgressHUDTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 69DA08D4158261EE000DC29E /* MMProgressHUDTests.m */; };
+		55F0589A159E04E200A47983 /* MMHudTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5527AF06159CD97A0037D67D /* MMHudTests.m */; };
+		55F0589B159E058600A47983 /* MMProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A19B5C155493B500D65BB8 /* MMProgressHUD.m */; };
+		55F0589C159E058600A47983 /* MMRadialProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 550D504B15615BEF0092B975 /* MMRadialProgressView.m */; };
+		55F0589D159E058600A47983 /* MMHud.m in Sources */ = {isa = PBXBuildFile; fileRef = 5527AEFA159CD7650037D67D /* MMHud.m */; };
+		55F0589E159E058600A47983 /* MMProgressHUDWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 5527AEFE159CD7D50037D67D /* MMProgressHUDWindow.m */; };
+		55F0589F159E058600A47983 /* MMProgressHUDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5527AF02159CD8200037D67D /* MMProgressHUDViewController.m */; };
+		55F058A1159E059E00A47983 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A19B5F15549B0300D65BB8 /* QuartzCore.framework */; };
+		55F0592B159E291700A47983 /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F05922159E291700A47983 /* libOCMock.a */; };
+		55F0592C159E39B300A47983 /* GHUnitIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F05891159E039800A47983 /* GHUnitIOS.framework */; };
+		55F0592D159E39C400A47983 /* MMProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A19B5C155493B500D65BB8 /* MMProgressHUD.m */; };
+		55F0592E159E39CB00A47983 /* MMRadialProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 550D504B15615BEF0092B975 /* MMRadialProgressView.m */; };
+		55F0592F159E39CB00A47983 /* MMHud.m in Sources */ = {isa = PBXBuildFile; fileRef = 5527AEFA159CD7650037D67D /* MMHud.m */; };
+		55F05930159E39CB00A47983 /* MMProgressHUDWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 5527AEFE159CD7D50037D67D /* MMProgressHUDWindow.m */; };
+		55F05931159E39CB00A47983 /* MMProgressHUDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5527AF02159CD8200037D67D /* MMProgressHUDViewController.m */; };
+		55F05932159E39D500A47983 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A19B5F15549B0300D65BB8 /* QuartzCore.framework */; };
+		55F0596115A2083C00A47983 /* MMProgressHUD+Animations.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F0596015A2083C00A47983 /* MMProgressHUD+Animations.m */; };
+		55F0596215A2083C00A47983 /* MMProgressHUD+Animations.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F0596015A2083C00A47983 /* MMProgressHUD+Animations.m */; };
+		55F0596315A2083C00A47983 /* MMProgressHUD+Animations.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F0596015A2083C00A47983 /* MMProgressHUD+Animations.m */; };
+		55F0596615A20BDD00A47983 /* MMProgressHUD+Class.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F0596515A20BDD00A47983 /* MMProgressHUD+Class.m */; };
+		55F0596715A20BDD00A47983 /* MMProgressHUD+Class.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F0596515A20BDD00A47983 /* MMProgressHUD+Class.m */; };
+		55F0596815A20BDD00A47983 /* MMProgressHUD+Class.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F0596515A20BDD00A47983 /* MMProgressHUD+Class.m */; };
+		55F0596915A2211000A47983 /* MMProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 550D5047155D8FBE0092B975 /* MMProgressHUD.bundle */; };
+		6936CF0215828F6600D931E7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A19B3A155492E000D65BB8 /* CoreGraphics.framework */; };
+		6936CF06158290D200D931E7 /* CoverageFix.m in Sources */ = {isa = PBXBuildFile; fileRef = 6936CF05158290D100D931E7 /* CoverageFix.m */; };
+		69DA08CA158261EE000DC29E /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69DA08C9158261EE000DC29E /* SenTestingKit.framework */; };
+		69DA08CB158261EE000DC29E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A19B36155492E000D65BB8 /* UIKit.framework */; };
+		69DA08CC158261EE000DC29E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A19B38155492E000D65BB8 /* Foundation.framework */; };
+		69DA08D2158261EE000DC29E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 69DA08D0158261EE000DC29E /* InfoPlist.strings */; };
+		69DA08D5158261EE000DC29E /* MMProgressHUDTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 69DA08D4158261EE000DC29E /* MMProgressHUDTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		69DA08DD15826291000DC29E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 46A19B29155492E000D65BB8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 69DA08C7158261EE000DC29E;
+			remoteInfo = LogicTests;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		463AE40616B105B300A93EED /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		4645AEFE16BB74AD000316D9 /* MMAutolayoutHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMAutolayoutHUD.h; sourceTree = "<group>"; };
+		4645AEFF16BB74AD000316D9 /* MMAutolayoutHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMAutolayoutHUD.m; sourceTree = "<group>"; };
+		46A19B32155492E000D65BB8 /* MMProgressHUDDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MMProgressHUDDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		46A19B36155492E000D65BB8 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		46A19B38155492E000D65BB8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		46A19B3A155492E000D65BB8 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		46A19B3E155492E000D65BB8 /* MMProgressHUDDemo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MMProgressHUDDemo-Info.plist"; sourceTree = "<group>"; };
+		46A19B40155492E000D65BB8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		46A19B42155492E000D65BB8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		46A19B44155492E000D65BB8 /* MMProgressHUDDemo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MMProgressHUDDemo-Prefix.pch"; sourceTree = "<group>"; };
+		46A19B45155492E000D65BB8 /* MMAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMAppDelegate.h; sourceTree = "<group>"; };
+		46A19B46155492E000D65BB8 /* MMAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MMAppDelegate.m; sourceTree = "<group>"; };
+		46A19B48155492E000D65BB8 /* MMViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMViewController.h; sourceTree = "<group>"; };
+		46A19B49155492E000D65BB8 /* MMViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MMViewController.m; sourceTree = "<group>"; };
+		46A19B5B155493B500D65BB8 /* MMProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMProgressHUD.h; sourceTree = "<group>"; };
+		46A19B5C155493B500D65BB8 /* MMProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMProgressHUD.m; sourceTree = "<group>"; };
+		46A19B5F15549B0300D65BB8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		46A19B6215549F5200D65BB8 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
+		46A19B6315549F5200D65BB8 /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
+		46A19B6415549F5200D65BB8 /* 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3.png; sourceTree = "<group>"; };
+		46A19B6515549F5200D65BB8 /* 4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 4.png; sourceTree = "<group>"; };
+		46A19B6615549F5200D65BB8 /* 5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 5.png; sourceTree = "<group>"; };
+		46A19B6715549F5200D65BB8 /* 6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 6.png; sourceTree = "<group>"; };
+		550D5047155D8FBE0092B975 /* MMProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MMProgressHUD.bundle; sourceTree = "<group>"; };
+		550D504A15615BEF0092B975 /* MMRadialProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMRadialProgressView.h; sourceTree = "<group>"; };
+		550D504B15615BEF0092B975 /* MMRadialProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMRadialProgressView.m; sourceTree = "<group>"; };
+		5527AEF4159CD18E0037D67D /* MMProgressHUDPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMProgressHUDPrivate.h; path = ../MMProgressHUDDemo/MMProgressHUDPrivate.h; sourceTree = "<group>"; };
+		5527AEF9159CD7650037D67D /* MMHud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMHud.h; sourceTree = "<group>"; };
+		5527AEFA159CD7650037D67D /* MMHud.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMHud.m; sourceTree = "<group>"; };
+		5527AEFD159CD7D50037D67D /* MMProgressHUDWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMProgressHUDWindow.h; sourceTree = "<group>"; };
+		5527AEFE159CD7D50037D67D /* MMProgressHUDWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMProgressHUDWindow.m; sourceTree = "<group>"; };
+		5527AF01159CD8200037D67D /* MMProgressHUDViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMProgressHUDViewController.h; sourceTree = "<group>"; };
+		5527AF02159CD8200037D67D /* MMProgressHUDViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMProgressHUDViewController.m; sourceTree = "<group>"; };
+		5527AF06159CD97A0037D67D /* MMHudTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMHudTests.m; sourceTree = "<group>"; };
+		5554BE6F1558877F0096B7B9 /* generateAppledoc.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = generateAppledoc.sh; path = ../Documentation/generateAppledoc.sh; sourceTree = "<group>"; };
+		55AC1A0315A602A500D64C1F /* MMProgressHUDOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMProgressHUDOverlayView.h; sourceTree = "<group>"; };
+		55AC1A0415A602A500D64C1F /* MMProgressHUDOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMProgressHUDOverlayView.m; sourceTree = "<group>"; };
+		55F0587C159E02DD00A47983 /* GHUnitTests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GHUnitTests.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		55F05891159E039800A47983 /* GHUnitIOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GHUnitIOS.framework; sourceTree = "<group>"; };
+		55F05893159E048F00A47983 /* GHUnitTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GHUnitTests-Info.plist"; sourceTree = "<group>"; };
+		55F05894159E048F00A47983 /* GHUnitTests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GHUnitTests-Prefix.pch"; sourceTree = "<group>"; };
+		55F05895159E048F00A47983 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		55F05922159E291700A47983 /* libOCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libOCMock.a; path = OCMock/libOCMock.a; sourceTree = "<group>"; };
+		55F0595415A1FCEC00A47983 /* NSNotificationCenter+OCMAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotificationCenter+OCMAdditions.h"; sourceTree = "<group>"; };
+		55F0595515A1FCEC00A47983 /* OCMArg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMArg.h; sourceTree = "<group>"; };
+		55F0595615A1FCEC00A47983 /* OCMConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMConstraint.h; sourceTree = "<group>"; };
+		55F0595715A1FCEC00A47983 /* OCMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMock.h; sourceTree = "<group>"; };
+		55F0595815A1FCEC00A47983 /* OCMockObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMockObject.h; sourceTree = "<group>"; };
+		55F0595915A1FCEC00A47983 /* OCMockRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMockRecorder.h; sourceTree = "<group>"; };
+		55F0595F15A2083C00A47983 /* MMProgressHUD+Animations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MMProgressHUD+Animations.h"; sourceTree = "<group>"; };
+		55F0596015A2083C00A47983 /* MMProgressHUD+Animations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MMProgressHUD+Animations.m"; sourceTree = "<group>"; };
+		55F0596515A20BDD00A47983 /* MMProgressHUD+Class.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MMProgressHUD+Class.m"; sourceTree = "<group>"; };
+		6936CF04158290D100D931E7 /* CoverageFix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoverageFix.h; sourceTree = SOURCE_ROOT; };
+		6936CF05158290D100D931E7 /* CoverageFix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoverageFix.m; sourceTree = SOURCE_ROOT; };
+		69DA08C8158261EE000DC29E /* LogicTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LogicTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		69DA08C9158261EE000DC29E /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		69DA08CF158261EE000DC29E /* LogicTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "LogicTests-Info.plist"; sourceTree = "<group>"; };
+		69DA08D1158261EE000DC29E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		69DA08D4158261EE000DC29E /* MMProgressHUDTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MMProgressHUDTests.m; sourceTree = "<group>"; };
+		69DA08D6158261EE000DC29E /* LogicTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LogicTests-Prefix.pch"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		46A19B2F155492E000D65BB8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				46A19B6015549B0300D65BB8 /* QuartzCore.framework in Frameworks */,
+				46A19B37155492E000D65BB8 /* UIKit.framework in Frameworks */,
+				46A19B39155492E000D65BB8 /* Foundation.framework in Frameworks */,
+				46A19B3B155492E000D65BB8 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55F05879159E02DD00A47983 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55F0587E159E02DD00A47983 /* UIKit.framework in Frameworks */,
+				55F0587F159E02DD00A47983 /* Foundation.framework in Frameworks */,
+				55F05880159E02DD00A47983 /* CoreGraphics.framework in Frameworks */,
+				55F05892159E039800A47983 /* GHUnitIOS.framework in Frameworks */,
+				55F058A1159E059E00A47983 /* QuartzCore.framework in Frameworks */,
+				55F0592B159E291700A47983 /* libOCMock.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		69DA08C4158261EE000DC29E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				69DA08CA158261EE000DC29E /* SenTestingKit.framework in Frameworks */,
+				69DA08CB158261EE000DC29E /* UIKit.framework in Frameworks */,
+				69DA08CC158261EE000DC29E /* Foundation.framework in Frameworks */,
+				6936CF0215828F6600D931E7 /* CoreGraphics.framework in Frameworks */,
+				55F0592C159E39B300A47983 /* GHUnitIOS.framework in Frameworks */,
+				55F05932159E39D500A47983 /* QuartzCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		46A19B27155492E000D65BB8 = {
+			isa = PBXGroup;
+			children = (
+				463AE40616B105B300A93EED /* Default-568h@2x.png */,
+				5554BE6F1558877F0096B7B9 /* generateAppledoc.sh */,
+				46A19B6115549F5200D65BB8 /* Images */,
+				46A19B5A155493B500D65BB8 /* MMProgressHUD */,
+				46A19B3C155492E000D65BB8 /* MMProgressHUDDemo */,
+				69DA08CD158261EE000DC29E /* LogicTests */,
+				55F05881159E02DD00A47983 /* GHUnitTests */,
+				46A19B35155492E000D65BB8 /* Frameworks */,
+				46A19B33155492E000D65BB8 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		46A19B33155492E000D65BB8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				46A19B32155492E000D65BB8 /* MMProgressHUDDemo.app */,
+				69DA08C8158261EE000DC29E /* LogicTests.octest */,
+				55F0587C159E02DD00A47983 /* GHUnitTests.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		46A19B35155492E000D65BB8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				55F05922159E291700A47983 /* libOCMock.a */,
+				55F05891159E039800A47983 /* GHUnitIOS.framework */,
+				46A19B3A155492E000D65BB8 /* CoreGraphics.framework */,
+				46A19B38155492E000D65BB8 /* Foundation.framework */,
+				46A19B5F15549B0300D65BB8 /* QuartzCore.framework */,
+				69DA08C9158261EE000DC29E /* SenTestingKit.framework */,
+				46A19B36155492E000D65BB8 /* UIKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		46A19B3C155492E000D65BB8 /* MMProgressHUDDemo */ = {
+			isa = PBXGroup;
+			children = (
+				46A19B45155492E000D65BB8 /* MMAppDelegate.h */,
+				46A19B46155492E000D65BB8 /* MMAppDelegate.m */,
+				46A19B48155492E000D65BB8 /* MMViewController.h */,
+				46A19B49155492E000D65BB8 /* MMViewController.m */,
+				46A19B3D155492E000D65BB8 /* Supporting Files */,
+			);
+			path = MMProgressHUDDemo;
+			sourceTree = "<group>";
+		};
+		46A19B3D155492E000D65BB8 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				46A19B3E155492E000D65BB8 /* MMProgressHUDDemo-Info.plist */,
+				46A19B3F155492E000D65BB8 /* InfoPlist.strings */,
+				46A19B42155492E000D65BB8 /* main.m */,
+				46A19B44155492E000D65BB8 /* MMProgressHUDDemo-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		46A19B5A155493B500D65BB8 /* MMProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				46A19B5B155493B500D65BB8 /* MMProgressHUD.h */,
+				46A19B5C155493B500D65BB8 /* MMProgressHUD.m */,
+				55AC1A0315A602A500D64C1F /* MMProgressHUDOverlayView.h */,
+				55AC1A0415A602A500D64C1F /* MMProgressHUDOverlayView.m */,
+				55F0596515A20BDD00A47983 /* MMProgressHUD+Class.m */,
+				55F0595F15A2083C00A47983 /* MMProgressHUD+Animations.h */,
+				55F0596015A2083C00A47983 /* MMProgressHUD+Animations.m */,
+				550D504A15615BEF0092B975 /* MMRadialProgressView.h */,
+				550D504B15615BEF0092B975 /* MMRadialProgressView.m */,
+				5527AEF9159CD7650037D67D /* MMHud.h */,
+				5527AEFA159CD7650037D67D /* MMHud.m */,
+				4645AEFE16BB74AD000316D9 /* MMAutolayoutHUD.h */,
+				4645AEFF16BB74AD000316D9 /* MMAutolayoutHUD.m */,
+				5527AEFD159CD7D50037D67D /* MMProgressHUDWindow.h */,
+				5527AEFE159CD7D50037D67D /* MMProgressHUDWindow.m */,
+				5527AF01159CD8200037D67D /* MMProgressHUDViewController.h */,
+				5527AF02159CD8200037D67D /* MMProgressHUDViewController.m */,
+				550D5047155D8FBE0092B975 /* MMProgressHUD.bundle */,
+			);
+			name = MMProgressHUD;
+			path = ../Source;
+			sourceTree = "<group>";
+		};
+		46A19B6115549F5200D65BB8 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				46A19B6215549F5200D65BB8 /* 1.png */,
+				46A19B6315549F5200D65BB8 /* 2.png */,
+				46A19B6415549F5200D65BB8 /* 3.png */,
+				46A19B6515549F5200D65BB8 /* 4.png */,
+				46A19B6615549F5200D65BB8 /* 5.png */,
+				46A19B6715549F5200D65BB8 /* 6.png */,
+			);
+			name = Images;
+			path = "Run Cycle 1";
+			sourceTree = "<group>";
+		};
+		55F05881159E02DD00A47983 /* GHUnitTests */ = {
+			isa = PBXGroup;
+			children = (
+				55F0595315A1FCEC00A47983 /* OCMock */,
+				55F05898159E049800A47983 /* Supporting Files */,
+			);
+			path = GHUnitTests;
+			sourceTree = "<group>";
+		};
+		55F05898159E049800A47983 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				55F05893159E048F00A47983 /* GHUnitTests-Info.plist */,
+				55F05894159E048F00A47983 /* GHUnitTests-Prefix.pch */,
+				55F05895159E048F00A47983 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		55F0595315A1FCEC00A47983 /* OCMock */ = {
+			isa = PBXGroup;
+			children = (
+				55F0595415A1FCEC00A47983 /* NSNotificationCenter+OCMAdditions.h */,
+				55F0595515A1FCEC00A47983 /* OCMArg.h */,
+				55F0595615A1FCEC00A47983 /* OCMConstraint.h */,
+				55F0595715A1FCEC00A47983 /* OCMock.h */,
+				55F0595815A1FCEC00A47983 /* OCMockObject.h */,
+				55F0595915A1FCEC00A47983 /* OCMockRecorder.h */,
+			);
+			name = OCMock;
+			path = OCMock/OCMock;
+			sourceTree = SOURCE_ROOT;
+		};
+		69DA08CD158261EE000DC29E /* LogicTests */ = {
+			isa = PBXGroup;
+			children = (
+				5527AEF4159CD18E0037D67D /* MMProgressHUDPrivate.h */,
+				6936CF04158290D100D931E7 /* CoverageFix.h */,
+				6936CF05158290D100D931E7 /* CoverageFix.m */,
+				69DA08D4158261EE000DC29E /* MMProgressHUDTests.m */,
+				5527AF06159CD97A0037D67D /* MMHudTests.m */,
+				69DA08CE158261EE000DC29E /* Supporting Files */,
+			);
+			path = LogicTests;
+			sourceTree = "<group>";
+		};
+		69DA08CE158261EE000DC29E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				69DA08CF158261EE000DC29E /* LogicTests-Info.plist */,
+				69DA08D0158261EE000DC29E /* InfoPlist.strings */,
+				69DA08D6158261EE000DC29E /* LogicTests-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		46A19B31155492E000D65BB8 /* MMProgressHUDDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 46A19B53155492E000D65BB8 /* Build configuration list for PBXNativeTarget "MMProgressHUDDemo" */;
+			buildPhases = (
+				46A19B2E155492E000D65BB8 /* Sources */,
+				46A19B2F155492E000D65BB8 /* Frameworks */,
+				46A19B30155492E000D65BB8 /* Resources */,
+				46A19B731554BE8C00D65BB8 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				69DA08DE15826291000DC29E /* PBXTargetDependency */,
+			);
+			name = MMProgressHUDDemo;
+			productName = MMProgressHUDDemo;
+			productReference = 46A19B32155492E000D65BB8 /* MMProgressHUDDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		55F0587B159E02DD00A47983 /* GHUnitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 55F0588F159E02DD00A47983 /* Build configuration list for PBXNativeTarget "GHUnitTests" */;
+			buildPhases = (
+				55F05878159E02DD00A47983 /* Sources */,
+				55F05879159E02DD00A47983 /* Frameworks */,
+				55F0587A159E02DD00A47983 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GHUnitTests;
+			productName = GHUnitTests;
+			productReference = 55F0587C159E02DD00A47983 /* GHUnitTests.app */;
+			productType = "com.apple.product-type.application";
+		};
+		69DA08C7158261EE000DC29E /* LogicTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 69DA08D9158261EE000DC29E /* Build configuration list for PBXNativeTarget "LogicTests" */;
+			buildPhases = (
+				69DA08C3158261EE000DC29E /* Sources */,
+				69DA08C4158261EE000DC29E /* Frameworks */,
+				69DA08C5158261EE000DC29E /* Resources */,
+				69DA08C6158261EE000DC29E /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LogicTests;
+			productName = LogicTests;
+			productReference = 69DA08C8158261EE000DC29E /* LogicTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		46A19B29155492E000D65BB8 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = MM;
+				LastUpgradeCheck = 0430;
+				ORGANIZATIONNAME = "Mutual Mobile";
+			};
+			buildConfigurationList = 46A19B2C155492E000D65BB8 /* Build configuration list for PBXProject "MMProgressHUDDemo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 46A19B27155492E000D65BB8;
+			productRefGroup = 46A19B33155492E000D65BB8 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				46A19B31155492E000D65BB8 /* MMProgressHUDDemo */,
+				69DA08C7158261EE000DC29E /* LogicTests */,
+				55F0587B159E02DD00A47983 /* GHUnitTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		46A19B30155492E000D65BB8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				46A19B41155492E000D65BB8 /* InfoPlist.strings in Resources */,
+				46A19B6815549F5200D65BB8 /* 1.png in Resources */,
+				46A19B6915549F5200D65BB8 /* 2.png in Resources */,
+				46A19B6A15549F5200D65BB8 /* 3.png in Resources */,
+				46A19B6B15549F5200D65BB8 /* 4.png in Resources */,
+				46A19B6C15549F5200D65BB8 /* 5.png in Resources */,
+				46A19B6D15549F5200D65BB8 /* 6.png in Resources */,
+				5554BE701558877F0096B7B9 /* generateAppledoc.sh in Resources */,
+				550D5048155D8FBE0092B975 /* MMProgressHUD.bundle in Resources */,
+				463AE40716B105B300A93EED /* Default-568h@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55F0587A159E02DD00A47983 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55F0596915A2211000A47983 /* MMProgressHUD.bundle in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		69DA08C5158261EE000DC29E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				69DA08D2158261EE000DC29E /* InfoPlist.strings in Resources */,
+				5599E188159B84B200DA786A /* MMProgressHUD.bundle in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		46A19B731554BE8C00D65BB8 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "KEYWORDS=\"TODO:|FIXME:|\\?\\?\\?:|\\!\\!\\!:\"\nfind \"${SRCROOT}/..\" \\( -name \"*.h\" -or -name \"*.m\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($KEYWORDS).*\\$\" | perl -p -e \"s/($KEYWORDS)/ warning: \\$1/\"";
+		};
+		69DA08C6158261EE000DC29E /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		46A19B2E155492E000D65BB8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				46A19B43155492E000D65BB8 /* main.m in Sources */,
+				46A19B47155492E000D65BB8 /* MMAppDelegate.m in Sources */,
+				46A19B4A155492E000D65BB8 /* MMViewController.m in Sources */,
+				46A19B5D155493B500D65BB8 /* MMProgressHUD.m in Sources */,
+				550D504C15615BEF0092B975 /* MMRadialProgressView.m in Sources */,
+				5527AEFB159CD7650037D67D /* MMHud.m in Sources */,
+				5527AEFF159CD7D50037D67D /* MMProgressHUDWindow.m in Sources */,
+				5527AF03159CD8200037D67D /* MMProgressHUDViewController.m in Sources */,
+				55F0596115A2083C00A47983 /* MMProgressHUD+Animations.m in Sources */,
+				55F0596615A20BDD00A47983 /* MMProgressHUD+Class.m in Sources */,
+				55AC1A0515A602A500D64C1F /* MMProgressHUDOverlayView.m in Sources */,
+				4645AF0016BB74AD000316D9 /* MMAutolayoutHUD.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55F05878159E02DD00A47983 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55F05897159E048F00A47983 /* main.m in Sources */,
+				55F05899159E04E200A47983 /* MMProgressHUDTests.m in Sources */,
+				55F0589A159E04E200A47983 /* MMHudTests.m in Sources */,
+				55F0589B159E058600A47983 /* MMProgressHUD.m in Sources */,
+				55F0589C159E058600A47983 /* MMRadialProgressView.m in Sources */,
+				55F0589D159E058600A47983 /* MMHud.m in Sources */,
+				55F0589E159E058600A47983 /* MMProgressHUDWindow.m in Sources */,
+				55F0589F159E058600A47983 /* MMProgressHUDViewController.m in Sources */,
+				55F0596315A2083C00A47983 /* MMProgressHUD+Animations.m in Sources */,
+				55F0596815A20BDD00A47983 /* MMProgressHUD+Class.m in Sources */,
+				55AC1A0615A602A500D64C1F /* MMProgressHUDOverlayView.m in Sources */,
+				4645AF0116BB74AD000316D9 /* MMAutolayoutHUD.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		69DA08C3158261EE000DC29E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				69DA08D5158261EE000DC29E /* MMProgressHUDTests.m in Sources */,
+				6936CF06158290D200D931E7 /* CoverageFix.m in Sources */,
+				5527AF07159CD97A0037D67D /* MMHudTests.m in Sources */,
+				55F0592D159E39C400A47983 /* MMProgressHUD.m in Sources */,
+				55F0592E159E39CB00A47983 /* MMRadialProgressView.m in Sources */,
+				55F0592F159E39CB00A47983 /* MMHud.m in Sources */,
+				55F05930159E39CB00A47983 /* MMProgressHUDWindow.m in Sources */,
+				55F05931159E39CB00A47983 /* MMProgressHUDViewController.m in Sources */,
+				55F0596215A2083C00A47983 /* MMProgressHUD+Animations.m in Sources */,
+				55F0596715A20BDD00A47983 /* MMProgressHUD+Class.m in Sources */,
+				55AC1A0815A62B6900D64C1F /* MMProgressHUDOverlayView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		69DA08DE15826291000DC29E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 69DA08C7158261EE000DC29E /* LogicTests */;
+			targetProxy = 69DA08DD15826291000DC29E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		46A19B3F155492E000D65BB8 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				46A19B40155492E000D65BB8 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		69DA08D0158261EE000DC29E /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				69DA08D1158261EE000DC29E /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		46A19B51155492E000D65BB8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = armv7;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_LDFLAGS = "-fobjc-arc";
+				RUN_CLANG_STATIC_ANALYZER = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		46A19B52155492E000D65BB8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = armv7;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				OTHER_LDFLAGS = "-fobjc-arc";
+				RUN_CLANG_STATIC_ANALYZER = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		46A19B54155492E000D65BB8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_OBJCPP_ARC_ABI = NO;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MMProgressHUDDemo/MMProgressHUDDemo-Prefix.pch";
+				INFOPLIST_FILE = "MMProgressHUDDemo/MMProgressHUDDemo-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WARNING_CFLAGS = "";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		46A19B55155492E000D65BB8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_OBJCPP_ARC_ABI = NO;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MMProgressHUDDemo/MMProgressHUDDemo-Prefix.pch";
+				INFOPLIST_FILE = "MMProgressHUDDemo/MMProgressHUDDemo-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WARNING_CFLAGS = "";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		55F0588D159E02DD00A47983 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_OBJCPP_ARC_ABI = NO;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"/**",
+					"\"${PROJECT_DIR}\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GHUnitTests/GHUnitTests-Prefix.pch";
+				HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/OCMock\"/**";
+				INFOPLIST_FILE = "GHUnitTests/GHUnitTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/OCMock\"/**",
+					"\"$(SRCROOT)/OCMock\"",
+				);
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-ObjC",
+					"-fobjc-arc",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/OCMock\"/**";
+				WARNING_CFLAGS = "-Wall";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		55F0588E159E02DD00A47983 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_OBJCPP_ARC_ABI = NO;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"/**",
+					"\"${PROJECT_DIR}\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GHUnitTests/GHUnitTests-Prefix.pch";
+				HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/OCMock\"/**";
+				INFOPLIST_FILE = "GHUnitTests/GHUnitTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/OCMock\"/**",
+					"\"$(SRCROOT)/OCMock\"",
+				);
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-ObjC",
+					"-fobjc-arc",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/OCMock\"/**";
+				WARNING_CFLAGS = "-Wall";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		69DA08D7158261EE000DC29E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"\"$(SRCROOT)\"",
+				);
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
+				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "LogicTests/LogicTests-Prefix.pch";
+				HEADER_SEARCH_PATHS = "\"$(PROJECT_DIR)\"/**";
+				INFOPLIST_FILE = "LogicTests/LogicTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(SRCROOT)\"/**",
+					"\"$(SRCROOT)/OCMock\"",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-force_load",
+					"\"$(PROJECT_DIR)/OCMock/libOCMock.a\"",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		69DA08D8158261EE000DC29E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"\"$(SRCROOT)\"",
+				);
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
+				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "LogicTests/LogicTests-Prefix.pch";
+				HEADER_SEARCH_PATHS = "\"$(PROJECT_DIR)\"/**";
+				INFOPLIST_FILE = "LogicTests/LogicTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(SRCROOT)\"/**",
+					"\"$(SRCROOT)/OCMock\"",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-force_load",
+					"\"$(PROJECT_DIR)/OCMock/libOCMock.a\"",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		46A19B2C155492E000D65BB8 /* Build configuration list for PBXProject "MMProgressHUDDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				46A19B51155492E000D65BB8 /* Debug */,
+				46A19B52155492E000D65BB8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		46A19B53155492E000D65BB8 /* Build configuration list for PBXNativeTarget "MMProgressHUDDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				46A19B54155492E000D65BB8 /* Debug */,
+				46A19B55155492E000D65BB8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		55F0588F159E02DD00A47983 /* Build configuration list for PBXNativeTarget "GHUnitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55F0588D159E02DD00A47983 /* Debug */,
+				55F0588E159E02DD00A47983 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		69DA08D9158261EE000DC29E /* Build configuration list for PBXNativeTarget "LogicTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				69DA08D7158261EE000DC29E /* Debug */,
+				69DA08D8158261EE000DC29E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 46A19B29155492E000D65BB8 /* Project object */;
+}
