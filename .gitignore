@@ -1,2 +1,6 @@
 .svn
 .xcuserdata
+*.xcuserdatad
+.xcuserdatad
+.DS_Store
+**/*.DS_Store

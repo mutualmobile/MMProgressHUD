@@ -25,14 +25,15 @@
 		46A19B6B15549F5200D65BB8 /* 4.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A19B6515549F5200D65BB8 /* 4.png */; };
 		46A19B6C15549F5200D65BB8 /* 5.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A19B6615549F5200D65BB8 /* 5.png */; };
 		46A19B6D15549F5200D65BB8 /* 6.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A19B6715549F5200D65BB8 /* 6.png */; };
-		550D5048155D8FBE0092B975 /* MMProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 550D5047155D8FBE0092B975 /* MMProgressHUD.bundle */; };
+		46F3F73F16D1E76700E255A2 /* MMVectorImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 46F3F73E16D1E76700E255A2 /* MMVectorImage.m */; };
+		46F3F74016D1E76700E255A2 /* MMVectorImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 46F3F73E16D1E76700E255A2 /* MMVectorImage.m */; };
+		46F3F74116D1E76700E255A2 /* MMVectorImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 46F3F73E16D1E76700E255A2 /* MMVectorImage.m */; };
 		550D504C15615BEF0092B975 /* MMRadialProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 550D504B15615BEF0092B975 /* MMRadialProgressView.m */; };
 		5527AEFB159CD7650037D67D /* MMHud.m in Sources */ = {isa = PBXBuildFile; fileRef = 5527AEFA159CD7650037D67D /* MMHud.m */; };
 		5527AEFF159CD7D50037D67D /* MMProgressHUDWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 5527AEFE159CD7D50037D67D /* MMProgressHUDWindow.m */; };
 		5527AF03159CD8200037D67D /* MMProgressHUDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5527AF02159CD8200037D67D /* MMProgressHUDViewController.m */; };
 		5527AF07159CD97A0037D67D /* MMHudTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5527AF06159CD97A0037D67D /* MMHudTests.m */; };
 		5554BE701558877F0096B7B9 /* generateAppledoc.sh in Resources */ = {isa = PBXBuildFile; fileRef = 5554BE6F1558877F0096B7B9 /* generateAppledoc.sh */; };
-		5599E188159B84B200DA786A /* MMProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 550D5047155D8FBE0092B975 /* MMProgressHUD.bundle */; };
 		55AC1A0515A602A500D64C1F /* MMProgressHUDOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55AC1A0415A602A500D64C1F /* MMProgressHUDOverlayView.m */; };
 		55AC1A0615A602A500D64C1F /* MMProgressHUDOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55AC1A0415A602A500D64C1F /* MMProgressHUDOverlayView.m */; };
 		55AC1A0815A62B6900D64C1F /* MMProgressHUDOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55AC1A0415A602A500D64C1F /* MMProgressHUDOverlayView.m */; };
@@ -63,7 +64,6 @@
 		55F0596615A20BDD00A47983 /* MMProgressHUD+Class.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F0596515A20BDD00A47983 /* MMProgressHUD+Class.m */; };
 		55F0596715A20BDD00A47983 /* MMProgressHUD+Class.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F0596515A20BDD00A47983 /* MMProgressHUD+Class.m */; };
 		55F0596815A20BDD00A47983 /* MMProgressHUD+Class.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F0596515A20BDD00A47983 /* MMProgressHUD+Class.m */; };
-		55F0596915A2211000A47983 /* MMProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 550D5047155D8FBE0092B975 /* MMProgressHUD.bundle */; };
 		6936CF0215828F6600D931E7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A19B3A155492E000D65BB8 /* CoreGraphics.framework */; };
 		6936CF06158290D200D931E7 /* CoverageFix.m in Sources */ = {isa = PBXBuildFile; fileRef = 6936CF05158290D100D931E7 /* CoverageFix.m */; };
 		69DA08CA158261EE000DC29E /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69DA08C9158261EE000DC29E /* SenTestingKit.framework */; };
@@ -108,7 +108,8 @@
 		46A19B6515549F5200D65BB8 /* 4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 4.png; sourceTree = "<group>"; };
 		46A19B6615549F5200D65BB8 /* 5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 5.png; sourceTree = "<group>"; };
 		46A19B6715549F5200D65BB8 /* 6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 6.png; sourceTree = "<group>"; };
-		550D5047155D8FBE0092B975 /* MMProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MMProgressHUD.bundle; sourceTree = "<group>"; };
+		46F3F73D16D1E76700E255A2 /* MMVectorImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMVectorImage.h; sourceTree = "<group>"; };
+		46F3F73E16D1E76700E255A2 /* MMVectorImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMVectorImage.m; sourceTree = "<group>"; };
 		550D504A15615BEF0092B975 /* MMRadialProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMRadialProgressView.h; sourceTree = "<group>"; };
 		550D504B15615BEF0092B975 /* MMRadialProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMRadialProgressView.m; sourceTree = "<group>"; };
 		5527AEF4159CD18E0037D67D /* MMProgressHUDPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMProgressHUDPrivate.h; path = ../MMProgressHUDDemo/MMProgressHUDPrivate.h; sourceTree = "<group>"; };
@@ -253,6 +254,8 @@
 		46A19B5A155493B500D65BB8 /* MMProgressHUD */ = {
 			isa = PBXGroup;
 			children = (
+				46F3F73D16D1E76700E255A2 /* MMVectorImage.h */,
+				46F3F73E16D1E76700E255A2 /* MMVectorImage.m */,
 				46A19B5B155493B500D65BB8 /* MMProgressHUD.h */,
 				46A19B5C155493B500D65BB8 /* MMProgressHUD.m */,
 				55AC1A0315A602A500D64C1F /* MMProgressHUDOverlayView.h */,
@@ -270,7 +273,6 @@
 				5527AEFE159CD7D50037D67D /* MMProgressHUDWindow.m */,
 				5527AF01159CD8200037D67D /* MMProgressHUDViewController.h */,
 				5527AF02159CD8200037D67D /* MMProgressHUDViewController.m */,
-				550D5047155D8FBE0092B975 /* MMProgressHUD.bundle */,
 			);
 			name = MMProgressHUD;
 			path = ../Source;
@@ -445,7 +447,6 @@
 				46A19B6C15549F5200D65BB8 /* 5.png in Resources */,
 				46A19B6D15549F5200D65BB8 /* 6.png in Resources */,
 				5554BE701558877F0096B7B9 /* generateAppledoc.sh in Resources */,
-				550D5048155D8FBE0092B975 /* MMProgressHUD.bundle in Resources */,
 				463AE40716B105B300A93EED /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -454,7 +455,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55F0596915A2211000A47983 /* MMProgressHUD.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -463,7 +463,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				69DA08D2158261EE000DC29E /* InfoPlist.strings in Resources */,
-				5599E188159B84B200DA786A /* MMProgressHUD.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -515,6 +514,7 @@
 				55F0596615A20BDD00A47983 /* MMProgressHUD+Class.m in Sources */,
 				55AC1A0515A602A500D64C1F /* MMProgressHUDOverlayView.m in Sources */,
 				4645AF0016BB74AD000316D9 /* MMAutolayoutHUD.m in Sources */,
+				46F3F73F16D1E76700E255A2 /* MMVectorImage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -534,6 +534,7 @@
 				55F0596815A20BDD00A47983 /* MMProgressHUD+Class.m in Sources */,
 				55AC1A0615A602A500D64C1F /* MMProgressHUDOverlayView.m in Sources */,
 				4645AF0116BB74AD000316D9 /* MMAutolayoutHUD.m in Sources */,
+				46F3F74116D1E76700E255A2 /* MMVectorImage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -552,6 +553,7 @@
 				55F0596215A2083C00A47983 /* MMProgressHUD+Animations.m in Sources */,
 				55F0596715A20BDD00A47983 /* MMProgressHUD+Class.m in Sources */,
 				55AC1A0815A62B6900D64C1F /* MMProgressHUDOverlayView.m in Sources */,
+				46F3F74016D1E76700E255A2 /* MMVectorImage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -645,7 +647,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MMProgressHUDDemo/MMProgressHUDDemo-Prefix.pch";
 				INFOPLIST_FILE = "MMProgressHUDDemo/MMProgressHUDDemo-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WARNING_CFLAGS = "";
 				WRAPPER_EXTENSION = app;
@@ -661,7 +663,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MMProgressHUDDemo/MMProgressHUDDemo-Prefix.pch";
 				INFOPLIST_FILE = "MMProgressHUDDemo/MMProgressHUDDemo-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WARNING_CFLAGS = "";
 				WRAPPER_EXTENSION = app;

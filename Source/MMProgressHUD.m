@@ -15,6 +15,7 @@
 #import "MMProgressHUDViewController.h"
 
 #import "MMProgressHUDOverlayView.h"
+#import "MMVectorImage.h"
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_5_0
 #error MMProgressHUD uses APIs only available in iOS 5.0+
@@ -38,6 +39,8 @@ NSString * const MMProgressHUDAnimationKeyDismissAnimation  = @"dismiss";
 NSUInteger const MMProgressHUDConfirmationPulseCount = 8;//Keep this number even
 
 CGFloat const MMProgressHUDStandardDismissDelay = 0.75f;
+
+CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
 
 #pragma mark - MMProgressHUD
 @interface MMProgressHUD () <MMHudDelegate>
@@ -171,17 +174,20 @@ CGFloat const MMProgressHUDStandardDismissDelay = 0.75f;
     if( (self = [super initWithFrame:CGRectZero]) ){
         self.hud = [[MMHud alloc] init];
         self.hud.delegate = self;
-        
-        NSBundle *bundle = [NSBundle bundleForClass:self.class];
-        NSString *errorImageLocation = [bundle pathForResource:@"MMProgressHUD.bundle/error" ofType:@"png"];
-        NSString *successImageLocation = [bundle pathForResource:@"MMProgressHUD.bundle/success" ofType:@"png"];
 
-        self.errorImage = [UIImage imageWithContentsOfFile:errorImageLocation];
-        self.successImage = [UIImage imageWithContentsOfFile:successImageLocation];
+        UIColor *imageFill = [UIColor colorWithWhite:1.f alpha:1.f];
+        self.errorImage = [MMVectorImage
+                           vectorImageShapeOfType:MMVectorShapeTypeX
+                           size:MMProgressHUDDefaultImageSize
+                           fillColor:imageFill];
+        self.successImage = [MMVectorImage
+                             vectorImageShapeOfType:MMVectorShapeTypeCheck
+                             size:MMProgressHUDDefaultImageSize
+                             fillColor:imageFill];
         _windowExclusionClasses = [[NSMutableSet alloc] init];
         
         [self setAutoresizingMask:
-         UIViewAutoresizingFlexibleHeight | 
+         UIViewAutoresizingFlexibleHeight |
          UIViewAutoresizingFlexibleWidth];
     }
     
