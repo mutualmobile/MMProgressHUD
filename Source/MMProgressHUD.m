@@ -692,7 +692,13 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
             self.cancelBlock();
         }
         
-        [self dismiss];
+        self.hud.completionState = MMProgressHUDCompletionStateError;
+        [self.hud setNeedsUpdate:YES];
+        [self.hud updateAnimated:YES
+                  withCompletion:^(BOOL completed) {
+            [self dismiss];
+        }];
+        
         _confirmed = NO;
     }
 }

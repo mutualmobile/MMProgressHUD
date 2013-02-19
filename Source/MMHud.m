@@ -276,7 +276,7 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
     CGRect imageTitleRect = CGRectUnion(self.titleFrame, self.contentAreaFrame);
     CGRect finalHudBounds = CGRectUnion(imageTitleRect, self.statusFrame);
     
-    if (!CGRectEqualToRect(self.frame, CGRectZero)) {
+    if (CGRectEqualToRect(self.frame, CGRectZero) == NO) {
         //preserve center
         CGPoint center;
         if(self.isVisible){
@@ -409,15 +409,15 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
             [self.activityIndicator stopAnimating];
             
             //layout imageview content mode
-//            if (self.imageView.image.size.width < CGRectGetWidth(self.imageView.frame) && self.imageView.image.size.height < CGRectGetHeight(self.imageView.frame)) {
-//                self.imageView.contentMode = UIViewContentModeCenter;
-//            }
-//            else if(self.imageView.image.size.width > CGRectGetWidth(self.imageView.frame) && self.imageView.image.size.height > CGRectGetHeight(self.imageView.frame)){
-//                self.imageView.contentMode = UIViewContentModeScaleAspectFit;
-//            }
-//            else{
-//                self.imageView.contentMode = UIViewContentModeScaleAspectFill;
-//            }
+            if (self.imageView.image.size.width < CGRectGetWidth(self.imageView.frame) && self.imageView.image.size.height < CGRectGetHeight(self.imageView.frame)) {
+                self.imageView.contentMode = UIViewContentModeCenter;
+            }
+            else if(self.imageView.image.size.width > CGRectGetWidth(self.imageView.frame) && self.imageView.image.size.height > CGRectGetHeight(self.imageView.frame)){
+                self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+            }
+            else{
+                self.imageView.contentMode = UIViewContentModeScaleAspectFill;
+            }
         }
         else {
             self.imageView.hidden = YES;
