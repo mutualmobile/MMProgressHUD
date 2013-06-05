@@ -544,27 +544,71 @@ CGFloat const ARC4RANDOM_MAX = 0x100000000;
 #pragma mark - Execution
 - (void)_executeShowAnimation:(CAAnimation *)animation{
     [animation setValue:MMProgressHUDAnimationShow forKey:@"name"];
-    animation.delegate = self;
     
     self.visible = YES;
+    
+    typeof(self) __weak weakSelf = self;
+    void(^showCompletion)(void) = ^(void){
+        MMHudLog(@"Show animation ended: %@", weakSelf.hud);
+        
+        weakSelf.queuedShowAnimation = nil;
+        
+        if (weakSelf.queuedDismissAnimation != nil) {
+            [weakSelf _executeDismissAnimation:weakSelf.queuedDismissAnimation];
+            weakSelf.queuedDismissAnimation = nil;
+        }
+    };
     
     if ([self.hud.layer animationForKey:MMProgressHUDAnimationKeyDismissAnimation] != nil) {
         self.queuedShowAnimation = animation;
     }
     else if([self.hud.layer animationForKey:MMProgressHUDAnimationKeyShowAnimation] == nil){
-        [self.hud.layer addAnimation:animation forKey:MMProgressHUDAnimationKeyShowAnimation];
+        self.queuedShowAnimation = nil;
+        
+        [CATransaction begin];
+        [CATransaction setCompletionBlock:showCompletion];
+        {
+            [self.hud.layer addAnimation:animation forKey:MMProgressHUDAnimationKeyShowAnimation];
+        }
+        [CATransaction commit];
     }
 }
 
 - (void)_executeDismissAnimation:(CAAnimation *)animation{
     [animation setValue:MMProgressHUDAnimationDismiss forKey:@"name"];
-    animation.delegate = self;
+    
+    typeof(self) __weak weakSelf = self;
+    void(^endCompletion)(void) = ^(void){
+        MMHudLog(@"Dismiss animation ended");
+        
+        if (weakSelf.dismissAnimationCompletion != nil) {
+            weakSelf.dismissAnimationCompletion();
+        }
+        
+        [weakSelf.hud removeFromSuperview];
+        
+        weakSelf.queuedDismissAnimation = nil;
+        
+        //reset for next presentation
+        [weakSelf.hud prepareForReuse];
+        
+        if (weakSelf.queuedShowAnimation != nil) {
+            [weakSelf _executeShowAnimation:weakSelf.queuedShowAnimation];
+        }
+    };
     
     if ([self.hud.layer animationForKey:MMProgressHUDAnimationKeyShowAnimation] != nil) {
         self.queuedDismissAnimation = animation;
     }
     else if([self.hud.layer animationForKey:MMProgressHUDAnimationKeyDismissAnimation] == nil){
-        [self.hud.layer addAnimation:animation forKey:MMProgressHUDAnimationKeyDismissAnimation];
+        self.queuedDismissAnimation = nil;
+        
+        [CATransaction begin];
+        [CATransaction setCompletionBlock:endCompletion];
+        {
+            [self.hud.layer addAnimation:animation forKey:MMProgressHUDAnimationKeyDismissAnimation];
+        }
+        [CATransaction commit];
     }
 }
 
