@@ -13,6 +13,8 @@
 - (id)init{
     
     if ((self = [super initWithFrame:[UIScreen mainScreen].bounds])) {
+        self.windowLevel = UIWindowLevelStatusBar;
+        
         self.backgroundColor = [UIColor clearColor];
         self.windowExclusionClasses = [NSMutableSet set];
         
@@ -45,8 +47,6 @@
 
 - (void)makeKeyAndVisible{
     MMHudLog(@"Making key");
-    
-    self.windowLevel = UIWindowLevelStatusBar;
     
     [super makeKeyAndVisible];
 }

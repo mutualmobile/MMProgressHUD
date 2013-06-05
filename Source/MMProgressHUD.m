@@ -197,8 +197,8 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
 - (void)dealloc{
     MMHudLog(@"dealloc");
     
-    if (_window) {
-        [_window resignKeyWindow];
+    if (_window != nil) {
+        [_window setHidden:YES];
     }
     _window = nil;
 
@@ -215,28 +215,11 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
 
 - (void)forceCleanup{
     //Do not invoke this method unless you are in a unit test environment
-    if (_window) {
-        [_window resignKeyWindow];
+    if (_window != nil) {
+        [_window setHidden:YES];
     }
     _window.rootViewController = nil;
     _window = nil;
-}
-
-#pragma mark - Other Public Instance Methods
-- (void)registerWindowExclusionClass:(Class)windowClass{
-    if (self.window) {
-        [self.window.windowExclusionClasses addObject:windowClass];
-    }
-    
-    [self.windowExclusionClasses addObject:windowClass];
-}
-
-- (void)unregisterWindowExclusionClass:(Class)windowClass{
-    if (self.window) {
-        [self.window.windowExclusionClasses removeObject:windowClass];
-    }
-    
-    [self.windowExclusionClasses removeObject:windowClass];
 }
 
 #pragma mark - Passthrough Properties
@@ -366,10 +349,8 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
         
         [self.window setRootViewController:vc];
         
-        [self.window.windowExclusionClasses addObjectsFromArray:[self.windowExclusionClasses allObjects]];
-        
         [self _buildOverlayViewForMode:self.overlayMode inView:self.window];
-        [self.window makeKeyAndVisible];
+        [self.window setHidden:NO];
     }
 }
 
@@ -560,7 +541,7 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
             [self removeFromSuperview];
             
             self.visible = NO;
-            [self.window resignKeyWindow];
+            [self.window setHidden:YES];
             _window = nil;
             break;
     }
@@ -579,7 +560,7 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
          self.progress = 0.f;
          self.hud.completionState = MMProgressHUDCompletionStateNone;
          
-         [self.window resignKeyWindow], _window = nil;
+         [self.window setHidden:YES], _window = nil;
      }];
     
     UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, nil);
@@ -619,47 +600,6 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
     return newCenter;
 }
 
-//- (void)stopAllAnimations
-
-#pragma mark - Animation Delegate
-- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag{
-    
-    NSString *animKey = [anim valueForKey:@"name"];
-
-    if ([animKey isEqualToString:MMProgressHUDAnimationShow]) {
-        MMHudLog(@"Show animation ended: %@", self.hud);
-        
-        self.queuedShowAnimation = nil;
-        
-        if (self.queuedDismissAnimation != nil) {
-            [self _executeDismissAnimation:self.queuedDismissAnimation];
-            self.queuedDismissAnimation = nil;
-        }
-    }
-    else if([animKey isEqualToString:MMProgressHUDAnimationDismiss]){
-        MMHudLog(@"Dismiss animation ended");
-        
-        if (self.dismissAnimationCompletion != nil) {
-            self.dismissAnimationCompletion();
-        }
-        
-        [self.hud removeFromSuperview];
-        
-        self.queuedDismissAnimation = nil;
-        
-        //reset for next presentation
-        [self.hud prepareForReuse];
-        
-        if (self.queuedShowAnimation != nil) {
-            [self show];
-            self.queuedShowAnimation = nil;
-        }
-    }
-    else{
-        MMHudLog(@"Unknown animation completed: %@", animKey);
-    }
-}
-
 #pragma mark - Gestures
 - (void)_handleTap:(UITapGestureRecognizer *)recognizer{
     MMHudLog(@"Handling tap");
@@ -695,7 +635,7 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
         self.hud.completionState = MMProgressHUDCompletionStateError;
         [self.hud setNeedsUpdate:YES];
         [self.hud updateAnimated:YES
-                  withCompletion:^(BOOL completed) {
+                  withCompletion:^(__unused BOOL completed) {
             [self dismiss];
         }];
         

@@ -136,18 +136,6 @@ This message will be presented to the user when a cancelBlock is present after t
  */
 @property (nonatomic, strong, readonly) MMProgressHUDOverlayView *overlayView;
 
-/** Allows a class to be registered with MMProgressHUD that tells it that is should exclude this class when determining which window to make key after MMProgressHUD is dismissed and cleaned up.
- 
- @param windowClass A UIWindow subclass that will be excluded from the check.
- */
-- (void)registerWindowExclusionClass:(Class)windowClass;
-
-/** Removes a UIWindow subclass registered with MMProgressHUD to be removed.
- 
- @param windowClass A UIWindow subclass that will be un-excluded from the check.
- */
-- (void)unregisterWindowExclusionClass:(Class)windowClass;
-
 #pragma mark - Class Methods
 /** Gives access to the shared instance of the HUD.
  
