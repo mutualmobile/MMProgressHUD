@@ -8,8 +8,6 @@
 #import <QuartzCore/QuartzCore.h>
 #import "MMProgressHUD+Animations.h"
 
-CGFloat const ARC4RANDOM_MAX = 0x100000000;
-
 @interface MMProgressHUD ()
 
 - (CGPoint)_windowCenterForHUDAnchor:(CGPoint)anchor;
@@ -79,7 +77,7 @@ CGFloat const ARC4RANDOM_MAX = 0x100000000;
 
 - (void)_dismissWithDropAnimation{
     
-    double newAngle = ((double)arc4random()/ARC4RANDOM_MAX)*M_2_PI-(M_2_PI)/2;
+    double newAngle = arc4random_uniform(1000)/1000.f*M_2_PI-(M_2_PI)/2.f;
     CGPoint newPosition = CGPointMake(self.hud.layer.position.x, self.frame.size.height + self.hud.frame.size.height);
     
     [CATransaction begin];
@@ -236,7 +234,7 @@ CGFloat const ARC4RANDOM_MAX = 0x100000000;
 
 #pragma mark - Animation Foundries
 - (CAAnimation *)_dropAnimationIn{
-    CGFloat initialAngle = M_2_PI/10 + ((double)arc4random()/ARC4RANDOM_MAX)*M_2_PI/5;
+    CGFloat initialAngle = M_2_PI/10.f + arc4random_uniform(1000)/1000.f*M_2_PI/5.f;
     CGPoint newCenter = [self _windowCenterForHUDAnchor:self.hud.layer.anchorPoint];
     
     MMHudLog(@"Center after drop animation: %@", NSStringFromCGPoint(newCenter));
@@ -293,7 +291,7 @@ CGFloat const ARC4RANDOM_MAX = 0x100000000;
 }
 
 - (CAAnimation *)_dropAnimationOut{
-    double newAngle = ((double)arc4random()/ARC4RANDOM_MAX)*M_2_PI-(M_2_PI)/2;
+    double newAngle = arc4random_uniform(1000)/1000.f*M_2_PI-(M_2_PI)/2.f;
     CATransform3D rotation = CATransform3DMakeRotation(newAngle, 0.f, 0.f, 1.f);
     CGPoint newPosition = CGPointMake(self.hud.layer.position.x, self.frame.size.height + self.hud.frame.size.height);
     
