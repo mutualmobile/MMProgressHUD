@@ -256,16 +256,16 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
     CATransition *titleAnimation = [CATransition animation];
     titleAnimation.duration = MMProgressHUDAnimateInDurationShort;
     titleAnimation.type = kCATransitionFade;
-    titleAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    titleAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
     [self.titleLabel.layer addAnimation:titleAnimation forKey:@"changeTextTransition"];
     
     self.titleLabel.text = self.titleText;
     
-//    CATransition *statusAnimation = [CATransition animation];
-//    statusAnimation.duration = MMProgressHUDAnimateInDurationShort;
-//    statusAnimation.type = kCATransitionFade;
-//    statusAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-//    [self.statusLabel.layer addAnimation:statusAnimation forKey:@"changeTextTransition"];
+    CATransition *statusAnimation = [CATransition animation];
+    statusAnimation.duration = MMProgressHUDAnimateInDurationShort;
+    statusAnimation.type = kCATransitionFade;
+    statusAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+    [self.statusLabel.layer addAnimation:statusAnimation forKey:@"changeTextTransition"];
     
     self.statusLabel.text = self.messageText;
     

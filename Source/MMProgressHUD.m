@@ -398,9 +398,9 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
     
     if (animated) {
         [UIView
-         animateWithDuration:0.15
-         delay:0.1f
-         options:UIViewAnimationOptionCurveLinear
+         animateWithDuration:0.1f
+         delay:0.f
+         options:UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionBeginFromCurrentState
          animations:^{
              [self _updateHUD];
          }
@@ -453,6 +453,9 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
     
     NSAssert([NSThread isMainThread], @"Show should be run on main thread!");
     
+    [CATransaction begin];
+    [CATransaction setDisableActions:YES];
+    
     [self _buildHUD];
     
     presentedAnimated_ = YES;
@@ -478,22 +481,17 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
         case MMProgressHUDPresentationStyleFade:
             [self _showWithFadeAnimation];
             break;
-        /*case MMProgressHUDPresentationStyleOrigami:
-        case MMProgressHUDPresentationStyleTVBlip:
-            NSAssert(NO, @"Animations not yet implemented!");*/
         case MMProgressHUDPresentationStyleNone:
-        default:
+        default:{
             presentedAnimated_ = NO;
-            [CATransaction begin];
-            [CATransaction setDisableActions:YES];
-        {
+            
             CGPoint newCenter = [self _windowCenterForHUDAnchor:self.hud.layer.anchorPoint];
             
             self.hud.center = newCenter;
             self.hud.layer.transform = CATransform3DIdentity;
             self.overlayView.alpha = 1.0f;
+            
         }
-            [CATransaction commit];
             break;
     }
     
@@ -502,7 +500,9 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
      animations:^{
          self.overlayView.alpha = 1.0f;
      }];
-    
+
+    [CATransaction commit];
+
     UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, self.hud.accessibilityLabel);
 }
 
