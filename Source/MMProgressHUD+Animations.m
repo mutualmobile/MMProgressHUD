@@ -69,6 +69,7 @@
     [CATransaction setDisableActions:YES];
     {
         self.hud.center = CGPointMake(newCenter.x, -CGRectGetHeight(self.hud.frame));
+        self.hud.layer.opacity = 1.f;
         
         [self _executeShowAnimation:[self _dropAnimationIn]];
     }
