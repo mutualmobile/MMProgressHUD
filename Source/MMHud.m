@@ -506,7 +506,7 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
 #pragma clang diagnostic pop
         _statusLabel.backgroundColor = [UIColor clearColor];
         _statusLabel.font = [UIFont fontWithName:MMProgressHUDFontNameNormal size:MMProgressHUDDefaultFontSize];
-        _statusLabel.textColor = [UIColor whiteColor];
+        _statusLabel.textColor = [UIColor colorWithWhite:0.9f alpha:0.95f];
         _statusLabel.shadowColor = [UIColor blackColor];
         _statusLabel.shadowOffset = CGSizeMake(0, -1);
         

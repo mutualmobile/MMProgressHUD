@@ -211,10 +211,10 @@ CGFloat const ARC4RANDOM_MAX = 0x100000000;
     [CATransaction begin];
     [CATransaction setDisableActions:YES];
     {
+        [self _executeShowAnimation:[self _fadeInAnimation]];
+        
         self.hud.layer.opacity = 1.f;
         self.hud.layer.position = [self _windowCenterForHUDAnchor:self.hud.layer.anchorPoint];
-        
-        [self _executeShowAnimation:[self _fadeInAnimation]];
     }
     [CATransaction commit];
 }
@@ -226,10 +226,10 @@ CGFloat const ARC4RANDOM_MAX = 0x100000000;
     [CATransaction begin];
     [CATransaction setDisableActions:YES];
     {
+        [self _executeDismissAnimation:[self _fadeOutAnimation]];
+        
         self.hud.layer.opacity = 0.f;
         self.hud.layer.position = [self _windowCenterForHUDAnchor:self.hud.layer.anchorPoint];
-        
-        [self _executeDismissAnimation:[self _fadeInAnimation]];
     }
     [CATransaction commit];
 }
@@ -498,11 +498,29 @@ CGFloat const ARC4RANDOM_MAX = 0x100000000;
 }
 
 - (CAAnimation *)_fadeInAnimation{
-    CATransition *transition = [CATransition animation];
-    transition.type = kCATransitionFade;
-    transition.duration = 0.33f;
+    NSString *opacityKey = @"opacity";
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:opacityKey];
+    NSNumber *currentValue = [self.hud.layer valueForKey:opacityKey];
+    if ([currentValue floatValue] == 1.f) {
+        animation.fromValue = @(0.f);
+    }
+    else{
+        animation.fromValue = [self.hud.layer.presentationLayer valueForKey:opacityKey];;
+    }
+    animation.toValue = @(1.f);
+    animation.duration = MMProgressHUDAnimateInDurationShort;
     
-    return transition;
+    return animation;
+}
+
+- (CAAnimation *)_fadeOutAnimation{
+    NSString *opacityKey = @"opacity";
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:opacityKey];
+    animation.fromValue = [self.hud.layer.presentationLayer valueForKey:opacityKey];
+    animation.toValue = @(0.f);
+    animation.duration = MMProgressHUDAnimateOutDurationMedium;
+    
+    return animation;
 }
 
 - (CAAnimation *)_balloonAnimationIn{

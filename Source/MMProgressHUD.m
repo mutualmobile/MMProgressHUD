@@ -495,21 +495,29 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
             break;
     }
     
+    [CATransaction commit];
+    
+    CGFloat duration = (self.presentationStyle == MMProgressHUDPresentationStyleNone) ? 0.f : MMProgressHUDAnimateInDurationShort;
+    
     [UIView
-     animateWithDuration:(self.presentationStyle == MMProgressHUDPresentationStyleNone) ? 0.f : 0.5
+     animateWithDuration:duration
+     delay:0.f
+     options:UIViewAnimationOptionCurveEaseOut |
+             UIViewAnimationOptionBeginFromCurrentState
      animations:^{
          self.overlayView.alpha = 1.0f;
+     }
+     completion:^(BOOL completed){
+         UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, self.hud.accessibilityLabel);
      }];
 
-    [CATransaction commit];
-
-    UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, self.hud.accessibilityLabel);
+    
 }
 
 - (void)dismiss{
     NSAssert([NSThread isMainThread], @"Dismiss method should be run on main thread!");
     
-    MMHudLog(@"dismissing...");
+    MMHudLog(@"Dismissing...");
     
     switch (self.presentationStyle) {
         case MMProgressHUDPresentationStyleDrop:
@@ -546,10 +554,14 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
             break;
     }
     
+    CGFloat duration = (self.presentationStyle == MMProgressHUDPresentationStyleNone) ? 0.f : MMProgressHUDAnimateOutDurationLong;
+    CGFloat delay = (self.presentationStyle == MMProgressHUDPresentationStyleDrop) ? MMProgressHUDAnimateOutDurationShort : 0.f;
+    
     [UIView
-     animateWithDuration:(self.presentationStyle == MMProgressHUDPresentationStyleNone) ? 0.f : 0.75
-     delay:(self.presentationStyle == MMProgressHUDPresentationStyleDrop) ? 0.33 : 0.f
-     options:UIViewAnimationOptionCurveEaseIn | UIViewAnimationOptionBeginFromCurrentState
+     animateWithDuration:duration
+     delay:delay
+     options:UIViewAnimationOptionCurveEaseIn |
+             UIViewAnimationOptionBeginFromCurrentState
      animations:^{
          self.overlayView.alpha = 0.f;
      }
@@ -561,9 +573,9 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
          self.hud.completionState = MMProgressHUDCompletionStateNone;
          
          [self.window setHidden:YES], _window = nil;
+         
+         UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, nil);
      }];
-    
-    UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, nil);
 }
 
 - (CGPoint)_antialiasedPositionPointForPoint:(CGPoint)oldCenter forLayer:(CALayer *)layer{
