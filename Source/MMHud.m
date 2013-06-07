@@ -89,7 +89,7 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
     _image = nil;
     _animationImages = nil;
     
-    self.titleLabel = nil;
+    _titleLabel = nil;
     _statusLabel = nil;
     _imageView = nil;
     
@@ -453,33 +453,33 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
         //completionState != MMProgressHUDCompletionStateNone
         
         UIImage *completionImage = [self.delegate hud:self imageForCompletionState:self.completionState];
-//        UIViewAnimationOptions animationOptions =
-//            UIViewAnimationOptionTransitionCrossDissolve |
-//            UIViewAnimationOptionBeginFromCurrentState |
-//            UIViewAnimationOptionCurveEaseInOut |
-//            UIViewAnimationOptionAllowAnimatedContent;
-//        
-//        [UIView
-//         transitionWithView:_progressViewContainer
-//         duration:MMProgressHUDAnimateInDurationVeryShort
-//         options:animationOptions
-//         animations:^{
+        UIViewAnimationOptions animationOptions =
+            UIViewAnimationOptionTransitionCrossDissolve |
+            UIViewAnimationOptionBeginFromCurrentState |
+            UIViewAnimationOptionCurveEaseInOut |
+            UIViewAnimationOptionAllowAnimatedContent;
+        
+        [UIView
+         transitionWithView:self.progressViewContainer
+         duration:MMProgressHUDAnimateInDurationVeryShort
+         options:animationOptions
+         animations:^{
         [CATransaction begin];
         [CATransaction setDisableActions:YES];
              [self.imageView stopAnimating];
              
              //layout imageview content mode
-//             if ((completionImage.size.width <= CGRectGetWidth(self.imageView.frame)) &&
-//                 (completionImage.size.height <= CGRectGetHeight(self.imageView.frame))) {
-//                 self.imageView.contentMode = UIViewContentModeCenter;
-//             }
-//             else if((completionImage.size.width >= CGRectGetWidth(self.imageView.frame)) &&
-//                     (completionImage.size.height >= CGRectGetHeight(self.imageView.frame))){
-//                 self.imageView.contentMode = UIViewContentModeScaleAspectFit;
-//             }
-//             else{
-//                 self.imageView.contentMode = UIViewContentModeScaleAspectFill;
-//             }
+             if ((completionImage.size.width <= CGRectGetWidth(self.imageView.frame)) &&
+                 (completionImage.size.height <= CGRectGetHeight(self.imageView.frame))) {
+                 self.imageView.contentMode = UIViewContentModeCenter;
+             }
+             else if((completionImage.size.width >= CGRectGetWidth(self.imageView.frame)) &&
+                     (completionImage.size.height >= CGRectGetHeight(self.imageView.frame))){
+                 self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+             }
+             else{
+                 self.imageView.contentMode = UIViewContentModeScaleAspectFill;
+             }
         
              [self.activityIndicator stopAnimating];
              self.radialProgressView.hidden = YES;
@@ -487,69 +487,75 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
              self.imageView.image = completionImage;
              self.imageView.hidden = NO;
         [CATransaction commit];
-//         }
-//         completion:nil];
+         }
+         completion:nil];
     }
     
     self.completionState = MMProgressHUDCompletionStateNone;
 }
 
 - (void)_buildStatusLabel{
-    if (self.statusLabel == nil) {
-        self.statusLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        self.statusLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
-        self.statusLabel.numberOfLines = 0;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdirect-ivar-access"
+    if (_statusLabel == nil) {
+        _statusLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        _statusLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
+        _statusLabel.numberOfLines = 0;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-        self.statusLabel.lineBreakMode = UILineBreakModeWordWrap;
-        self.statusLabel.textAlignment = UITextAlignmentCenter;
+        _statusLabel.lineBreakMode = UILineBreakModeWordWrap;
+        _statusLabel.textAlignment = UITextAlignmentCenter;
 #pragma clang diagnostic pop
-        self.statusLabel.backgroundColor = [UIColor clearColor];
-        self.statusLabel.font = [UIFont fontWithName:MMProgressHUDFontNameNormal size:MMProgressHUDDefaultFontSize];
-        self.statusLabel.textColor = [UIColor colorWithWhite:0.9f alpha:0.95f];
-        self.statusLabel.shadowColor = [UIColor blackColor];
-        self.statusLabel.shadowOffset = CGSizeMake(0, -1);
+        _statusLabel.backgroundColor = [UIColor clearColor];
+        _statusLabel.font = [UIFont fontWithName:MMProgressHUDFontNameNormal size:MMProgressHUDDefaultFontSize];
+        _statusLabel.textColor = [UIColor colorWithWhite:0.9f alpha:0.95f];
+        _statusLabel.shadowColor = [UIColor blackColor];
+        _statusLabel.shadowOffset = CGSizeMake(0, -1);
         
         if (MMProgressHUDDebugModeEnabled == YES) {
             CGColorRef redColor = CGColorRetain([UIColor redColor].CGColor);
             
-            self.statusLabel.layer.borderColor = redColor;
-            self.statusLabel.layer.borderWidth = 1.f;
+            _statusLabel.layer.borderColor = redColor;
+            _statusLabel.layer.borderWidth = 1.f;
             
             CGColorRelease(redColor);
         }
         
-        [self addSubview:self.statusLabel];
+        [self addSubview:_statusLabel];
     }
+#pragma clang diagnostic pop
 }
 
 - (void)_buildTitleLabel{
-    if (self.titleLabel == nil) {
-        self.titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        self.titleLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
-        self.titleLabel.numberOfLines = 0;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdirect-ivar-access"
+    if (_titleLabel == nil) {
+        _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        _titleLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
+        _titleLabel.numberOfLines = 0;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-        self.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
-        self.titleLabel.textAlignment = UITextAlignmentCenter;
+        _titleLabel.lineBreakMode = UILineBreakModeWordWrap;
+        _titleLabel.textAlignment = UITextAlignmentCenter;
 #pragma clang diagnostic pop
-        self.titleLabel.backgroundColor = [UIColor clearColor];
-        self.titleLabel.font = [UIFont fontWithName:MMProgressHUDFontNameBold size:MMProgressHUDDefaultFontSize];
-        self.titleLabel.textColor = [UIColor whiteColor];
-        self.titleLabel.shadowColor = [UIColor blackColor];
-        self.titleLabel.shadowOffset = CGSizeMake(0, -1);
+        _titleLabel.backgroundColor = [UIColor clearColor];
+        _titleLabel.font = [UIFont fontWithName:MMProgressHUDFontNameBold size:MMProgressHUDDefaultFontSize];
+        _titleLabel.textColor = [UIColor whiteColor];
+        _titleLabel.shadowColor = [UIColor blackColor];
+        _titleLabel.shadowOffset = CGSizeMake(0, -1);
         
         if (MMProgressHUDDebugModeEnabled == YES) {
             CGColorRef blueColor = CGColorRetain([UIColor blueColor].CGColor);
             
-            self.titleLabel.layer.borderColor = blueColor;
-            self.titleLabel.layer.borderWidth = 1.f;
+            _titleLabel.layer.borderColor = blueColor;
+            _titleLabel.layer.borderWidth = 1.f;
             
             CGColorRelease(blueColor);
         }
         
-        [self addSubview:self.titleLabel];
+        [self addSubview:_titleLabel];
     }
+#pragma clang diagnostic pop
 }
 
 #pragma mark - Property Overrides
@@ -609,6 +615,8 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
 }
 
 - (void)setProgress:(CGFloat)progress animated:(BOOL)animated{
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdirect-ivar-access"
     _progress = progress;
     
     typeof(self) __weak weakSelf = self;
@@ -627,6 +635,7 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
     [self.radialProgressView setProgress:progress
                                 animated:animated
                           withCompletion:completionBlock];
+#pragma clang diagnostic pop
 }
 
 - (UILabel *)statusLabel{
@@ -638,7 +647,7 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
 - (UILabel *)titleLabel{
     [self _buildTitleLabel];
     
-    return self.titleLabel;
+    return _titleLabel;
 }
 
 - (void)setMessageText:(NSString *)messageText{
