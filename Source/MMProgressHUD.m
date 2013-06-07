@@ -21,12 +21,6 @@
 #error MMProgressHUD uses APIs only available in iOS 5.0+
 #endif
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 60000 // iOS 6.0 or later
-#define NEEDS_DISPATCH_RETAIN_RELEASE 0
-#else                                         // iOS 5.X or earlier
-#define NEEDS_DISPATCH_RETAIN_RELEASE 1
-#endif
-
 static const BOOL kMMProgressHUDDebugMode = NO;
 
 NSString * const MMProgressHUDDefaultConfirmationMessage    = @"Cancel?";
@@ -61,6 +55,7 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
 @property (nonatomic, copy) NSString *tempStatus;
 @property (nonatomic, strong) NSTimer *confirmationTimer;
 @property (nonatomic, getter = isConfirmed) BOOL confirmed;
+@property (nonatomic, assign) BOOL presentedAnimated;
 
 @end
 
@@ -215,11 +210,11 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
 
 - (void)forceCleanup{
     //Do not invoke this method unless you are in a unit test environment
-    if (_window != nil) {
-        [_window setHidden:YES];
+    if (self.window != nil) {
+        [self.window setHidden:YES];
     }
-    _window.rootViewController = nil;
-    _window = nil;
+    self.window.rootViewController = nil;
+    self.window = nil;
 }
 
 #pragma mark - Passthrough Properties
@@ -341,7 +336,7 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
 
 #pragma mark - Builders
 - (void)_buildHUDWindow {
-    if (!_window) {
+    if (self.window == nil) {
         self.window = [[MMProgressHUDWindow alloc] init];
         
         MMProgressHUDViewController *vc = [[MMProgressHUDViewController alloc] init];
@@ -392,8 +387,8 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
 - (void)_updateHUDAnimated:(BOOL)animated withCompletion:(void(^)(BOOL completed))completionBlock{
     MMHudLog(@"Updating %@ with completion...", NSStringFromClass(self.class));
     
-    if (_dismissDelayTimer != nil) {
-        [_dismissDelayTimer invalidate], _dismissDelayTimer = nil;
+    if (self.dismissDelayTimer != nil) {
+        [self.dismissDelayTimer invalidate], self.dismissDelayTimer = nil;
     }
     
     if (animated) {
@@ -447,8 +442,8 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
 
 #pragma mark - Presentation
 - (void)show{
-    if (_dismissDelayTimer != nil) {
-        [_dismissDelayTimer invalidate], _dismissDelayTimer = nil;
+    if (self.dismissDelayTimer != nil) {
+        [self.dismissDelayTimer invalidate], self.dismissDelayTimer = nil;
     }
     
     NSAssert([NSThread isMainThread], @"Show should be run on main thread!");
@@ -458,7 +453,7 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
     
     [self _buildHUD];
     
-    presentedAnimated_ = YES;
+    self.presentedAnimated = YES;
     switch (self.presentationStyle) {
         case MMProgressHUDPresentationStyleDrop:
             [self _showWithDropAnimation];
@@ -483,7 +478,7 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
             break;
         case MMProgressHUDPresentationStyleNone:
         default:{
-            presentedAnimated_ = NO;
+            self.presentedAnimated = NO;
             
             CGPoint newCenter = [self _windowCenterForHUDAnchor:self.hud.layer.anchorPoint];
             
@@ -550,7 +545,7 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
             
             self.visible = NO;
             [self.window setHidden:YES];
-            _window = nil;
+            self.window = nil;
             break;
     }
     
@@ -572,7 +567,7 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
          self.progress = 0.f;
          self.hud.completionState = MMProgressHUDCompletionStateNone;
          
-         [self.window setHidden:YES], _window = nil;
+         [self.window setHidden:YES], self.window = nil;
          
          UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, nil);
      }];
@@ -651,14 +646,14 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
             [self dismiss];
         }];
         
-        _confirmed = NO;
+        self.confirmed = NO;
     }
 }
 
 - (void)_resetConfirmationTimer:(NSTimer *)timer{
     MMHudLog(@"Resetting confirmation timer");
     
-    [_confirmationTimer invalidate], _confirmationTimer = nil;
+    [self.confirmationTimer invalidate], self.confirmationTimer = nil;
     self.status = self.tempStatus;
     self.tempStatus = nil;
     
@@ -673,13 +668,10 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
     switch (completionState) {
         case MMProgressHUDCompletionStateError:
             return self.errorImage;
-            break;
         case MMProgressHUDCompletionStateSuccess:
             return self.successImage;
-            break;
         case MMProgressHUDCompletionStateNone:
             return nil;
-            break;
     }
 }
 

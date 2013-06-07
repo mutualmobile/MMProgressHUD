@@ -48,9 +48,6 @@
             case UIInterfaceOrientationPortraitUpsideDown:
                 self.view.transform = CGAffineTransformMakeRotation(M_PI);
                 break;
-            default:
-                //do nothing
-                break;
         }
     }
 }

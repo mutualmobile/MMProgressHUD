@@ -651,12 +651,24 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MMProgressHUDDemo/MMProgressHUDDemo-Prefix.pch";
 				INFOPLIST_FILE = "MMProgressHUDDemo/MMProgressHUDDemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				WARNING_CFLAGS = "";
+				PROVISIONING_PROFILE = "";
+				WARNING_CFLAGS = (
+					"-Wall",
+					"-Wextra",
+					"-Wobjc-interface-ivars",
+					"-Warc-repeated-use-of-weak",
+					"-Wunused-macros",
+					"-Wunreachable-code",
+					"-Wimplicit-retain-self",
+					"-Wdirect-ivar-access",
+					"-Wno-unused-parameter",
+				);
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -666,12 +678,24 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MMProgressHUDDemo/MMProgressHUDDemo-Prefix.pch";
 				INFOPLIST_FILE = "MMProgressHUDDemo/MMProgressHUDDemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				WARNING_CFLAGS = "";
+				PROVISIONING_PROFILE = "";
+				WARNING_CFLAGS = (
+					"-Wall",
+					"-Wextra",
+					"-Wobjc-interface-ivars",
+					"-Warc-repeated-use-of-weak",
+					"-Wunused-macros",
+					"-Wunreachable-code",
+					"-Wimplicit-retain-self",
+					"-Wdirect-ivar-access",
+					"-Wno-unused-parameter",
+				);
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

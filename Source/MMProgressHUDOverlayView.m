@@ -8,9 +8,9 @@
 
 #import "MMProgressHUDOverlayView.h"
 
-@interface MMProgressHUDOverlayView(){
-    CGGradientRef _gradientRef;
-}
+@interface MMProgressHUDOverlayView()
+
+@property (nonatomic) CGGradientRef gradientRef;
 
 @end
 
@@ -73,12 +73,12 @@
             [self _drawLinearOverlayInRect:rect];
         }
             break;
-        default:
-            break;
     }
 }
 
 - (void)_buildGradient{
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdirect-ivar-access"
     if (_gradientRef) {
         CGGradientRelease(_gradientRef);
     }
@@ -112,6 +112,7 @@
     CFRelease(colors);
     
     CGColorSpaceRelease(rgb);
+#pragma clang diagnostic pop
 }
 
 - (void)_drawRadialGradientInRect:(CGRect)rect{
@@ -123,10 +124,10 @@
     float startRadius = 50.0f;
     float endRadius = rect.size.height*0.66f;
     
-    NSAssert(_gradientRef, @"Gradient is nil!");
+    NSAssert(self.gradientRef != nil, @"Gradient is nil!");
     
     CGContextDrawRadialGradient(context, 
-                                _gradientRef, 
+                                self.gradientRef,
                                 center, 
                                 startRadius, 
                                 center, 

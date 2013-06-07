@@ -59,10 +59,7 @@ typedef NS_ENUM(NSInteger, MMProgressHUDWindowOverlayMode){
 //    MMProgressHUDOptionGyroEnabled = 1 << 1,
 //};
 
-@interface MMProgressHUD : UIView{
-@protected
-    BOOL presentedAnimated_;
-}
+@interface MMProgressHUD : UIView
 /** An enum to specify the style in which to display progress.
  
  The default style is indeterminate progress.

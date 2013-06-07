@@ -106,10 +106,12 @@
 }
 
 - (void)setProgress:(CGFloat)progress animated:(BOOL)animated withCompletion:(void(^)(BOOL completed))completion{
+    NSUInteger options = (UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionBeginFromCurrentState);
+    
     [UIView
      animateWithDuration:animated ? 0.25f : 0.f
      delay:0.f
-     options:UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionBeginFromCurrentState
+     options:options
      animations:^{
          [((MMRadialProgressLayer *)self.layer) setProgress:progress];
      }

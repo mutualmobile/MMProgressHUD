@@ -272,15 +272,12 @@ typedef NS_ENUM(NSInteger, MMProgressHUDDemoFeatureType){
     switch (section) {
         case MMProgressHUDDemoSectionFeatures:
             return @"Features";
-            break;
         case MMProgressHUDDemoSectionAnimations:
             return @"Presentation Styles";
         case MMProgressHUDDemoSectionOverlays:
             return @"Overlays";
-            break;
         default:
             return nil;
-            break;
     }
 }
 

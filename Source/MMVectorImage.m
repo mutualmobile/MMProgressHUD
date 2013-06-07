@@ -68,10 +68,8 @@
     switch (shapeType) {
         case MMVectorShapeTypeCheck:
             return [self checkMarkVectorString];
-            break;
         case MMVectorShapeTypeX:
             return [self xMarkVectorString];
-            break;
     }
 }
 

@@ -566,13 +566,14 @@
     
     typeof(self) __weak weakSelf = self;
     void(^showCompletion)(void) = ^(void){
-        MMHudLog(@"Show animation ended: %@", weakSelf.hud);
+        MMProgressHUD *blockSelf = weakSelf;
+        MMHudLog(@"Show animation ended: %@", blockSelf.hud);
         
-        weakSelf.queuedShowAnimation = nil;
+        blockSelf.queuedShowAnimation = nil;
         
-        if (weakSelf.queuedDismissAnimation != nil) {
-            [weakSelf _executeDismissAnimation:weakSelf.queuedDismissAnimation];
-            weakSelf.queuedDismissAnimation = nil;
+        if (blockSelf.queuedDismissAnimation != nil) {
+            [blockSelf _executeDismissAnimation:blockSelf.queuedDismissAnimation];
+            blockSelf.queuedDismissAnimation = nil;
         }
     };
     
@@ -596,21 +597,22 @@
     
     typeof(self) __weak weakSelf = self;
     void(^endCompletion)(void) = ^(void){
+        MMProgressHUD *blockSelf = weakSelf;
         MMHudLog(@"Dismiss animation ended");
         
-        if (weakSelf.dismissAnimationCompletion != nil) {
-            weakSelf.dismissAnimationCompletion();
+        if (blockSelf.dismissAnimationCompletion != nil) {
+            blockSelf.dismissAnimationCompletion();
         }
         
-        [weakSelf.hud removeFromSuperview];
+        [blockSelf.hud removeFromSuperview];
         
-        weakSelf.queuedDismissAnimation = nil;
+        blockSelf.queuedDismissAnimation = nil;
         
         //reset for next presentation
-        [weakSelf.hud prepareForReuse];
+        [blockSelf.hud prepareForReuse];
         
-        if (weakSelf.queuedShowAnimation != nil) {
-            [weakSelf _executeShowAnimation:weakSelf.queuedShowAnimation];
+        if (blockSelf.queuedShowAnimation != nil) {
+            [blockSelf _executeShowAnimation:blockSelf.queuedShowAnimation];
         }
     };
     
