@@ -31,13 +31,13 @@ NSString * const MMProgressHUDFontNameBold = @"HelveticaNeue-Bold";
 NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
 
 #ifdef DEBUG
-    #ifdef MM_HUD_DEBUG
-        static const BOOL MMProgressHUDDebugModeEnabled = YES;
+    #ifdef MM_HUD_FRAME_DEBUG
+        static const BOOL MMProgressHUDFrameDebugModeEnabled = YES;
     #else
-        static const BOOL MMProgressHUDDebugModeEnabled = NO;
+        static const BOOL MMProgressHUDFrameDebugModeEnabled = NO;
     #endif
 #else
-    static const BOOL MMProgressHUDDebugModeEnabled = NO;
+    static const BOOL MMProgressHUDFrameDebugModeEnabled = NO;
 #endif
 
 @interface MMHud()
@@ -512,14 +512,14 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
         _statusLabel.shadowColor = [UIColor blackColor];
         _statusLabel.shadowOffset = CGSizeMake(0, -1);
         
-        if (MMProgressHUDDebugModeEnabled == YES) {
-            CGColorRef redColor = CGColorRetain([UIColor redColor].CGColor);
-            
-            _statusLabel.layer.borderColor = redColor;
-            _statusLabel.layer.borderWidth = 1.f;
-            
-            CGColorRelease(redColor);
-        }
+#ifdef MM_HUD_FRAME_DEBUG
+        CGColorRef redColor = CGColorRetain([UIColor redColor].CGColor);
+        
+        _statusLabel.layer.borderColor = redColor;
+        _statusLabel.layer.borderWidth = 1.f;
+        
+        CGColorRelease(redColor);
+#endif
         
         [self addSubview:_statusLabel];
     }
@@ -544,14 +544,14 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
         _titleLabel.shadowColor = [UIColor blackColor];
         _titleLabel.shadowOffset = CGSizeMake(0, -1);
         
-        if (MMProgressHUDDebugModeEnabled == YES) {
-            CGColorRef blueColor = CGColorRetain([UIColor blueColor].CGColor);
-            
-            _titleLabel.layer.borderColor = blueColor;
-            _titleLabel.layer.borderWidth = 1.f;
-            
-            CGColorRelease(blueColor);
-        }
+#ifdef MM_HUD_FRAME_DEBUG
+        CGColorRef blueColor = CGColorRetain([UIColor blueColor].CGColor);
+        
+        _titleLabel.layer.borderColor = blueColor;
+        _titleLabel.layer.borderWidth = 1.f;
+        
+        CGColorRelease(blueColor);
+#endif
         
         [self addSubview:_titleLabel];
     }
@@ -585,14 +585,14 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
         _progressViewContainer = [[UIView alloc] initWithFrame:self.contentAreaFrame];
         _progressViewContainer.backgroundColor = [UIColor clearColor];
         
-        if (MMProgressHUDDebugModeEnabled == YES) {
-            CGColorRef yellowColor = CGColorRetain([UIColor yellowColor].CGColor);
-            
-            _progressViewContainer.layer.borderColor = yellowColor;
-            _progressViewContainer.layer.borderWidth = 1.f;
-            
-            CGColorRelease(yellowColor);
-        }
+#ifdef MM_HUD_FRAME_DEBUG
+        CGColorRef yellowColor = CGColorRetain([UIColor yellowColor].CGColor);
+        
+        _progressViewContainer.layer.borderColor = yellowColor;
+        _progressViewContainer.layer.borderWidth = 1.f;
+        
+        CGColorRelease(yellowColor);
+#endif
         
         [self addSubview:_progressViewContainer];
     }

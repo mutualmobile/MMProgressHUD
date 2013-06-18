@@ -4,8 +4,8 @@
 
 #import <Availability.h>
 
-#ifndef __IPHONE_4_0
-#warning "This project uses features only available in iOS SDK 4.0 and later."
+#ifndef __IPHONE_5_0
+#warning "This project uses features only available in iOS SDK 5.0 and later."
 #endif
 
 #ifdef __OBJC__
@@ -15,4 +15,5 @@
 
 #ifndef MM_HUD_DEBUG
 #define MM_HUD_DEBUG
+//#define MM_HUD_FRAME_DEBUG
 #endif
