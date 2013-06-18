@@ -463,6 +463,4 @@ This message will be presented to the user when a cancelBlock is present after t
  */
 + (void)setDisplayStyle:(MMProgressHUDDisplayStyle)displayStyle;
 
-//@property (nonatomic, copy) NSString *confirmationMessage;
-
 @end
