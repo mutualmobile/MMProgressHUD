@@ -3,13 +3,59 @@ MMProgressHUD
 
 An easy-to-use HUD interface with personality.
 
+It would be a shame for Mutual Mobile's in-house HUD interface to not be shared with the world. Now available for everyone!
+
 ##Installation
 Use cocoapods for installation: `pod 'MMProgressHUD'`
 
 ##Usage
 Use the shared instance of `MMProgressHUD` through either the `+sharedHUD` class method or through the other suite of class convenience methods available.
 
-###Anatomy
+##Features
+###Animations
+The primary motivation for building MMProgressHUD was to be able to easily add fun animations as they were needed. MMProgressHUD has several presentation/dismiss animation styles depending on what you are looking for:
+
+1. **Drop Animation** - When presented, the HUD drops from above the screen and hangs as if it were pinned on it's top corners to the top corners of the screen with string. The initial angle and constants for the keyframe animation are random so no two presentations look exactly the same.
+2. **Expand** - Presentation begins with the HUD very small, scaling larger to the final size with a small bounce. Dismissal begins with a small bounce around the original size up to a very large size.
+3. **Shrink** - Presentation begins with the HUD much larger than reality, scaling smaller to the final size with a small bounce. Dismissal shrinks from the HUD's original size down to a small point with an alpha fade and a small initial bounce.
+4. **Balloon** - Presentation begins below the screen with the HUD floating up from the bottom as if it were a balloon being let go into the air and hanging at the end of its string. Dismissal acts as if the string holding the balloon were cut and the HUD floats off the top of the screen.
+5. **Fade** - Your standard alpha fade in/out.
+
+###Full-Screen
+MMProgressHUD is window-based, meaning it will display the overlay above the status bar. This means that MMProgressHUD does not muck with your view hierarchies and will stay self-contained in its own window. MMProgressHUD does not make itself the key window at any point during presentation.
+
+###Autosizing
+MMProgressHUD supports almost arbitrary text content. As a matter of design and clutter, you probably shouldn't put too much text into a HUD, but MMProgressHUD will intelligently lay itself out depending on your text content. Changing the text and image content while the HUD is displayed will initiate an animation between the two states. This animation is very fast, yet not instantaneous in order to provide context of the state change.
+
+###Extremely Basic User Interaction
+MMProgressHUD supports extremely basic user input in the form of a confirmation tap from the user to initiate a "cancellation" action. After the user taps the HUD, it will enter a "confirmation" state in which the HUD changes state to let the user know the next tap will initiate some action that you define (see "Completion Blocks" below). For example, use this to let the user cancel a long-running task. The "confirmation" state resets back to the normal HUD state after a given timeout if the user has not confirmed the action. MMProgressHUD looks for a `cancelBlock` when determining whether or not to enter into the "confirmation" state.
+
+```` lang:objective-c
++ (void)showWithTitle:(NSString *)title
+               status:(NSString *)status
+  confirmationMessage:(NSString *)confirmation
+          cancelBlock:(void(^)(void))cancelBlock;
+````
+
+###Completion Blocks
+Some HUD actions can have an associated block of work attached to them to be fired when the action occurs:
+
+1. `dismissAnimationCompletion` - A block of work that is executed when the HUD dismissal animation is completed.
+2. `cancelBlock` - A block of work that is executed when the user cancels a long-running action. When this block is non-nil, the HUD will respond to taps and enter a "confirmation" state on first tap. When a confirmation tap is performed by the user, the HUD is dismissed and this block is fired.
+3. `progressCompletion` - A block of work that is executed when the HUD's progress property is fed a value >= 1.f.
+
+##Setup
+When setting up your instance of MMProgressHUD, you'll need to configure the settings according to the style and behavior you're trying to achieve. You can find the available properties in `MMProgressHUD.h`. These settings will persist across calls of `show` and `dismiss`, so you only have to set them once per instance:
+
+1. `overlayMode` - The type of overlay that displays behind the HUD and over your content.
+2. `successImage` - The success image you would like to use for success dismissal. The default image is a white check mark.
+3. `errorImage` - The error image you would like to use for error situations. The default image is a white 'X'.
+4. `confirmationMessage` - A message to be displayed to the user when a cancelable HUD action is displayed.
+6. `presentationStyle` - The behavior animation the HUD performs when presenting and dismissing itself.
+7. `glowColor` - The glow color the HUD emits during cancellation confirmation.
+8. `progressStyle` - The style that the HUD inherits when the HUD is in determinate progress state.
+
+##Anatomy
 MMProgressHUD consists of a window, an overlay view, and the HUD view itself. Since MMProgressHUD is window-based, the overlay will display full-screen over the status bar. The only two pieces of information related to MMProgressHUD's visual anatomy are the text labels:
 
 <!--````
@@ -27,25 +73,6 @@ MMProgressHUD consists of a window, an overlay view, and the HUD view itself. Si
 `statusLabel` - The message label that is displayed at the bottom of the HUD below the center content area. In the absence of title text, this label's font will be the bold variant.
 
 You will never access these label properties directly, but it's useful to know which text will be displayed in which label when using the class convenience methods.
-
-
-###Setup
-When setting up your instance of MMProgressHUD, you'll need to configure the settings according to the style and behavior you're trying to achieve. You can find the available properties in `MMProgressHUD.h`. These settings will persist across calls of `show` and `dismiss`, so you only have to set them once per instance:
-
-1. `overlayMode` - The type of overlay that displays behind the hud
-2. `successImage` - The success image you would like to use for success dismissal. The default image is a white check mark.
-3. `errorImage` - The error image you would like to use for error situations. The default image is a white 'X'.
-4. `confirmationMessage` - A message to be displayed to the user when a cancelable HUD action is displayed.
-6. `presentationStyle` - The behavior animation the HUD performs when presenting and dismissing itself.
-7. `glowColor` - The glow color the HUD emits during cancellation confirmation.
-8. `progressStyle` - The style that the HUD inherits when the HUD is in determinate progress state.
-
-####Completion Blocks
-Some HUD actions can have an associated block of work attached to them to be fired when the action occurs:
-
-1. `dismissAnimationCompletion` - A block of work that is executed when the HUD dismissal animation is completed.
-2. `cancelBlock` - A block of work that is executed when the user cancels a long-running action.
-3. `progressCompletion` - A block of work that is executed when the HUD's progress property is fed a value >= 1.f.
 
 ##License
 Standard MIT License
