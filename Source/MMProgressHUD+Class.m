@@ -20,6 +20,13 @@
     withCompletion:(void(^)(BOOL completed))completionBlock;
 
 - (void)show;
+- (void)dismiss;
+
+- (void)showWithTitle:(NSString *)title
+               status:(NSString *)status
+  confirmationMessage:(NSString *)confirmationMessage
+          cancelBlock:(void(^)(void))cancelBlock
+               images:(NSArray *)images;
 
 @end
 
@@ -31,7 +38,8 @@
 }
 
 + (void)setDisplayStyle:(MMProgressHUDDisplayStyle)style{
-    [[(MMProgressHUD *)[MMProgressHUD sharedHUD] hud] setDisplayStyle:style];
+    MMHud *hud = [[MMProgressHUD sharedHUD] hud];
+    [hud setDisplayStyle:style];
 }
 
 //updates
