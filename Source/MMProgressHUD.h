@@ -40,9 +40,7 @@ typedef NS_ENUM(NSInteger, MMProgressHUDPresentationStyle){
     MMProgressHUDPresentationStyleShrink,
     MMProgressHUDPresentationStyleSwingLeft,
     MMProgressHUDPresentationStyleSwingRight,
-    /*MMProgressHUDPresentationStyleOrigami,*/
     MMProgressHUDPresentationStyleBalloon,
-    /*MMProgressHUDPresentationStyleTVBlip,*/
     MMProgressHUDPresentationStyleFade,
     MMProgressHUDPresentationStyleNone
 };
@@ -51,9 +49,10 @@ typedef NS_ENUM(NSInteger, MMProgressHUDWindowOverlayMode){
     MMProgressHUDWindowOverlayModeNone = -1,
     MMProgressHUDWindowOverlayModeGradient = 0,
     MMProgressHUDWindowOverlayModeLinear,
-    /*MMProgressHUDWindowOverlayModeBlur*/
+    /*MMProgressHUDWindowOverlayModeBlur*/ //iOS 7 only
 };
 
+//iOS 7 only
 //typedef NS_ENUM(NSInteger, MMProgressHUDOptions) {
 //    MMProgressHUDOptionGravityEnabled = 1 << 0,
 //    MMProgressHUDOptionGyroEnabled = 1 << 1,
@@ -138,7 +137,7 @@ This message will be presented to the user when a cancelBlock is present after t
  
  @return Shared MMProgressHUD instance.
  */
-+ (id)sharedHUD;
++ (instancetype)sharedHUD;
 
 @end
 

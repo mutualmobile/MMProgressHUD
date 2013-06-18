@@ -62,7 +62,7 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
 @implementation MMProgressHUD
 
 #pragma mark - Class Methods
-+ (id)sharedHUD{
++ (instancetype)sharedHUD{
     static MMProgressHUD *__sharedHUD = nil;
     
     static dispatch_once_t mmSharedHUDOnceToken;
