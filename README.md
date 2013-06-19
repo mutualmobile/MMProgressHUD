@@ -5,8 +5,13 @@ An easy-to-use HUD interface with personality.
 
 It would be a shame for Mutual Mobile's in-house HUD interface to not be shared with the world. Now available for everyone!
 
+![](Demo/VisualDemos/MMP3.gif)
+
 ##Installation
 Use cocoapods for installation: `pod 'MMProgressHUD'`
+
+###Manual Install
+If you really insist on doing things the hard way, simply include all of the files in the `Source/` folder in the repository in your project. If you don't already have it in your project, you'll need to link against the QuartzCore and CoreGraphics frameworks.
 
 ##Usage
 Use the shared instance of `MMProgressHUD` through either the `+sharedHUD` class method or through the other suite of class convenience methods available.
@@ -27,7 +32,7 @@ The primary motivation for building MMProgressHUD was to be able to easily add f
 Use `+ (void)setPresentationStyle:(MMProgressHUDPresentationStyle)presentationStyle;` to modify the presentation animation.
 
 ###Full-Screen
-MMProgressHUD is window-based, meaning it will display the overlay above the status bar. This means that MMProgressHUD does not muck with your view hierarchies and will stay self-contained in its own window. MMProgressHUD does not make itself the key window at any point during presentation.
+MMProgressHUD is window-based, so it will display the overlay above the status bar. This means that MMProgressHUD does not muck with your view hierarchies and will stay self-contained in its own window. MMProgressHUD does not make itself the key window at any point during presentation.
 
 ###Autosizing
 MMProgressHUD supports almost arbitrary text content. As a matter of design and clutter, you probably shouldn't put too much text into a HUD, but MMProgressHUD will intelligently lay itself out depending on your text content. Changing the text and image content while the HUD is displayed will initiate an animation between the two states. This animation is very fast, yet not instantaneous in order to provide context of the state change.
@@ -50,7 +55,7 @@ Some HUD actions can have an associated block of work attached to them to be fir
 3. `progressCompletion` - A block of work that is executed when the HUD's progress property is fed a value >= 1.f.
 
 ###Determinate Progress
-MMProgressHUD currently supports determinate tasks through the progress APIs. Feed MMProgressHUD a progress (`[0,1]`), and it will display a progress indicator visually displaying the task progress to the user. Currently, only the radial progress indicator is supported.
+By default, MMProgressHUD displays an indeterminate spinner, but it also supports determinate tasks through the progress APIs. Feed MMProgressHUD a progress (`[0,1]`), and it will display a progress indicator visually displaying the task progress to the user. Currently, only the radial progress indicator is supported.
 
 ```` lang:objective-c
 + (void)showProgressWithStyle:(MMProgressHUDProgressStyle)progressStyle
