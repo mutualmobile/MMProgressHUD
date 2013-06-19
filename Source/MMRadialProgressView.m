@@ -42,7 +42,7 @@
     CGFloat radius = truncf(MIN(CGRectGetMidX(insetRect), CGRectGetMidY(insetRect))) + radiusOffset;
     CGPoint center = CGPointMake(CGRectGetMidX(insetRect), CGRectGetMidY(insetRect));
     CGFloat topAngle = -(M_PI_2);
-    CGFloat endAngle = topAngle + (2*M_PI) * self.progress;
+    CGFloat endAngle = topAngle + (2.f*M_PI) * self.progress;
     UIColor *backgroundFill = [UIColor colorWithWhite:1.0 alpha:0.2];
     UIColor *pieFillColor = [UIColor whiteColor];
     UIColor *borderStroke = [UIColor colorWithWhite:1.f alpha:0.5f];

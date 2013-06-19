@@ -11,11 +11,7 @@
 
 @interface MMProgressHUDWindow : UIWindow
 
-/** The window that was key before making this window (self) key. This property will be set as the keyWindow when resignKeyWindow is called on this instance. */
+/** The window that was key at presentation time. Used to grab the view controller associated with the key window for rotation callbacks if they are available. */
 @property (nonatomic, strong) UIWindow *oldWindow;
-
-/** A set of classes that indicates additional user-subclasses of UIWindow should be excluded from the window-check when determining which window should be set back to key upon dismissing and cleaning up of MMProgressHUDWindow
- */
-@property (strong, nonatomic) NSMutableSet *windowExclusionClasses;
 
 @end

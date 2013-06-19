@@ -12,35 +12,10 @@
 
 - (id)init{
     
-    if ((self = [super initWithFrame:[UIScreen mainScreen].bounds])) {
+    if ((self = [super initWithFrame:[[UIScreen mainScreen] bounds]])) {
         self.windowLevel = UIWindowLevelStatusBar;
         
         self.backgroundColor = [UIColor clearColor];
-        self.windowExclusionClasses = [NSMutableSet set];
-        
-        [self.windowExclusionClasses addObject:self.class];
-        
-        //could also use introspection with objc_ and class_ methods to get full list of
-        //  subclasses that could be possible here, but would this include user-classes?
-        //   It's possible, so we won't be using that approach here.
-        NSArray *windowClassStrings = @[@"_UIAlertNormalizingOverlayWindow",
-                                       @"UIAutoRotatingWindow",
-                                       @"UIClassicWindow",
-                                       @"UIPrintPanelWindow",
-                                       @"UIRemoteWindow",
-                                       @"UISoftwareDimmingWindow",
-                                       @"UIStatusBarAdornmentWindow",
-                                       @"UIStatusBarWindow",
-                                       @"UITextEffectsWindow",
-                                       @"_UIFallbackPresentationWindow"];
-        
-        for (NSString *classString in windowClassStrings) {
-            Class potentialWindowClass = NSClassFromString(classString);
-            
-            if (potentialWindowClass) {
-                [self.windowExclusionClasses addObject:potentialWindowClass];
-            }
-        }
     }
     return self;
 }
@@ -52,55 +27,56 @@
 }
 
 - (UIWindow *)oldWindow{
-    _oldWindow = nil;
-	
-    NSMutableArray *windowCandidates = [NSMutableArray array];
-    
-    for(UIWindow *window in [[UIApplication sharedApplication] windows]){
-        
-        //this will only check if the given window class is exactly the same
-        //  class as the class listed in the excluded class and will
-        //  not check if the given window class is a _subclass_ of a class
-        //  in the list of excluded classes
-        if (![self.windowExclusionClasses containsObject:window.class]) {
-            if ([window.screen isEqual:[UIScreen mainScreen]]) {
-                [windowCandidates addObject:window];
-            }
+    if (_oldWindow == nil) {
+        UIResponder <UIApplicationDelegate> *appDelegate = [[UIApplication sharedApplication] delegate];
+        UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
+        if(keyWindow != nil){
+            self.oldWindow = keyWindow;
+        }
+        else if([appDelegate respondsToSelector:@selector(window)]) {
+            UIWindow *delegateWindow = appDelegate.window;
+            self.oldWindow = delegateWindow;
+        }
+        else {
+            self.oldWindow = nil;
         }
     }
     
-    MMHudLog(@"Window Candidates: %@", windowCandidates);
-    
-	UIResponder <UIApplicationDelegate> *appDelegate = [UIApplication sharedApplication].delegate;
-	if([appDelegate respondsToSelector:@selector(window)]) {
-		UIWindow *delegateWindow = appDelegate.window;
-		self.oldWindow = delegateWindow;
-	} else if([windowCandidates count] > 0){
-		self.oldWindow = windowCandidates[0];
-	} else {
-		self.oldWindow = nil;
-	}
-	
     MMHudLog(@"Old Window: %@", _oldWindow);
     
     return _oldWindow;
 }
 
-- (void)resignKeyWindow{
-    [super resignKeyWindow];
-    [self.oldWindow makeKeyWindow];
+- (void)setRootViewController:(UIViewController *)rootViewController{
+    [super setRootViewController:rootViewController];
     
-    MMHudLog(@"Resign key ended");
+    [self orientRootViewControllerForOrientation:rootViewController.interfaceOrientation];
+}
+
+- (void)orientRootViewControllerForOrientation:(UIInterfaceOrientation)interfaceOrientation{
+    CGAffineTransform transform;
+    
+    switch (interfaceOrientation) {
+        case UIInterfaceOrientationLandscapeRight:
+            transform = CGAffineTransformMakeRotation(M_PI_2);
+            break;
+        case UIInterfaceOrientationLandscapeLeft:
+            transform = CGAffineTransformMakeRotation(-M_PI_2);
+            break;
+        case UIInterfaceOrientationPortraitUpsideDown:
+            transform = CGAffineTransformMakeRotation(M_PI);
+            break;
+        default:
+        case UIInterfaceOrientationPortrait:
+            transform = CGAffineTransformIdentity;
+            break;
+    }
+    
+    self.rootViewController.view.transform = transform;
 }
 
 - (void)dealloc{
     MMHudLog(@"dealloc");
-    
-    [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
-    _oldWindow = nil;
-    
 }
 
 @end

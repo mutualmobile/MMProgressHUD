@@ -50,7 +50,6 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
 @property (nonatomic, strong) CAAnimation *queuedDismissAnimation;
 //@property (nonatomic) MMProgressHUDCompletionState completionState;
 @property (nonatomic, readwrite, strong) MMProgressHUDOverlayView *overlayView;
-@property (nonatomic, strong) NSMutableSet *windowExclusionClasses;
 @property (nonatomic, strong) NSTimer *dismissDelayTimer;
 @property (nonatomic, copy) NSString *tempStatus;
 @property (nonatomic, strong) NSTimer *confirmationTimer;
@@ -179,7 +178,6 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
                              vectorImageShapeOfType:MMVectorShapeTypeCheck
                              size:MMProgressHUDDefaultImageSize
                              fillColor:imageFill];
-        _windowExclusionClasses = [[NSMutableSet alloc] init];
         
         [self setAutoresizingMask:
          UIViewAutoresizingFlexibleHeight |
@@ -199,7 +197,6 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
 
     _hud = nil;
     _image = nil;
-    _windowExclusionClasses = nil;
     _animationImages = nil;
     _gradientView = nil;
     _successImage = nil;
