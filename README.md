@@ -5,7 +5,14 @@ An easy-to-use HUD interface with personality.
 
 It would be a shame for Mutual Mobile's in-house HUD interface to not be shared with the world. Now available for everyone!
 
-![](Demo/VisualDemos/MMP3.gif)
+<p align="center" >
+<img src="Demo/VisualDemos/MMP3.gif" />
+</p>
+
+MMProgressHUD is a part of Mutual Mobile's growing suite of open-source Objective-C projects:
+
+- [MMRecord](https://github.com/mutualmobile/MMRecord)
+- [MMDrawerController](https://github.com/mutualmobile/MMDrawerController)
 
 ##Installation
 Use cocoapods for installation: `pod 'MMProgressHUD'`
@@ -17,9 +24,6 @@ If you really insist on doing things the hard way, simply include all of the fil
 Use the shared instance of `MMProgressHUD` through either the `+sharedHUD` class method or through the other suite of class convenience methods available.
 
 ##Features
-###No Assets
-MMProgressHUD uses CoreGraphics-drawn images for the default images. This makes it very easy to drop-in all the files to your project without having to specify bundles and other assets to copy. Just include the source and you're good to go.
-
 ###Animations
 The primary motivation for building MMProgressHUD was to be able to easily add fun animations as they were needed. MMProgressHUD has several presentation/dismiss animation styles depending on what you are looking for:
 
@@ -30,6 +34,9 @@ The primary motivation for building MMProgressHUD was to be able to easily add f
 5. **Fade** - Your standard alpha fade in/out.
 
 Use `+ (void)setPresentationStyle:(MMProgressHUDPresentationStyle)presentationStyle;` to modify the presentation animation.
+
+###No Assets
+MMProgressHUD uses CoreGraphics-drawn images for the default images. This makes it very easy to drop-in all the files to your project without having to specify bundles and other assets to copy. Just include the source and you're good to go.
 
 ###Full-Screen
 MMProgressHUD is window-based, so it will display the overlay above the status bar. This means that MMProgressHUD does not muck with your view hierarchies and will stay self-contained in its own window. MMProgressHUD does not make itself the key window at any point during presentation.
@@ -96,7 +103,9 @@ MMProgressHUD consists of a window, an overlay view, and the HUD view itself. Si
 ------ statusLabel (UILabel)
 ```` -->
 
-![](Demo/Images/title-status.png "MMHud")
+<p align="center" >
+<img src="Demo/Images/title-status.png" />
+</p>
 
 `titleLabel` - The is the label at the top of the HUD above the content area.  
 `statusLabel` - The message label that is displayed at the bottom of the HUD below the center content area. In the absence of title text, this label's font will be the bold variant.
