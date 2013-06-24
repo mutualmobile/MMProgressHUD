@@ -12,6 +12,7 @@
 #import "MMHud.h"
 #import "MMProgressHUD.h"
 #import "MMProgressHUDPrivate.h"
+#import "MMVectorImage.h"
 
 @interface MMProgressHUDTests : GHAsyncTestCase
 
@@ -110,11 +111,7 @@
 
 #pragma mark - Images
 - (void)testShowImageActuallySetsImage{
-    NSBundle *bundle = [NSBundle bundleForClass:self.class];
-    NSString *errorImageLocation = [bundle pathForResource:@"MMProgressHUD.bundle/error" ofType:@"png"];
-    
-    UIImage *image = [UIImage imageWithContentsOfFile:errorImageLocation];
-    [self prepare];
+    UIImage *image = [MMVectorImage vectorImageShapeOfType:MMVectorShapeTypeX size:CGSizeMake(10, 10) fillColor:[UIColor redColor]];
     
     id mockHUD = [OCMockObject partialMockForObject:self.progressHUD];
     
@@ -128,11 +125,7 @@
 }
 
 - (void)testShowImageDoesNotSetAnimatedImages{
-    NSBundle *bundle = [NSBundle bundleForClass:self.class];
-    NSString *errorImageLocation = [bundle pathForResource:@"MMProgressHUD.bundle/error" ofType:@"png"];
-    
-    UIImage *image = [UIImage imageWithContentsOfFile:errorImageLocation];
-    [self prepare];
+    UIImage *image = [MMVectorImage vectorImageShapeOfType:MMVectorShapeTypeCheck size:CGSizeMake(10, 10) fillColor:[UIColor redColor]];
     
     [self.progressHUD showWithTitle:@"title" status:@"status" confirmationMessage:nil cancelBlock:nil images:@[image]];
     
@@ -144,12 +137,9 @@
 }
 
 - (void)testShowAnimatedImagesActuallySetsAnimatedImages{
-    NSBundle *bundle = [NSBundle bundleForClass:self.class];
-    NSString *errorImageLocation = [bundle pathForResource:@"MMProgressHUD.bundle/error" ofType:@"png"];
     
-    UIImage *image = [UIImage imageWithContentsOfFile:errorImageLocation];
-    UIImage *image2 = [UIImage imageWithContentsOfFile:errorImageLocation];
-    [self prepare];
+    UIImage *image = [MMVectorImage vectorImageShapeOfType:MMVectorShapeTypeCheck size:CGSizeMake(10, 10) fillColor:[UIColor redColor]];
+    UIImage *image2 = [MMVectorImage vectorImageShapeOfType:MMVectorShapeTypeX size:CGSizeMake(10, 10) fillColor:[UIColor redColor]];
     
     [self.progressHUD showWithTitle:@"title" status:@"status" confirmationMessage:nil cancelBlock:nil images:@[image, image2]];
     
@@ -161,12 +151,9 @@
 }
 
 - (void)testShowAnimatedImagesDoesNotSetStaticImage{
-    NSBundle *bundle = [NSBundle bundleForClass:self.class];
-    NSString *errorImageLocation = [bundle pathForResource:@"MMProgressHUD.bundle/error" ofType:@"png"];
     
-    UIImage *image = [UIImage imageWithContentsOfFile:errorImageLocation];
-    UIImage *image2 = [UIImage imageWithContentsOfFile:errorImageLocation];
-    [self prepare];
+    UIImage *image = [MMVectorImage vectorImageShapeOfType:MMVectorShapeTypeCheck size:CGSizeMake(10, 10) fillColor:[UIColor redColor]];
+    UIImage *image2 = [MMVectorImage vectorImageShapeOfType:MMVectorShapeTypeX size:CGSizeMake(10, 10) fillColor:[UIColor redColor]];
     
     [self.progressHUD showWithTitle:@"title" status:@"status" confirmationMessage:nil cancelBlock:nil images:@[image, image2]];
     
@@ -225,13 +212,21 @@
 - (void)testTapHandlerConfirmedTapDismisses{
     id mockProgressHUD = [OCMockObject partialMockForObject:self.progressHUD];
     
-    ((MMProgressHUD *)mockProgressHUD).cancelBlock = ^{ /* stuff */ };
+//    [self prepare];
+    
+    self.progressHUD.cancelBlock = ^{ /* stuff */ };
+    
+    NSLog(@"progressHUD: %@", self.progressHUD);
+    
+    [self.progressHUD setDismissAnimationCompletion:^{ /* do stuff */ }];
     
     [mockProgressHUD _handleTap:nil];
     
     [[mockProgressHUD expect] dismiss];
     
     [mockProgressHUD _handleTap:nil];
+    
+    [self runForInterval:1];
         
     [mockProgressHUD verify];
 }
