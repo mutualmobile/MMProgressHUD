@@ -114,7 +114,7 @@ You will never access these label properties directly, but it's useful to know w
 
 ##Authors
 
-Created by ([Lars Anderson](http://twitter.com/theonlylars)) at [Mutual Mobile](http://mutualmobile.com).
+Created by [Lars Anderson](http://twitter.com/theonlylars) at [Mutual Mobile](http://mutualmobile.com).
 
 ##License
 Standard MIT License
