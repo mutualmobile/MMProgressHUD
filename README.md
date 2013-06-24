@@ -112,5 +112,9 @@ MMProgressHUD consists of a window, an overlay view, and the HUD view itself. Si
 
 You will never access these label properties directly, but it's useful to know which text will be displayed in which label when using the class convenience methods.
 
+##Authors
+
+Created by ([Lars Anderson](http://twitter.com/theonlylars)) at [Mutual Mobile](http://mutualmobile.com).
+
 ##License
 Standard MIT License
