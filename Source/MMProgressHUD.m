@@ -164,7 +164,7 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
 }
 
 #pragma mark - Initializers
-- (id)init{
+- (instancetype)init{
     if( (self = [super initWithFrame:CGRectZero]) ){
         self.hud = [[MMHud alloc] init];
         self.hud.delegate = self;

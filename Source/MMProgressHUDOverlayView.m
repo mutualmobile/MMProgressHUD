@@ -16,7 +16,7 @@
 
 @implementation MMProgressHUDOverlayView
 
-- (id)init{
+- (instancetype)init{
     self = [self initWithFrame:CGRectZero];
     if(self){
         //do more stuff
@@ -25,7 +25,7 @@
     return self;
 }
 
-- (id)initWithFrame:(CGRect)frame{
+- (instancetype)initWithFrame:(CGRect)frame{
     self = [self initWithFrame:frame overlayMode:MMProgressHUDWindowOverlayModeGradient];
     if (self) {
         //do stuff
@@ -33,7 +33,7 @@
     return self;
 }
 
-- (id)initWithFrame:(CGRect)frame overlayMode:(MMProgressHUDWindowOverlayMode)overlayMode
+- (instancetype)initWithFrame:(CGRect)frame overlayMode:(MMProgressHUDWindowOverlayMode)overlayMode
 {
     self = [super initWithFrame:frame];
     if (self) {
