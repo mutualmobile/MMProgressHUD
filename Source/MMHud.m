@@ -257,7 +257,7 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
     self.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
 }
 
-- (void)frameInitialHUDPositionOffscreenWithDelegate:(id)localDelegate finalHudBounds:(CGRect)finalHudBounds {
+- (void)frameInitialHUDPositionOffscreenWithDelegate:(id<MMHudDelegate>)localDelegate finalHudBounds:(CGRect)finalHudBounds {
     //create offscreen
     CGRect hudRect;
     CGPoint center = [localDelegate hudCenterPointForDisplay:self];
@@ -275,7 +275,7 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
     [self configureInitialDisplayAttributes];
 }
 
-- (void)frameHUDPositionPreservingCenterWithDelegate:(id)localDelegate finalHudBounds:(CGRect)finalHudBounds {
+- (void)frameHUDPositionPreservingCenterWithDelegate:(id<MMHudDelegate>)localDelegate finalHudBounds:(CGRect)finalHudBounds {
     //preserve center
     CGRect hudRect;
     CGPoint center;
