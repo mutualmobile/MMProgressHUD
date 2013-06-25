@@ -95,38 +95,38 @@ typedef NS_ENUM(NSInteger, MMProgressHUDCompletionState){
 
 /** The completion state of the HUD. Used by the HUD to call out to the delegate to query for a completion image.
  */
-@property (nonatomic) MMProgressHUDCompletionState completionState;
+@property (nonatomic, assign) MMProgressHUDCompletionState completionState;
 
 /** A Boolean value that indicates whether or not the HUD is visible. 
  
  @warning Managed internally.
  */
-@property(nonatomic, readonly,
-          getter = isVisible) BOOL visible;
+@property (nonatomic, readonly,
+           getter = isVisible) BOOL visible;
 
 /** The display style for the HUD.
  
  Persistent across show calls (does not get reset when prepareForReuse is called).
  */
-@property(nonatomic) MMProgressHUDDisplayStyle displayStyle;
+@property (nonatomic, assign) MMProgressHUDDisplayStyle displayStyle;
 
 /** An enum to specifiy the style in which to display progress.
  
  The default style is indeterminate progress.
  */
-@property (nonatomic) MMProgressHUDProgressStyle progressStyle;
+@property (nonatomic, assign) MMProgressHUDProgressStyle progressStyle;
 
 /** The HUD's indeterminate activity indicator. */
-@property(nonatomic, strong, readonly) UIActivityIndicatorView *activityIndicator;
+@property (nonatomic, strong, readonly) UIActivityIndicatorView *activityIndicator;
 
 /** The determinate progress state.
  
  The progress ranges from 0-1.
  */
-@property (nonatomic) CGFloat progress;
+@property (nonatomic, assign) CGFloat progress;
 
 /** The loop duration to be used when displaying animationImages. */
-@property(nonatomic) CGFloat animationLoopDuration;
+@property (nonatomic, assign) CGFloat animationLoopDuration;
 
 /** The delegate that certain actions will be sent to. */
 @property (nonatomic, weak) id<MMHudDelegate> delegate;
@@ -135,7 +135,7 @@ typedef NS_ENUM(NSInteger, MMProgressHUDCompletionState){
  
  Automatically flagged to YES when content properties change (titleText, messageText, etc).
  */
-@property (nonatomic) BOOL needsUpdate;
+@property (nonatomic, assign) BOOL needsUpdate;
 
 /** The text which will display at the top of the HUD.
  

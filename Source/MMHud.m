@@ -81,18 +81,6 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
 
 - (void)dealloc{
     MMHudLog(@"dealloc");
-    
-    _delegate = nil;
-    
-    _titleText = nil;
-    _messageText = nil;
-    _image = nil;
-    _animationImages = nil;
-    
-    _titleLabel = nil;
-    _statusLabel = nil;
-    _imageView = nil;
-    
 }
 
 #pragma mark - Construction
