@@ -234,7 +234,7 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
     }
     
     CGSize statusSize = CGSizeZero;
-    if (self.messageText == nil) {
+    if (self.messageText != nil) {
         statusSize = [self statusSizeForMessageText];
         
         self.statusFrame = CGRectMake(MMProgressHUDContentPadding,
@@ -323,7 +323,7 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
     
     //animate text change
     CATransition *crossfadeTransition = [CATransition animation];
-    crossfadeTransition.duration = MMProgressHUDAnimateInDurationShort;
+    crossfadeTransition.duration = MMProgressHUDAnimateInDurationVeryShort;
     crossfadeTransition.type = kCATransitionFade;
     crossfadeTransition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
     
