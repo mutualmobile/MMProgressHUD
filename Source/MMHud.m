@@ -61,22 +61,9 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
     if ( (self = [super init]) ) {
         _needsUpdate = YES;
         
-        CGColorRef blackColor = CGColorRetain([UIColor blackColor].CGColor);
-        
-        self.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.75];
-        self.layer.shadowColor  = blackColor;
-        self.layer.shadowOpacity = 0.5;
-        self.layer.shadowRadius = 15.0f;
-        self.layer.cornerRadius = 10.0f;
+        [self configureInitialDisplayAttributes];
         
         self.isAccessibilityElement = YES;
-        
-        CGColorRelease(blackColor);
-        
-        self.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin |
-        UIViewAutoresizingFlexibleRightMargin |
-        UIViewAutoresizingFlexibleTopMargin |
-        UIViewAutoresizingFlexibleBottomMargin;
     }
     
     return self;
@@ -90,7 +77,7 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
 - (void)buildHUDAnimated:(BOOL)animated{
     if (animated == YES) {
         [UIView
-         animateWithDuration:0.33f
+         animateWithDuration:MMProgressHUDAnimateInDurationNormal
          animations:^{
              [self buildHUDAnimated:NO];
          }];
@@ -104,8 +91,9 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
     CGSize titleSize=CGSizeZero;
     NSInteger numberOfLines = 20;
     CGFloat lineHeight = [titleText sizeWithFont:self.titleLabel.font].height;
-    for (CGFloat targetWidth = MMProgressHUDMinimumWidth; numberOfLines > 2; targetWidth += 25.f) {
-        if(targetWidth >= 300.f)
+    CGFloat targetWidthIncrementor = 25.f;
+    for (CGFloat targetWidth = MMProgressHUDMinimumWidth; numberOfLines > 2; targetWidth += targetWidthIncrementor) {
+        if(targetWidth >= MMProgressHUDMaximumWidth)
             break;
         titleSize = [titleText sizeWithFont:self.titleLabel.font constrainedToSize:CGSizeMake(targetWidth, 500.f)];
         numberOfLines = titleSize.height/lineHeight;
@@ -255,6 +243,20 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
     self.needsUpdate = NO;
 }
 
+- (void)configureInitialDisplayAttributes {
+    CGColorRef blackColor = CGColorRetain([UIColor blackColor].CGColor);
+    
+    self.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.75];
+    self.layer.shadowColor  = blackColor;
+    self.layer.shadowOpacity = 0.5;
+    self.layer.shadowRadius = 15.0f;
+    self.layer.cornerRadius = 10.0f;
+    
+    CGColorRelease(blackColor);
+    
+    self.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+}
+
 - (void)frameInitialHUDPositionOffscreenWithDelegate:(id)localDelegate finalHudBounds:(CGRect)finalHudBounds {
     //create offscreen
     CGRect hudRect;
@@ -270,20 +272,7 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
     
     self.frame = hudRect;
     
-    CGColorRef blackColor = CGColorRetain([UIColor blackColor].CGColor);
-    
-    self.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.75];
-    self.layer.shadowColor  = blackColor;
-    self.layer.shadowOpacity = 0.5;
-    self.layer.shadowRadius = 15.0f;
-    self.layer.cornerRadius = 10.0f;
-    
-    CGColorRelease(blackColor);
-    
-    self.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin |
-    UIViewAutoresizingFlexibleRightMargin |
-    UIViewAutoresizingFlexibleTopMargin |
-    UIViewAutoresizingFlexibleBottomMargin;
+    [self configureInitialDisplayAttributes];
 }
 
 - (void)frameHUDPositionPreservingCenterWithDelegate:(id)localDelegate finalHudBounds:(CGRect)finalHudBounds {
@@ -297,10 +286,14 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
         center = self.center;
     }
     
-    hudRect = CGRectMake(roundf(center.x - self.layer.anchorPoint.x * CGRectGetWidth(finalHudBounds)),
-                         roundf(center.y - self.layer.anchorPoint.y * CGRectGetHeight(finalHudBounds) + (0.5 - self.layer.anchorPoint.y) * 2 * MMProgressHUDContentPadding),
-                         CGRectGetWidth(finalHudBounds),
-                         CGRectGetHeight(finalHudBounds));
+    CGFloat hudWidth = CGRectGetWidth(finalHudBounds);
+    CGFloat hudHeight = CGRectGetHeight(finalHudBounds);
+    CGFloat originX = roundf(center.x - self.layer.anchorPoint.x * hudWidth);
+    CGFloat originYAnchorPointOffset = (0.5 - self.layer.anchorPoint.y) * 2.f * MMProgressHUDContentPadding;
+    CGFloat originY = roundf(center.y - self.layer.anchorPoint.y * hudHeight + originYAnchorPointOffset);
+    
+    hudRect = CGRectMake(originX, originY,
+                         hudWidth, hudHeight);
     
     hudRect = CGRectIntegral(CGRectInset(hudRect, -MMProgressHUDContentPadding, -MMProgressHUDContentPadding));
     
@@ -340,10 +333,12 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
     id<MMHudDelegate> localDelegate = self.delegate;
     
     if (CGRectEqualToRect(self.frame, CGRectZero) == NO) {
-        [self frameHUDPositionPreservingCenterWithDelegate:localDelegate finalHudBounds:finalHudBounds];
+        [self frameHUDPositionPreservingCenterWithDelegate:localDelegate
+                                            finalHudBounds:finalHudBounds];
     }
     else{
-        [self frameInitialHUDPositionOffscreenWithDelegate:localDelegate finalHudBounds:finalHudBounds];
+        [self frameInitialHUDPositionOffscreenWithDelegate:localDelegate
+                                            finalHudBounds:finalHudBounds];
     }
     
     //update subviews' frames
@@ -351,7 +346,9 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
     self.statusLabel.frame = self.statusFrame;
     self.progressViewContainer.frame = self.contentAreaFrame;
     
-    self.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:self.layer.cornerRadius].CGPath;
+    UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds
+                                                          cornerRadius:self.layer.cornerRadius];
+    self.layer.shadowPath = shadowPath.CGPath;
 }
 
 #pragma mark - Updating Content
@@ -395,15 +392,17 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
 }
 
 #pragma mark - Private Methods
-- (UIViewContentMode)contentModeForImage:(UIImage *)completionImage {
-    UIViewContentMode contentMode;
+- (UIViewContentMode)contentModeForImage:(UIImage *)image {
     //layout imageview content mode
-    if ((completionImage.size.width <= CGRectGetWidth(self.imageView.frame)) &&
-        (completionImage.size.height <= CGRectGetHeight(self.imageView.frame))) {
+    UIViewContentMode contentMode;
+    CGFloat xRatio = image.size.width/CGRectGetWidth(self.imageView.frame);
+    CGFloat yRatio = image.size.height/CGRectGetHeight(self.imageView.frame);
+    if ((xRatio < 1.f) &&
+        (yRatio < 1.f)) {
         contentMode = UIViewContentModeCenter;
     }
-    else if((completionImage.size.width >= CGRectGetWidth(self.imageView.frame)) &&
-            (completionImage.size.height >= CGRectGetHeight(self.imageView.frame))){
+    else if((xRatio > 1.f) &&
+            (yRatio > 1.f)){
         contentMode = UIViewContentModeScaleAspectFit;
     }
     else{
@@ -447,16 +446,7 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
             
             [self.activityIndicator stopAnimating];
             
-            //layout imageview content mode
-            if (self.imageView.image.size.width < CGRectGetWidth(self.imageView.frame) && self.imageView.image.size.height < CGRectGetHeight(self.imageView.frame)) {
-                self.imageView.contentMode = UIViewContentModeCenter;
-            }
-            else if(self.imageView.image.size.width > CGRectGetWidth(self.imageView.frame) && self.imageView.image.size.height > CGRectGetHeight(self.imageView.frame)){
-                self.imageView.contentMode = UIViewContentModeScaleAspectFit;
-            }
-            else{
-                self.imageView.contentMode = UIViewContentModeScaleAspectFill;
-            }
+            self.imageView.contentMode = [self contentModeForImage:self.imageView.image];
         }
         else {
             self.imageView.hidden = YES;

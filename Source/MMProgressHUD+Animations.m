@@ -234,13 +234,8 @@
 }
 
 #pragma mark - Animation Foundries
-- (CAAnimation *)_dropAnimationIn{
-    CGFloat initialAngle = M_2_PI/10.f + arc4random_uniform(1000)/1000.f*M_2_PI/5.f;
-    CGPoint newCenter = [self _windowCenterForHUDAnchor:self.hud.layer.anchorPoint];
-    
-    MMHudLog(@"Center after drop animation: %@", NSStringFromCGPoint(newCenter));
-    
-    CAKeyframeAnimation *dropInAnimation = [CAKeyframeAnimation animationWithKeyPath:@"position"];
+- (CAKeyframeAnimation *)_dropInAnimationPositionAnimationWithCenter:(CGPoint)newCenter {
+    CAKeyframeAnimation *dropInPositionAnimation = [CAKeyframeAnimation animationWithKeyPath:@"position"];
     CGMutablePathRef path = CGPathCreateMutable();
     CGPathMoveToPoint(path, NULL, self.hud.center.x, self.hud.center.y);
     CGPathAddLineToPoint(path, NULL, newCenter.x - 10.f, newCenter.y - 2.f);
@@ -257,36 +252,53 @@
                           newCenter.x , newCenter.y - 4.f,
                           newCenter.x, newCenter.y);
     
-    dropInAnimation.path = path;
-    dropInAnimation.calculationMode = kCAAnimationCubic;
-    dropInAnimation.keyTimes = @[@0.0f,
-                                @0.25f,
-                                @0.35f,
-                                @0.55f,
-                                @0.7f,
-                                @1.0f];
-    dropInAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+    dropInPositionAnimation.path = path;
+    dropInPositionAnimation.calculationMode = kCAAnimationCubic;
+    dropInPositionAnimation.keyTimes = @[@0.0f,
+                                      @0.25f,
+                                      @0.35f,
+                                      @0.55f,
+                                      @0.7f,
+                                      @1.0f];
+    dropInPositionAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
     
+    CGPathRelease(path);
+    
+    return dropInPositionAnimation;
+}
+
+- (CAKeyframeAnimation *)_dropInAnimationRotationAnimationWithInitialAngle:(CGFloat)initialAngle keyTimes:(NSArray *)keyTimes{
     CAKeyframeAnimation *rotation = [CAKeyframeAnimation animationWithKeyPath:@"transform.rotation.z"];
     rotation.values = @[@(initialAngle),
-                       @(-initialAngle * 0.85),
-                       @(initialAngle * 0.6),
-                       @(-initialAngle * 0.3),
-                       @0.f];
+                        @(-initialAngle * 0.85),
+                        @(initialAngle * 0.6),
+                        @(-initialAngle * 0.3),
+                        @0.f];
     rotation.calculationMode = kCAAnimationCubic;
     rotation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    rotation.keyTimes = dropInAnimation.keyTimes;
+    rotation.keyTimes = keyTimes;
+    
+    return rotation;
+}
+
+- (CAAnimation *)_dropAnimationIn{
+    CGFloat initialAngle = M_2_PI/10.f + arc4random_uniform(1000)/1000.f*M_2_PI/5.f;
+    CGPoint newCenter = [self _windowCenterForHUDAnchor:self.hud.layer.anchorPoint];
+    
+    MMHudLog(@"Center after drop animation: %@", NSStringFromCGPoint(newCenter));
+    
+    CAKeyframeAnimation *dropInAnimation = [self _dropInAnimationPositionAnimationWithCenter:newCenter];
+    CAKeyframeAnimation *rotationAnimation = [self _dropInAnimationRotationAnimationWithInitialAngle:initialAngle
+                                                                                   keyTimes:dropInAnimation.keyTimes];
     
     CAAnimationGroup *showAnimation = [CAAnimationGroup animation];
-    showAnimation.animations = @[dropInAnimation, rotation];
+    showAnimation.animations = @[dropInAnimation, rotationAnimation];
     showAnimation.duration = MMProgressHUDAnimateInDurationLong;
     
     [self _executeShowAnimation:showAnimation];
     
     self.hud.layer.position = newCenter;
     self.hud.layer.transform = CATransform3DIdentity;
-    
-    CGPathRelease(path);
     
     return showAnimation;
 }
@@ -332,7 +344,7 @@
         }
     }
     else{
-        startingOpacity = 0.25f;
+        startingOpacity = 0.f;
         endingScale = 1.f;
         endingOpacity = 1.f;
         
@@ -397,7 +409,6 @@
 }
 
 - (CAAnimation *)_swingInAnimationFromLeft:(BOOL)fromLeft{
-    CAKeyframeAnimation *swing = [CAKeyframeAnimation animationWithKeyPath:@"position"];
     CAKeyframeAnimation *rotate = [CAKeyframeAnimation animationWithKeyPath:@"transform.rotation"];
     
     CGPoint endPoint = [self _windowCenterForHUDAnchor:self.hud.layer.anchorPoint];
@@ -408,7 +419,6 @@
     CGMutablePathRef path = CGPathCreateMutable();
     CGPoint cp1;
     CGPoint cp2;
-    
     
     if (UIInterfaceOrientationIsPortrait([[[[UIApplication sharedApplication] keyWindow] rootViewController] interfaceOrientation])) {
         height = CGRectGetHeight(self.window.frame);
@@ -461,6 +471,7 @@
     CGPathAddLineToPoint(path, NULL, endPoint.x + 3.f, endPoint.y);
     CGPathAddLineToPoint(path, NULL, endPoint.x, endPoint.y);
     
+    CAKeyframeAnimation *swing = [CAKeyframeAnimation animationWithKeyPath:@"position"];
     swing.path = path;
     swing.calculationMode = kCAAnimationCubic;
     swing.keyTimes = @[@0.0f,
