@@ -23,12 +23,12 @@
 
 static const BOOL kMMProgressHUDDebugMode = NO;
 
-NSString * const MMProgressHUDDefaultConfirmationMessage    = @"Cancel?";
-NSString * const MMProgressHUDAnimationShow                 = @"mm-progress-hud-present-animation";
-NSString * const MMProgressHUDAnimationDismiss              = @"mm-progress-hud-dismiss-animation";
-NSString * const MMProgressHUDAnimationWindowFadeOut        = @"mm-progress-hud-window-fade-out";
-NSString * const MMProgressHUDAnimationKeyShowAnimation     = @"show";
-NSString * const MMProgressHUDAnimationKeyDismissAnimation  = @"dismiss";
+NSString * const MMProgressHUDDefaultConfirmationMessage = @"Cancel?";
+NSString * const MMProgressHUDAnimationShow = @"mm-progress-hud-present-animation";
+NSString * const MMProgressHUDAnimationDismiss = @"mm-progress-hud-dismiss-animation";
+NSString * const MMProgressHUDAnimationWindowFadeOut = @"mm-progress-hud-window-fade-out";
+NSString * const MMProgressHUDAnimationKeyShowAnimation = @"show";
+NSString * const MMProgressHUDAnimationKeyDismissAnimation = @"dismiss";
 
 NSUInteger const MMProgressHUDConfirmationPulseCount = 8;//Keep this number even
 
@@ -48,7 +48,6 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
 @property (nonatomic, copy) NSArray *animationImages;
 @property (nonatomic, strong) CAAnimation *queuedShowAnimation;
 @property (nonatomic, strong) CAAnimation *queuedDismissAnimation;
-//@property (nonatomic) MMProgressHUDCompletionState completionState;
 @property (nonatomic, readwrite, strong) MMProgressHUDOverlayView *overlayView;
 @property (nonatomic, strong) NSTimer *dismissDelayTimer;
 @property (nonatomic, copy) NSString *tempStatus;
@@ -193,16 +192,6 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
     if (_window != nil) {
         [_window setHidden:YES];
     }
-    _window = nil;
-
-    _hud = nil;
-    _image = nil;
-    _animationImages = nil;
-    _gradientView = nil;
-    _successImage = nil;
-    _errorImage = nil;
-    _overlayView = nil;
-    
 }
 
 - (void)forceCleanup{
@@ -277,7 +266,7 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
 #pragma mark - Property Overrides
 
 - (MMProgressHUDOverlayView *)overlayView{
-    if (!_overlayView) {
+    if (_overlayView == nil) {
         _overlayView = [[MMProgressHUDOverlayView alloc] init];
         _overlayView.alpha = 0.f;
     }
@@ -502,8 +491,6 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
      completion:^(BOOL completed){
          UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, self.hud.accessibilityLabel);
      }];
-
-    
 }
 
 - (void)dismiss{

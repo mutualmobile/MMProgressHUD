@@ -26,13 +26,13 @@
     return YES;
 }
 
-- (void)setUp {
+- (void)setUp{
     [super setUp];
     
     _progressHUD = [[MMProgressHUD alloc] init];
 }
 
-- (void)tearDown {
+- (void)tearDown{
     
     [_progressHUD forceCleanup];
     _progressHUD = nil;
@@ -211,8 +211,6 @@
 
 - (void)testTapHandlerConfirmedTapDismisses{
     id mockProgressHUD = [OCMockObject partialMockForObject:self.progressHUD];
-    
-//    [self prepare];
     
     self.progressHUD.cancelBlock = ^{ /* stuff */ };
     

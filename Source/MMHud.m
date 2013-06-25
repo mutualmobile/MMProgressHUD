@@ -27,6 +27,9 @@ CGFloat    const MMProgressHUDAnimateOutDurationLong    = 0.75f;
 CGFloat    const MMProgressHUDAnimateOutDurationMedium  = 0.55f;
 CGFloat    const MMProgressHUDAnimateOutDurationShort   = 0.35f;
 
+CGSize const MMProgressHUDDefaultContentAreaSize = { 100.f, 100.f };
+CGSize const MMProgressHUDProgressContentAreaSize = { 40.f, 40.f };
+
 NSString * const MMProgressHUDFontNameBold = @"HelveticaNeue-Bold";
 NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
 
@@ -45,10 +48,10 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
 @property (nonatomic, strong) UIView *progressViewContainer;
 @property (nonatomic, strong) MMRadialProgressView *radialProgressView;
 @property (nonatomic, readwrite, getter = isVisible) BOOL visible;
-@property(nonatomic, strong, readwrite) UIActivityIndicatorView *activityIndicator;
-@property (nonatomic) CGRect contentAreaFrame;
-@property (nonatomic) CGRect statusFrame;
-@property (nonatomic) CGRect titleFrame;
+@property (nonatomic, strong, readwrite) UIActivityIndicatorView *activityIndicator;
+@property (nonatomic, assign) CGRect contentAreaFrame;
+@property (nonatomic, assign) CGRect statusFrame;
+@property (nonatomic, assign) CGRect titleFrame;
 
 @end
 
@@ -97,36 +100,26 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
     }
 }
 
-- (void)updateLayoutFrames{
-    
-    self.titleFrame = CGRectZero;
-    self.statusFrame = CGRectZero;
-    self.contentAreaFrame = CGRectZero;
-    
-    CGSize titleSize = CGSizeZero;
-    
-    if(self.titleText){
-        int numberOfLines = 20;
-        CGFloat lineHeight = [self.titleText sizeWithFont:self.titleLabel.font].height;
-        for (CGFloat targetWidth = MMProgressHUDMinimumWidth; numberOfLines > 2; targetWidth += 25.f) {
-            if(targetWidth >= 300.f)
-                break;
-            titleSize = [self.titleText sizeWithFont:self.titleLabel.font constrainedToSize:CGSizeMake(targetWidth, 500.f)];
-            numberOfLines = titleSize.height/lineHeight;
-        }
-        
-        self.titleFrame = CGRectMake(MMProgressHUDContentPadding,
-                                     MMProgressHUDContentPadding,
-                                     titleSize.width,
-                                     titleSize.height);
+- (CGSize)titleLabelSizeForTitleText:(NSString *)titleText {
+    CGSize titleSize=CGSizeZero;
+    NSInteger numberOfLines = 20;
+    CGFloat lineHeight = [titleText sizeWithFont:self.titleLabel.font].height;
+    for (CGFloat targetWidth = MMProgressHUDMinimumWidth; numberOfLines > 2; targetWidth += 25.f) {
+        if(targetWidth >= 300.f)
+            break;
+        titleSize = [titleText sizeWithFont:self.titleLabel.font constrainedToSize:CGSizeMake(targetWidth, 500.f)];
+        numberOfLines = titleSize.height/lineHeight;
     }
-    
+    return titleSize;
+}
+
+- (void)layoutContentAreaForCurrentState {
     if ((self.image || self.animationImages.count > 0) &&
         self.completionState == MMProgressHUDCompletionStateNone) {
         self.contentAreaFrame = CGRectMake(0.f,
                                            CGRectGetMaxY(self.titleFrame) + MMProgressHUDContentPadding,
-                                           100.f,
-                                           100.f);
+                                           MMProgressHUDDefaultContentAreaSize.width,
+                                           MMProgressHUDDefaultContentAreaSize.height);
     }
     else if(self.completionState == MMProgressHUDCompletionStateError ||
             self.completionState == MMProgressHUDCompletionStateSuccess){
@@ -151,34 +144,27 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
             case MMProgressHUDProgressStyleRadial:
                 self.contentAreaFrame = CGRectMake(0.f,
                                                    CGRectGetMaxY(self.titleFrame) + MMProgressHUDContentPadding,
-                                                   40.f,
-                                                   40.f);
+                                                   MMProgressHUDProgressContentAreaSize.width,
+                                                   MMProgressHUDProgressContentAreaSize.height);
                 break;
         }
     }
-    
-    if (!self.titleText) {
-        //adjust content area frame to compensate for extra padding that would have been around title label
-        self.contentAreaFrame = CGRectOffset(self.contentAreaFrame,
-                                             0.f,
-                                             MMProgressHUDContentPadding);
-    }
-    
+}
+
+- (CGSize)statusSizeForMessageText {
     CGSize statusSize = CGSizeZero;
-    if (self.messageText) {
-        for (CGFloat targetWidth = MMProgressHUDMinimumWidth; statusSize.width < statusSize.height + 35.f; targetWidth += 25.f) {//35 is a fudge number
-            if(targetWidth >= 300.f)
-                break;
-            statusSize = [self.messageText sizeWithFont:self.statusLabel.font
-                                      constrainedToSize:CGSizeMake(targetWidth, 500.f)];
-        }
-        
-        self.statusFrame = CGRectMake(MMProgressHUDContentPadding,
-                                      CGRectGetMaxY(self.contentAreaFrame) + MMProgressHUDContentPadding,
-                                      statusSize.width,
-                                      statusSize.height);
+    CGFloat additiveHeightConstant = 35.f;//35 is a fudge number from trial/error
+    CGFloat targetWidthIncrementor = 25.f;
+    for (CGFloat targetWidth = MMProgressHUDMinimumWidth; statusSize.width < statusSize.height + additiveHeightConstant; targetWidth += targetWidthIncrementor) {
+        if(targetWidth >= MMProgressHUDMaximumWidth)
+            break;
+        statusSize = [self.messageText sizeWithFont:self.statusLabel.font
+                                  constrainedToSize:CGSizeMake(targetWidth, 500.f)];
     }
-    
+    return statusSize;
+}
+
+- (void)layoutLabelFramesForStatusSize:(CGSize)statusSize titleSize:(CGSize)titleSize {
     CGFloat largerContentDimension = MAX(titleSize.width, statusSize.width);
     CGFloat upperBoundedContentWidth = MIN(largerContentDimension, MMProgressHUDMaximumWidth);
     CGFloat boundedContentWidth = MAX(upperBoundedContentWidth, MMProgressHUDMinimumWidth);
@@ -197,10 +183,9 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
                                                      hudWidth,
                                                      self.statusFrame.size.height));
     }
-    
-    CGRect imageTitleRect = CGRectUnion(self.titleFrame, self.contentAreaFrame);
-    CGRect finalHudBounds = CGRectUnion(imageTitleRect, self.statusFrame);
-    
+}
+
+- (void)layoutChildContentFramesForFinalHUDBounds:(CGRect)finalHudBounds {
     //center stuff
     self.titleFrame = CGRectMake(MMProgressHUDContentPadding,
                                  self.titleFrame.origin.y,
@@ -211,8 +196,8 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
                                   CGRectGetWidth(finalHudBounds),
                                   CGRectGetHeight(self.statusFrame));
     self.contentAreaFrame = CGRectMake(CGRectGetWidth(finalHudBounds)/2
-                                           - CGRectGetWidth(self.contentAreaFrame)/2
-                                           + MMProgressHUDContentPadding,
+                                       - CGRectGetWidth(self.contentAreaFrame)/2
+                                       + MMProgressHUDContentPadding,
                                        self.contentAreaFrame.origin.y,
                                        CGRectGetWidth(self.contentAreaFrame),
                                        CGRectGetHeight(self.contentAreaFrame));
@@ -220,10 +205,106 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
     self.titleFrame = CGRectIntegral(self.titleFrame);
     self.statusFrame = CGRectIntegral(self.statusFrame);
     self.contentAreaFrame = CGRectIntegral(self.contentAreaFrame);
+}
+
+- (void)updateLayoutFrames{
+    
+    self.titleFrame = CGRectZero;
+    self.statusFrame = CGRectZero;
+    self.contentAreaFrame = CGRectZero;
+    
+    CGSize titleSize = CGSizeZero;
+    
+    if(self.titleText != nil){
+        titleSize = [self titleLabelSizeForTitleText:self.titleText];
+        
+        self.titleFrame = CGRectMake(MMProgressHUDContentPadding,
+                                     MMProgressHUDContentPadding,
+                                     titleSize.width,
+                                     titleSize.height);
+    }
+    
+    [self layoutContentAreaForCurrentState];
+    
+    if (self.titleText == nil) {
+        //adjust content area frame to compensate for extra padding that would have been around title label
+        self.contentAreaFrame = CGRectOffset(self.contentAreaFrame,
+                                             0.f,
+                                             MMProgressHUDContentPadding);
+    }
+    
+    CGSize statusSize = CGSizeZero;
+    if (self.messageText == nil) {
+        statusSize = [self statusSizeForMessageText];
+        
+        self.statusFrame = CGRectMake(MMProgressHUDContentPadding,
+                                      CGRectGetMaxY(self.contentAreaFrame) + MMProgressHUDContentPadding,
+                                      statusSize.width,
+                                      statusSize.height);
+    }
+    
+    [self layoutLabelFramesForStatusSize:statusSize titleSize:titleSize];
+    
+    CGRect imageTitleRect = CGRectUnion(self.titleFrame, self.contentAreaFrame);
+    CGRect finalHudBounds = CGRectUnion(imageTitleRect, self.statusFrame);
+    
+    [self layoutChildContentFramesForFinalHUDBounds:finalHudBounds];
     
     [self _layoutContentArea];
     
     self.needsUpdate = NO;
+}
+
+- (void)frameInitialHUDPositionOffscreenWithDelegate:(id)localDelegate finalHudBounds:(CGRect)finalHudBounds {
+    //create offscreen
+    CGRect hudRect;
+    CGPoint center = [localDelegate hudCenterPointForDisplay:self];
+    
+    hudRect = CGRectMake(roundf(center.x - CGRectGetWidth(finalHudBounds)/2),
+                         roundf(-finalHudBounds.size.height*2),
+                         CGRectGetWidth(finalHudBounds),
+                         CGRectGetHeight(finalHudBounds));
+    
+    
+    hudRect = CGRectIntegral(CGRectInset(hudRect, -MMProgressHUDContentPadding, -MMProgressHUDContentPadding));
+    
+    self.frame = hudRect;
+    
+    CGColorRef blackColor = CGColorRetain([UIColor blackColor].CGColor);
+    
+    self.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.75];
+    self.layer.shadowColor  = blackColor;
+    self.layer.shadowOpacity = 0.5;
+    self.layer.shadowRadius = 15.0f;
+    self.layer.cornerRadius = 10.0f;
+    
+    CGColorRelease(blackColor);
+    
+    self.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin |
+    UIViewAutoresizingFlexibleRightMargin |
+    UIViewAutoresizingFlexibleTopMargin |
+    UIViewAutoresizingFlexibleBottomMargin;
+}
+
+- (void)frameHUDPositionPreservingCenterWithDelegate:(id)localDelegate finalHudBounds:(CGRect)finalHudBounds {
+    //preserve center
+    CGRect hudRect;
+    CGPoint center;
+    if(self.isVisible){
+        center = [localDelegate hudCenterPointForDisplay:self];
+    }
+    else{
+        center = self.center;
+    }
+    
+    hudRect = CGRectMake(roundf(center.x - self.layer.anchorPoint.x * CGRectGetWidth(finalHudBounds)),
+                         roundf(center.y - self.layer.anchorPoint.y * CGRectGetHeight(finalHudBounds) + (0.5 - self.layer.anchorPoint.y) * 2 * MMProgressHUDContentPadding),
+                         CGRectGetWidth(finalHudBounds),
+                         CGRectGetHeight(finalHudBounds));
+    
+    hudRect = CGRectIntegral(CGRectInset(hudRect, -MMProgressHUDContentPadding, -MMProgressHUDContentPadding));
+    
+    self.frame = hudRect;
 }
 
 - (void)applyLayoutFrames{
@@ -231,86 +312,38 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
         [self updateLayoutFrames];
     }
     
-    if (!self.titleText) {
-        self.statusLabel.font = [UIFont fontWithName:MMProgressHUDFontNameBold size:MMProgressHUDDefaultFontSize];
+    if (self.titleText == nil) {
+        self.statusLabel.font = [UIFont fontWithName:MMProgressHUDFontNameBold
+                                                size:MMProgressHUDDefaultFontSize];
     }
     else{
-        self.statusLabel.font = [UIFont fontWithName:MMProgressHUDFontNameNormal size:MMProgressHUDDefaultFontSize];
+        self.statusLabel.font = [UIFont fontWithName:MMProgressHUDFontNameNormal
+                                                size:MMProgressHUDDefaultFontSize];
     }
     
     //animate text change
-    CATransition *titleAnimation = [CATransition animation];
-    titleAnimation.duration = MMProgressHUDAnimateInDurationShort;
-    titleAnimation.type = kCATransitionFade;
-    titleAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
-    [self.titleLabel.layer addAnimation:titleAnimation forKey:@"changeTextTransition"];
+    CATransition *crossfadeTransition = [CATransition animation];
+    crossfadeTransition.duration = MMProgressHUDAnimateInDurationShort;
+    crossfadeTransition.type = kCATransitionFade;
+    crossfadeTransition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+    
+    [self.titleLabel.layer addAnimation:crossfadeTransition forKey:@"changeTextTransition"];
+    [self.statusLabel.layer addAnimation:crossfadeTransition forKey:@"changeTextTransition"];
     
     self.titleLabel.text = self.titleText;
-    
-    CATransition *statusAnimation = [CATransition animation];
-    statusAnimation.duration = MMProgressHUDAnimateInDurationShort;
-    statusAnimation.type = kCATransitionFade;
-    statusAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
-    [self.statusLabel.layer addAnimation:statusAnimation forKey:@"changeTextTransition"];
-    
     self.statusLabel.text = self.messageText;
-    
-    //size HUD
-    CGRect hudRect;
     
     //update container
     CGRect imageTitleRect = CGRectUnion(self.titleFrame, self.contentAreaFrame);
     CGRect finalHudBounds = CGRectUnion(imageTitleRect, self.statusFrame);
     
-    id localDelegate = self.delegate;
+    id<MMHudDelegate> localDelegate = self.delegate;
     
     if (CGRectEqualToRect(self.frame, CGRectZero) == NO) {
-        //preserve center
-        CGPoint center;
-        if(self.isVisible){
-            center = [localDelegate hudCenterPointForDisplay:self];
-        }
-        else{
-            center = self.center;
-        }
-        
-        hudRect = CGRectMake(roundf(center.x - self.layer.anchorPoint.x * CGRectGetWidth(finalHudBounds)),
-                             roundf(center.y - self.layer.anchorPoint.y * CGRectGetHeight(finalHudBounds) + (0.5 - self.layer.anchorPoint.y) * 2 * MMProgressHUDContentPadding),
-                             CGRectGetWidth(finalHudBounds),
-                             CGRectGetHeight(finalHudBounds));
-        
-        hudRect = CGRectIntegral(CGRectInset(hudRect, -MMProgressHUDContentPadding, -MMProgressHUDContentPadding));
-        
-        self.frame = hudRect;
+        [self frameHUDPositionPreservingCenterWithDelegate:localDelegate finalHudBounds:finalHudBounds];
     }
     else{
-        //create offscreen
-        CGPoint center = [localDelegate hudCenterPointForDisplay:self];
-        
-        hudRect = CGRectMake(roundf(center.x - CGRectGetWidth(finalHudBounds)/2),
-                             roundf(-finalHudBounds.size.height*2),
-                             CGRectGetWidth(finalHudBounds),
-                             CGRectGetHeight(finalHudBounds));
-        
-        
-        hudRect = CGRectIntegral(CGRectInset(hudRect, -MMProgressHUDContentPadding, -MMProgressHUDContentPadding));
-        
-        self.frame = hudRect;
-        
-        CGColorRef blackColor = CGColorRetain([UIColor blackColor].CGColor);
-        
-        self.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.75];
-        self.layer.shadowColor  = blackColor;
-        self.layer.shadowOpacity = 0.5;
-        self.layer.shadowRadius = 15.0f;
-        self.layer.cornerRadius = 10.0f;
-        
-        CGColorRelease(blackColor);
-        
-        self.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin |
-        UIViewAutoresizingFlexibleRightMargin |
-        UIViewAutoresizingFlexibleTopMargin |
-        UIViewAutoresizingFlexibleBottomMargin;
+        [self frameInitialHUDPositionOffscreenWithDelegate:localDelegate finalHudBounds:finalHudBounds];
     }
     
     //update subviews' frames
@@ -362,6 +395,24 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
 }
 
 #pragma mark - Private Methods
+- (UIViewContentMode)contentModeForImage:(UIImage *)completionImage {
+    UIViewContentMode contentMode;
+    //layout imageview content mode
+    if ((completionImage.size.width <= CGRectGetWidth(self.imageView.frame)) &&
+        (completionImage.size.height <= CGRectGetHeight(self.imageView.frame))) {
+        contentMode = UIViewContentModeCenter;
+    }
+    else if((completionImage.size.width >= CGRectGetWidth(self.imageView.frame)) &&
+            (completionImage.size.height >= CGRectGetHeight(self.imageView.frame))){
+        contentMode = UIViewContentModeScaleAspectFit;
+    }
+    else{
+        contentMode = UIViewContentModeScaleAspectFill;
+    }
+    
+    return contentMode;
+}
+
 - (void)_layoutContentArea{
     //hud should already be the correct size before getting into this method
     self.progressViewContainer.frame = self.contentAreaFrame;
@@ -438,8 +489,6 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
         [CATransaction commit];
     }
     else{
-        //completionState != MMProgressHUDCompletionStateNone
-        
         UIImage *completionImage = [self.delegate hud:self imageForCompletionState:self.completionState];
         UIViewAnimationOptions animationOptions =
             UIViewAnimationOptionTransitionCrossDissolve |
@@ -452,29 +501,20 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
          duration:MMProgressHUDAnimateInDurationVeryShort
          options:animationOptions
          animations:^{
-        [CATransaction begin];
-        [CATransaction setDisableActions:YES];
-             [self.imageView stopAnimating];
-             
-             //layout imageview content mode
-             if ((completionImage.size.width <= CGRectGetWidth(self.imageView.frame)) &&
-                 (completionImage.size.height <= CGRectGetHeight(self.imageView.frame))) {
-                 self.imageView.contentMode = UIViewContentModeCenter;
+             [CATransaction begin];
+             [CATransaction setDisableActions:YES];
+             {
+                 [self.imageView stopAnimating];
+                 
+                 self.imageView.contentMode = [self contentModeForImage:completionImage];
+                 
+                 [self.activityIndicator stopAnimating];
+                 self.radialProgressView.hidden = YES;
+                 
+                 self.imageView.image = completionImage;
+                 self.imageView.hidden = NO;
              }
-             else if((completionImage.size.width >= CGRectGetWidth(self.imageView.frame)) &&
-                     (completionImage.size.height >= CGRectGetHeight(self.imageView.frame))){
-                 self.imageView.contentMode = UIViewContentModeScaleAspectFit;
-             }
-             else{
-                 self.imageView.contentMode = UIViewContentModeScaleAspectFill;
-             }
-        
-             [self.activityIndicator stopAnimating];
-             self.radialProgressView.hidden = YES;
-             
-             self.imageView.image = completionImage;
-             self.imageView.hidden = NO;
-        [CATransaction commit];
+             [CATransaction commit];
          }
          completion:nil];
     }

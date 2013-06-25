@@ -21,8 +21,7 @@
     return [key isEqualToString:@"progress"] || [super needsDisplayForKey:key];
 }
 
-- (id)actionForKey:(NSString *)key{
-    
+- (id<CAAction>)actionForKey:(NSString *)key{
     if ([key isEqualToString:@"progress"]) {
         CABasicAnimation *progressAnimation = [CABasicAnimation animation];
         progressAnimation.fromValue = [self.presentationLayer valueForKey:key];
@@ -118,8 +117,7 @@
     return [MMRadialProgressLayer class];
 }
 
-- (instancetype)initWithFrame:(CGRect)frame
-{
+- (instancetype)initWithFrame:(CGRect)frame{
     if ((self = [super initWithFrame:frame])) {
         self.backgroundColor = [UIColor clearColor];
         self.layer.contentsScale = [[UIScreen mainScreen] scale];//set this or have fuzzy drawing on retina

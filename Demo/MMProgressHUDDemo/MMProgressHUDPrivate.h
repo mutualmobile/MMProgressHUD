@@ -15,21 +15,21 @@
 
 @interface MMProgressHUD() <MMHudDelegate>
 
-@property (nonatomic, strong)  UIView                *gradientView;
-@property (nonatomic, strong)  MMProgressHUDWindow   *window;
-@property (nonatomic, strong)  UILabel               *titleLabel;
-@property (nonatomic, strong)  UILabel               *statusLabel;
-@property (nonatomic, strong)  UIImageView           *imageView;
+@property (nonatomic, strong) UIView *gradientView;
+@property (nonatomic, strong) MMProgressHUDWindow *window;
+@property (nonatomic, strong) UILabel *titleLabel;
+@property (nonatomic, strong) UILabel *statusLabel;
+@property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, readwrite, getter = isVisible) BOOL visible;
-@property (nonatomic, copy)   NSString              *title;
-@property (nonatomic, copy)   NSString              *status;
-@property (nonatomic, strong)  UIImage               *image;
-@property (nonatomic, copy)    NSArray               *animationImages;
-@property (nonatomic, strong) CAAnimation           *queuedShowAnimation;
-@property (nonatomic, strong) CAAnimation           *queuedDismissAnimation;
-@property (nonatomic)         MMProgressHUDCompletionState completionState;
-@property (nonatomic, strong) UIView                *progressViewContainer;
-@property (nonatomic, strong) MMRadialProgressView  *radialProgressView;
+@property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) NSString *status;
+@property (nonatomic, strong) UIImage *image;
+@property (nonatomic, copy) NSArray *animationImages;
+@property (nonatomic, strong) CAAnimation *queuedShowAnimation;
+@property (nonatomic, strong) CAAnimation *queuedDismissAnimation;
+@property (nonatomic, assign) MMProgressHUDCompletionState completionState;
+@property (nonatomic, strong) UIView *progressViewContainer;
+@property (nonatomic, strong) MMRadialProgressView *radialProgressView;
 @property (nonatomic, strong) MMProgressHUDOverlayView *overlayView;
 
 - (void)_buildTextLabel;

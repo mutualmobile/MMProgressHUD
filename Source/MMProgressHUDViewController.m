@@ -20,35 +20,37 @@
     [self setWantsFullScreenLayout:YES];
 }
 
+- (BOOL)oldRootViewControllerShouldRotateToOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
+    BOOL shouldRotateToOrientation = NO;
+    MMProgressHUDWindow *win = (MMProgressHUDWindow *)self.view.window;
+    UIViewController *rootViewController = win.oldWindow.rootViewController;
+    
+    if ([[self superclass] instancesRespondToSelector:@selector(presentedViewController)] &&
+        ([rootViewController presentedViewController] != nil)) {
+        MMHudLog(@"Presented view controller: %@", rootViewController.presentedViewController);
+        shouldRotateToOrientation = [rootViewController.presentedViewController shouldAutorotateToInterfaceOrientation:toInterfaceOrientation];
+    }
+    
+    if ((shouldRotateToOrientation == NO) &&
+        (rootViewController != nil)) {
+        shouldRotateToOrientation = [rootViewController shouldAutorotateToInterfaceOrientation:toInterfaceOrientation];
+    }
+    else if(rootViewController == nil){
+        MMHudWLog(@"Root view controller for your application cannot be found! Defaulting to liberal rotation handling for your device!");
+        
+        shouldRotateToOrientation = [super shouldAutorotateToInterfaceOrientation:toInterfaceOrientation];
+    }
+    
+    return shouldRotateToOrientation;
+}
+
 /** The rotation callbacks for this view controller will never get fired on iOS <5.0. This must be related to creating a view controller in a new window besides the default keyWindow. Since this is the case, the manual method of animating the rotating the view's transform is used via notification observers added in setView: above.
  
  */
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation{
     
     if ([self.view.window isKindOfClass:[MMProgressHUDWindow class]]) {
-        
-        BOOL shouldRotateToOrientation = NO;
-        MMProgressHUDWindow *win = (MMProgressHUDWindow *)self.view.window;
-        UIViewController *rootViewController = win.oldWindow.rootViewController;
-        
-        if ([[self superclass] instancesRespondToSelector:@selector(presentedViewController)] == YES) {
-            if ([rootViewController presentedViewController] != nil) {
-                MMHudLog(@"Presented view controller: %@", rootViewController.presentedViewController);
-                shouldRotateToOrientation = [rootViewController.presentedViewController shouldAutorotateToInterfaceOrientation:toInterfaceOrientation];
-            }
-        }
-        
-        if ((shouldRotateToOrientation == NO) &&
-            (rootViewController != nil)) {
-            shouldRotateToOrientation = [rootViewController shouldAutorotateToInterfaceOrientation:toInterfaceOrientation];
-        }
-        else if(rootViewController == nil){
-            NSLog(@"Root view controller for your application cannot be found! Defaulting to liberal rotation handling for your device!");
-            
-            shouldRotateToOrientation = [super shouldAutorotateToInterfaceOrientation:toInterfaceOrientation];
-        }
-        
-        return shouldRotateToOrientation;
+        return [self oldRootViewControllerShouldRotateToOrientation:toInterfaceOrientation];;
     }
     else{
         return [super shouldAutorotateToInterfaceOrientation:toInterfaceOrientation];
@@ -64,7 +66,7 @@
         return [rootViewController supportedInterfaceOrientations];
     }
     else{
-        NSLog(@"Root view controller for your application cannot be found! Defaulting to liberal rotation handling for your device!");
+        MMHudWLog(@"Root view controller for your application cannot be found! Defaulting to liberal rotation handling for your device!");
     }
     
     return [super supportedInterfaceOrientations];

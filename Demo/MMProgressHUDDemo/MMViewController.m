@@ -48,14 +48,9 @@ typedef NS_ENUM(NSInteger, MMProgressHUDDemoFeatureType){
     MMProgressHUDDemoNumberOfFeatureTypes
 };
 
-@interface MMViewController ()
-
-@end
-
 @implementation MMViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad{
     [super viewDidLoad];
     
     UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
@@ -63,18 +58,9 @@ typedef NS_ENUM(NSInteger, MMProgressHUDDemoFeatureType){
     tableView.delegate = self;
     tableView.dataSource = self;
     [self.view addSubview:tableView];
-    
-	// Do any additional setup after loading the view, typically from a nib.
 }
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation{
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
 
@@ -291,7 +277,6 @@ typedef NS_ENUM(NSInteger, MMProgressHUDDemoFeatureType){
 
 - (void)configureCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
     NSString *title = nil;
-//    NSString *subtitle = nil;
     
     switch (indexPath.section) {
         case MMProgressHUDDemoSectionFeatures:

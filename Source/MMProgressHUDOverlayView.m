@@ -33,8 +33,7 @@
     return self;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame overlayMode:(MMProgressHUDWindowOverlayMode)overlayMode
-{
+- (instancetype)initWithFrame:(CGRect)frame overlayMode:(MMProgressHUDWindowOverlayMode)overlayMode{
     self = [super initWithFrame:frame];
     if (self) {
         _overlayMode = overlayMode;
@@ -171,10 +170,8 @@
 }
 
 - (void)dealloc{
-    
     CGGradientRelease(_gradientRef);
     CGColorRelease(_overlayColor);
-    
 }
 
 @end

@@ -63,13 +63,13 @@ typedef NS_ENUM(NSInteger, MMProgressHUDWindowOverlayMode){
  
  The default style is indeterminate progress.
  */
-@property (nonatomic) MMProgressHUDProgressStyle progressStyle;
+@property (nonatomic, assign) MMProgressHUDProgressStyle progressStyle;
 
 /** The determinate progress state.
  
  The progress ranges from 0-1.
  */
-@property (nonatomic) CGFloat progress;
+@property (nonatomic, assign) CGFloat progress;
 
 /** A Boolean value that indicates whether or not the HUD is visible. */
 @property(nonatomic, readonly, getter = isVisible) BOOL visible;
@@ -78,28 +78,28 @@ typedef NS_ENUM(NSInteger, MMProgressHUDWindowOverlayMode){
  
  Persistent across show calls.
  */
-@property(nonatomic) MMProgressHUDPresentationStyle presentationStyle;
+@property(nonatomic, assign) MMProgressHUDPresentationStyle presentationStyle;
 
 /** The glow color for the HUD.
  
  The glow color is used during confirmation of a user-cancelled action.
  */
-@property(nonatomic) CGColorRef glowColor;
+@property(nonatomic, assign) CGColorRef glowColor;
 
 /** The default confirmation message for user-confirmed cancellation.
  
 This message will be presented to the user when a cancelBlock is present after the user taps on the screen while the HUD is presented.
 */
-@property(nonatomic, copy)  NSString *confirmationMessage;
+@property(nonatomic, copy) NSString *confirmationMessage;
 
 /** The void block executed when the user confirms their intent to cancel an operation. */
-@property(nonatomic, copy)  void(^cancelBlock)(void);
+@property(nonatomic, copy) void(^cancelBlock)(void);
 
 /** The image to be used for the error state. Persistent across show calls.
  
  The image size is currently fixed to 100x100. The image will scale to fit if the image is larger than 100x100, otherwise it will remain centered.
  */
-@property (nonatomic, strong)  UIImage *errorImage;
+@property (nonatomic, strong) UIImage *errorImage;
 
 /** The image to be used for the success state. Persistent across show calls.
  
@@ -121,12 +121,11 @@ This message will be presented to the user when a cancelBlock is present after t
  */
 @property (nonatomic, copy) void(^dismissAnimationCompletion)(void);
 
-
 /** The HUD that is displaying all information. */
 @property (nonatomic, strong) MMHud *hud;
 
 /** The overlay type for the view behind the HUD */
-@property (nonatomic) MMProgressHUDWindowOverlayMode overlayMode;
+@property (nonatomic, assign) MMProgressHUDWindowOverlayMode overlayMode;
 
 /** The overlay view that is placed just behind the HUD.
  */

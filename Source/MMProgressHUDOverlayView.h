@@ -23,6 +23,6 @@
  @param overlayMode The style of the overlay.
  */
 - (instancetype)initWithFrame:(CGRect)frame
-        overlayMode:(MMProgressHUDWindowOverlayMode)overlayMode;
+                  overlayMode:(MMProgressHUDWindowOverlayMode)overlayMode;
 
 @end

@@ -11,7 +11,6 @@
 @implementation MMProgressHUDWindow
 
 - (instancetype)init{
-    
     if ((self = [super initWithFrame:[[UIScreen mainScreen] bounds]])) {
         self.windowLevel = UIWindowLevelStatusBar;
         

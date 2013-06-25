@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MMProgressHUDViewController : UIViewController{
-    
-}
+@interface MMProgressHUDViewController : UIViewController
 
 @end

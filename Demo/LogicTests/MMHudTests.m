@@ -22,16 +22,11 @@
 
 @implementation MMHudTests
 
-//- (BOOL)shouldRunOnMainThread{
-//    return YES;
-//}
-
 - (void)setUp{
     [super setUp];
     
     _hud = [[MMHud alloc] init];
     _progressHUD = [[MMProgressHUD alloc] init];
-    
     _hud.delegate = _progressHUD;
 }
 
@@ -39,7 +34,6 @@
     _hud.delegate = nil;
     _hud = nil;
     _progressHUD = nil;
-    
     
     [super tearDown];
 }
