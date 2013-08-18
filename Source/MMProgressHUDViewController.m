@@ -10,6 +10,16 @@
 #import "MMProgressHUDWindow.h"
 #import "MMProgressHUD.h"
 
+
+#define suppressDeprecation(Stuff) \
+do { \
+_Pragma("clang diagnostic push") \
+_Pragma("clang diagnostic ignored \"-Wdeprecated-declarations\"") \
+Stuff; \
+_Pragma("clang diagnostic pop") \
+} while (0)
+
+
 @implementation MMProgressHUDViewController
 
 - (void)setView:(UIView *)view{
@@ -24,22 +34,24 @@
     BOOL shouldRotateToOrientation = NO;
     MMProgressHUDWindow *win = (MMProgressHUDWindow *)self.view.window;
     UIViewController *rootViewController = win.oldWindow.rootViewController;
-    
-    if ([[self superclass] instancesRespondToSelector:@selector(presentedViewController)] &&
-        ([rootViewController presentedViewController] != nil)) {
-        MMHudLog(@"Presented view controller: %@", rootViewController.presentedViewController);
-        shouldRotateToOrientation = [rootViewController.presentedViewController shouldAutorotateToInterfaceOrientation:toInterfaceOrientation];
-    }
-    
-    if ((shouldRotateToOrientation == NO) &&
-        (rootViewController != nil)) {
-        shouldRotateToOrientation = [rootViewController shouldAutorotateToInterfaceOrientation:toInterfaceOrientation];
-    }
-    else if(rootViewController == nil){
-        MMHudWLog(@"Root view controller for your application cannot be found! Defaulting to liberal rotation handling for your device!");
-        
-        shouldRotateToOrientation = [super shouldAutorotateToInterfaceOrientation:toInterfaceOrientation];
-    }
+    suppressDeprecation(
+                        if ([[self superclass] instancesRespondToSelector:@selector(presentedViewController)] &&
+                            ([rootViewController presentedViewController] != nil)) {
+                            MMHudLog(@"Presented view controller: %@", rootViewController.presentedViewController);
+                            shouldRotateToOrientation = [rootViewController.presentedViewController shouldAutorotateToInterfaceOrientation:toInterfaceOrientation];
+                        }
+                        
+                        if ((shouldRotateToOrientation == NO) &&
+                            (rootViewController != nil)) {
+                            
+                            shouldRotateToOrientation = [rootViewController shouldAutorotateToInterfaceOrientation:toInterfaceOrientation];
+                        }
+                        else if(rootViewController == nil){
+                            MMHudWLog(@"Root view controller for your application cannot be found! Defaulting to liberal rotation handling for your device!");
+                            
+                            shouldRotateToOrientation = [super shouldAutorotateToInterfaceOrientation:toInterfaceOrientation];
+                        }
+                        );
     
     return shouldRotateToOrientation;
 }

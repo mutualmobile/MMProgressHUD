@@ -59,6 +59,11 @@ typedef NS_ENUM(NSInteger, MMProgressHUDWindowOverlayMode){
 //};
 
 @interface MMProgressHUD : UIView
+
+
+/** A Boolean value that indicates whether or not the HUD has been cancelled manually. */
+@property (nonatomic, assign) BOOL cancelled;
+
 /** An enum to specify the style in which to display progress.
  
  The default style is indeterminate progress.

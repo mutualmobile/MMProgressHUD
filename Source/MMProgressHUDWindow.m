@@ -27,14 +27,8 @@
 
 - (UIWindow *)oldWindow{
     if (_oldWindow == nil) {
-        UIResponder <UIApplicationDelegate> *appDelegate = [[UIApplication sharedApplication] delegate];
-        UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
-        if(keyWindow != nil){
-            self.oldWindow = keyWindow;
-        }
-        else if([appDelegate respondsToSelector:@selector(window)]) {
-            UIWindow *delegateWindow = appDelegate.window;
-            self.oldWindow = delegateWindow;
+        if ([[[UIApplication sharedApplication] windows] count]) {
+            self.oldWindow = [[UIApplication sharedApplication] windows][0];
         }
         else {
             self.oldWindow = nil;

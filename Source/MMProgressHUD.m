@@ -59,6 +59,8 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
 
 @implementation MMProgressHUD
 
+@synthesize cancelled;
+
 #pragma mark - Class Methods
 + (instancetype)sharedHUD{
     static MMProgressHUD *__sharedHUD = nil;
@@ -294,7 +296,7 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
 
 - (void)setProgressCompletion:(void (^)(void))progressCompletion{
     if (progressCompletion != nil) {
-        typeof(self) __weak weakSelf = self;
+        __typeof(self) __weak weakSelf = self;
         _progressCompletion = ^(void){
             progressCompletion();
             
@@ -396,7 +398,7 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
     }
 }
 
-- (void)_updateHUD{
+- (void)_updateHUD {
     [self.hud updateLayoutFrames];
     
     [self.hud updateAnimated:YES withCompletion:nil];
@@ -409,7 +411,7 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
     CGFloat hudHeight = CGRectGetHeight(self.hud.frame);
     
     CGPoint position;
-    if (UIInterfaceOrientationIsPortrait([[[[UIApplication sharedApplication] keyWindow] rootViewController] interfaceOrientation])) {
+    if (UIInterfaceOrientationIsPortrait([[self.window rootViewController] interfaceOrientation])) {
         
         CGFloat y = roundf(self.window.center.y + (anchor.y - 0.5f) * hudHeight);
         CGFloat x = roundf(self.window.center.x);
@@ -480,11 +482,7 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
     
     CGFloat duration = (self.presentationStyle == MMProgressHUDPresentationStyleNone) ? 0.f : MMProgressHUDAnimateInDurationShort;
     
-    [UIView
-     animateWithDuration:duration
-     delay:0.f
-     options:UIViewAnimationOptionCurveEaseOut |
-             UIViewAnimationOptionBeginFromCurrentState
+    [UIView animateWithDuration:duration delay:0.f options:UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionBeginFromCurrentState
      animations:^{
          self.overlayView.alpha = 1.0f;
      }
@@ -599,22 +597,26 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
        (self.confirmed == NO)){
         MMHudLog(@"Asking to confirm cancel");
         
-        self.tempStatus = [self.status copy];
+        self.confirmed = YES;
+        
+        self.tempStatus = self.status.copy;
         CGFloat timerDuration = MMProgressHUDAnimateInDurationNormal*MMProgressHUDConfirmationPulseCount;
         self.confirmationTimer = [NSTimer scheduledTimerWithTimeInterval:timerDuration
                                                                   target:self
                                                                 selector:@selector(_resetConfirmationTimer:)
                                                                 userInfo:nil
                                                                  repeats:NO];
+        
         self.status = self.confirmationMessage;
     
         [self.hud updateTitle:self.hud.titleText message:self.confirmationMessage animated:YES];
         
-        self.confirmed = YES;
+        
         
         [self _beginGlowAnimation];
     }
     else if(self.confirmed){
+        self.cancelled = YES;
         MMHudLog(@"confirmed to dismiss!");
         
         [self.confirmationTimer invalidate], self.confirmationTimer = nil;

@@ -10,6 +10,7 @@
 #import "MMHud.h"
 #import "MMProgressHUD.h"
 #import "MMRadialProgressView.h"
+#import "MMRadialProgress.h"
 
 CGFloat    const MMProgressHUDDefaultFontSize           = 16.f;
 
@@ -46,7 +47,7 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
 @interface MMHud()
 
 @property (nonatomic, strong) UIView *progressViewContainer;
-@property (nonatomic, strong) MMRadialProgressView *radialProgressView;
+@property (nonatomic, strong) UIView <MMRadialProgress> *radialProgressView;
 @property (nonatomic, readwrite, getter = isVisible) BOOL visible;
 @property (nonatomic, strong, readwrite) UIActivityIndicatorView *activityIndicator;
 @property (nonatomic, assign) CGRect contentAreaFrame;
@@ -112,7 +113,6 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
     else if(self.completionState == MMProgressHUDCompletionStateError ||
             self.completionState == MMProgressHUDCompletionStateSuccess){
         UIImage *image = [self.delegate hud:self imageForCompletionState:self.completionState];
-        
         self.contentAreaFrame = CGRectMake(0.f,
                                            CGRectGetMaxY(self.titleFrame) + MMProgressHUDContentPadding,
                                            image.size.width,
@@ -588,9 +588,13 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
     return _imageView;
 }
 
-- (MMRadialProgressView *)radialProgressView{
+- (Class)radialProgressViewClass {
+    return [MMRadialProgress class];
+}
+
+- (UIView <MMRadialProgress> *)radialProgressView{
     if (_radialProgressView == nil) {
-        _radialProgressView = [[MMRadialProgressView alloc] initWithFrame:self.progressViewContainer.bounds];
+        _radialProgressView = [[[self radialProgressViewClass] alloc] initWithFrame:self.progressViewContainer.bounds];
         _radialProgressView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [self.progressViewContainer addSubview:_radialProgressView];
     }
@@ -637,7 +641,7 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
 #pragma clang diagnostic ignored "-Wdirect-ivar-access"
     _progress = progress;
     
-    typeof(self) __weak weakSelf = self;
+    __typeof(self) __weak weakSelf = self;
     
     void(^completionBlock)(BOOL completed) = ^(BOOL completed) {
         MMHud *blockSelf = weakSelf;
