@@ -551,6 +551,8 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
          
          [self.window setHidden:YES], self.window = nil;
          
+         self.cancelled = NO;
+         
          UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, nil);
      }];
 }

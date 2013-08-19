@@ -116,6 +116,12 @@ typedef NS_ENUM(NSInteger, MMProgressHUDCompletionState){
  */
 @property (nonatomic, assign) MMProgressHUDProgressStyle progressStyle;
 
+/** The class to use for the radial progress style. Instances of this class must confrom to the MMRadialProgress protocol. When setting a custom value this value must be set before setting the MMProgressHUDProgressStyle to MMProgressHUDProgressStyleRadial.
+ 
+ Defaults to MMRadialProgressView
+ */
+@property (nonatomic, assign) Class radialProgressViewClass;
+
 /** The HUD's indeterminate activity indicator. */
 @property (nonatomic, strong, readonly) UIActivityIndicatorView *activityIndicator;
 

@@ -10,7 +10,6 @@
 #import "MMHud.h"
 #import "MMProgressHUD.h"
 #import "MMRadialProgressView.h"
-#import "MMRadialProgress.h"
 
 CGFloat    const MMProgressHUDDefaultFontSize           = 16.f;
 
@@ -57,6 +56,8 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
 @end
 
 @implementation MMHud
+
+@synthesize radialProgressViewClass = _radialProgressViewClass;
 
 - (instancetype)init{
     if ( (self = [super init]) ) {
@@ -577,6 +578,23 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
 }
 
 #pragma mark - Property Overrides
+
+- (Class)radialProgressViewClass {
+    if (_radialProgressViewClass == Nil) {
+        self.radialProgressViewClass = [MMRadialProgressView class];
+    }
+    return _radialProgressViewClass;
+}
+
+- (void)setRadialProgressViewClass:(Class)radialProgressViewClass {
+    if ([radialProgressViewClass conformsToProtocol:@protocol(MMRadialProgress)]) {
+        _radialProgressViewClass = radialProgressViewClass;
+    }
+    else {
+        _radialProgressViewClass = Nil;
+    }
+}
+
 - (UIImageView *)imageView{
     if (_imageView == nil) {
         _imageView = [[UIImageView alloc] initWithFrame:self.progressViewContainer.bounds];
@@ -586,10 +604,6 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
     }
     
     return _imageView;
-}
-
-- (Class)radialProgressViewClass {
-    return [MMRadialProgress class];
 }
 
 - (UIView <MMRadialProgress> *)radialProgressView{
