@@ -59,8 +59,6 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
 
 @implementation MMHud
 
-@synthesize progressViewClass = _progressViewClass;
-
 - (instancetype)init {
     if ( (self = [super init]) ) {
         _needsUpdate = YES;
@@ -70,6 +68,7 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
         [self configureInitialDisplayAttributes];
         
         self.isAccessibilityElement = YES;
+        self.progressViewClass = [MMRadialProgressView class];
     }
     
     return self;
@@ -257,7 +256,7 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
     self.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
 }
 
-- (void)frameInitialHUDPositionOffscreenWithDelegate:(id)localDelegate finalHudBounds:(CGRect)finalHudBounds {
+- (void)frameInitialHUDPositionOffscreenWithDelegate:(id<MMHudDelegate>)localDelegate finalHudBounds:(CGRect)finalHudBounds {
     //create offscreen
     CGRect hudRect;
     CGPoint center = [localDelegate hudCenterPointForDisplay:self];
@@ -275,7 +274,7 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
     [self configureInitialDisplayAttributes];
 }
 
-- (void)frameHUDPositionPreservingCenterWithDelegate:(id)localDelegate finalHudBounds:(CGRect)finalHudBounds {
+- (void)frameHUDPositionPreservingCenterWithDelegate:(id<MMHudDelegate>)localDelegate finalHudBounds:(CGRect)finalHudBounds {
     //preserve center
     CGRect hudRect;
     CGPoint center;
@@ -512,11 +511,11 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
         _statusLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         _statusLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
         _statusLabel.numberOfLines = 0;
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+//#pragma clang diagnostic push
+//#pragma clang diagnostic ignored "-Wdeprecated-declarations"
         _statusLabel.lineBreakMode = UILineBreakModeWordWrap;
         _statusLabel.textAlignment = UITextAlignmentCenter;
-#pragma clang diagnostic pop
+//#pragma clang diagnostic pop
         _statusLabel.backgroundColor = [UIColor clearColor];
         _statusLabel.font = [UIFont fontWithName:MMProgressHUDFontNameNormal size:MMProgressHUDDefaultFontSize];
         _statusLabel.textColor = [UIColor colorWithWhite:0.9f alpha:0.95f];
@@ -570,17 +569,9 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
 }
 
 #pragma mark - Property Overrides
-
-- (Class)progressViewClass {
-    if (_progressViewClass == Nil) {
-        self.progressViewClass = [MMRadialProgressView class];
-    }
-    return _progressViewClass;
-}
-
 - (void)setProgressViewClass:(Class)progressViewClass {
     if (progressViewClass != Nil) {
-        Protocol *expectedProtocol = @protocol(MMProgressView);
+        Protocol * __unused expectedProtocol = @protocol(MMProgressView);
         
         NSAssert([progressViewClass conformsToProtocol:expectedProtocol], @"Class %@ doesn't conform to %@ protocol", NSStringFromClass(progressViewClass), NSStringFromProtocol(expectedProtocol));
     }

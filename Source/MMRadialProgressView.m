@@ -139,16 +139,21 @@
 }
 
 - (void)setProgress:(CGFloat)progress animated:(BOOL)animated withCompletion:(void(^)(BOOL completed))completion {
-    NSUInteger options = (UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionBeginFromCurrentState);
+    [CATransaction begin];
+    [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
+    if (animated == NO) {
+        [CATransaction setDisableActions:YES];
+    }
     
-    [UIView
-     animateWithDuration:animated ? 0.25f : 0.f
-     delay:0.f
-     options:options
-     animations:^{
-         [((MMRadialProgressLayer *)self.layer) setProgress:progress];
-     }
-     completion:completion];
+    [CATransaction setCompletionBlock:^{
+        if (completion) {
+            completion(YES);
+        }
+    }];
+    
+    [((UIView <MMProgressView>*)self.layer) setProgress:progress];
+    
+    [CATransaction commit];
 }
 
 - (CGFloat)progress {

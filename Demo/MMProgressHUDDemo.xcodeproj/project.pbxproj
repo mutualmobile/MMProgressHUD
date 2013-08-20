@@ -23,6 +23,7 @@
 		46A19B6B15549F5200D65BB8 /* 4.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A19B6515549F5200D65BB8 /* 4.png */; };
 		46A19B6C15549F5200D65BB8 /* 5.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A19B6615549F5200D65BB8 /* 5.png */; };
 		46A19B6D15549F5200D65BB8 /* 6.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A19B6715549F5200D65BB8 /* 6.png */; };
+		46ACE86A17C3C1470075C2A0 /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46ACE86917C3C1470075C2A0 /* libOCMock.a */; };
 		46F3F73F16D1E76700E255A2 /* MMVectorImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 46F3F73E16D1E76700E255A2 /* MMVectorImage.m */; };
 		46F3F74016D1E76700E255A2 /* MMVectorImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 46F3F73E16D1E76700E255A2 /* MMVectorImage.m */; };
 		46F3F74116D1E76700E255A2 /* MMVectorImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 46F3F73E16D1E76700E255A2 /* MMVectorImage.m */; };
@@ -47,7 +48,6 @@
 		55F0589E159E058600A47983 /* MMProgressHUDWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 5527AEFE159CD7D50037D67D /* MMProgressHUDWindow.m */; };
 		55F0589F159E058600A47983 /* MMProgressHUDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5527AF02159CD8200037D67D /* MMProgressHUDViewController.m */; };
 		55F058A1159E059E00A47983 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A19B5F15549B0300D65BB8 /* QuartzCore.framework */; };
-		55F0592B159E291700A47983 /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F05922159E291700A47983 /* libOCMock.a */; };
 		55F0592C159E39B300A47983 /* GHUnitIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F05891159E039800A47983 /* GHUnitIOS.framework */; };
 		55F0592D159E39C400A47983 /* MMProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A19B5C155493B500D65BB8 /* MMProgressHUD.m */; };
 		55F0592E159E39CB00A47983 /* MMRadialProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 550D504B15615BEF0092B975 /* MMRadialProgressView.m */; };
@@ -104,6 +104,7 @@
 		46A19B6515549F5200D65BB8 /* 4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 4.png; sourceTree = "<group>"; };
 		46A19B6615549F5200D65BB8 /* 5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 5.png; sourceTree = "<group>"; };
 		46A19B6715549F5200D65BB8 /* 6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 6.png; sourceTree = "<group>"; };
+		46ACE86917C3C1470075C2A0 /* libOCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libOCMock.a; path = OCMock/libOCMock.a; sourceTree = "<group>"; };
 		46F3F73D16D1E76700E255A2 /* MMVectorImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMVectorImage.h; sourceTree = "<group>"; };
 		46F3F73E16D1E76700E255A2 /* MMVectorImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMVectorImage.m; sourceTree = "<group>"; };
 		550D504A15615BEF0092B975 /* MMRadialProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMRadialProgressView.h; sourceTree = "<group>"; };
@@ -123,7 +124,6 @@
 		55F05893159E048F00A47983 /* GHUnitTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GHUnitTests-Info.plist"; sourceTree = "<group>"; };
 		55F05894159E048F00A47983 /* GHUnitTests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GHUnitTests-Prefix.pch"; sourceTree = "<group>"; };
 		55F05895159E048F00A47983 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		55F05922159E291700A47983 /* libOCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libOCMock.a; path = OCMock/libOCMock.a; sourceTree = "<group>"; };
 		55F0595415A1FCEC00A47983 /* NSNotificationCenter+OCMAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotificationCenter+OCMAdditions.h"; sourceTree = "<group>"; };
 		55F0595515A1FCEC00A47983 /* OCMArg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMArg.h; sourceTree = "<group>"; };
 		55F0595615A1FCEC00A47983 /* OCMConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMConstraint.h; sourceTree = "<group>"; };
@@ -167,7 +167,6 @@
 				55F05880159E02DD00A47983 /* CoreGraphics.framework in Frameworks */,
 				55F05892159E039800A47983 /* GHUnitIOS.framework in Frameworks */,
 				55F058A1159E059E00A47983 /* QuartzCore.framework in Frameworks */,
-				55F0592B159E291700A47983 /* libOCMock.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -181,6 +180,7 @@
 				6936CF0215828F6600D931E7 /* CoreGraphics.framework in Frameworks */,
 				55F0592C159E39B300A47983 /* GHUnitIOS.framework in Frameworks */,
 				55F05932159E39D500A47983 /* QuartzCore.framework in Frameworks */,
+				46ACE86A17C3C1470075C2A0 /* libOCMock.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,7 +214,7 @@
 		46A19B35155492E000D65BB8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				55F05922159E291700A47983 /* libOCMock.a */,
+				46ACE86917C3C1470075C2A0 /* libOCMock.a */,
 				55F05891159E039800A47983 /* GHUnitIOS.framework */,
 				46A19B3A155492E000D65BB8 /* CoreGraphics.framework */,
 				46A19B38155492E000D65BB8 /* Foundation.framework */,
@@ -655,7 +655,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MMProgressHUDDemo/MMProgressHUDDemo-Prefix.pch";
@@ -673,6 +676,7 @@
 					"-Wunreachable-code",
 					"-Wimplicit-retain-self",
 					"-Wno-unused-parameter",
+					"-Wdeprecated-declarations",
 				);
 				WRAPPER_EXTENSION = app;
 			};
@@ -682,7 +686,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MMProgressHUDDemo/MMProgressHUDDemo-Prefix.pch";
@@ -700,6 +707,7 @@
 					"-Wunreachable-code",
 					"-Wimplicit-retain-self",
 					"-Wno-unused-parameter",
+					"-Wdeprecated-declarations",
 				);
 				WRAPPER_EXTENSION = app;
 			};
@@ -781,19 +789,16 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
-					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)\"/**",
 				);
 				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LogicTests/LogicTests-Prefix.pch";
-				HEADER_SEARCH_PATHS = "\"$(PROJECT_DIR)\"/**";
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/OCMock\"/**";
 				INFOPLIST_FILE = "LogicTests/LogicTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)\"/**",
-					"\"$(SRCROOT)/OCMock\"",
-				);
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/OCMock\"";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-force_load",
@@ -812,19 +817,16 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
-					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)\"/**",
 				);
 				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LogicTests/LogicTests-Prefix.pch";
-				HEADER_SEARCH_PATHS = "\"$(PROJECT_DIR)\"/**";
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/OCMock\"/**";
 				INFOPLIST_FILE = "LogicTests/LogicTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)\"/**",
-					"\"$(SRCROOT)/OCMock\"",
-				);
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/OCMock\"";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-force_load",
