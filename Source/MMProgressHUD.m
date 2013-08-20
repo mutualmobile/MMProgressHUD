@@ -59,8 +59,6 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
 
 @implementation MMProgressHUD
 
-@synthesize cancelled;
-
 #pragma mark - Class Methods
 + (instancetype)sharedHUD{
     static MMProgressHUD *__sharedHUD = nil;

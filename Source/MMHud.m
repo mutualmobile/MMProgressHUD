@@ -250,6 +250,8 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
     self.layer.shadowRadius = 15.0f;
     self.layer.cornerRadius = 10.0f;
     
+    self.indeterminate = YES;
+    
     CGColorRelease(blackColor);
     
     self.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
