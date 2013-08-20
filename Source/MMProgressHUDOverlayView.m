@@ -16,16 +16,16 @@
 
 @implementation MMProgressHUDOverlayView
 
-- (instancetype)init{
+- (instancetype)init {
     self = [self initWithFrame:CGRectZero];
-    if(self){
+    if (self) {
         //do more stuff
     }
     
     return self;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame{
+- (instancetype)initWithFrame:(CGRect)frame {
     self = [self initWithFrame:frame overlayMode:MMProgressHUDWindowOverlayModeGradient];
     if (self) {
         //do stuff
@@ -33,7 +33,7 @@
     return self;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame overlayMode:(MMProgressHUDWindowOverlayMode)overlayMode{
+- (instancetype)initWithFrame:(CGRect)frame overlayMode:(MMProgressHUDWindowOverlayMode)overlayMode {
     self = [super initWithFrame:frame];
     if (self) {
         _overlayMode = overlayMode;
@@ -55,7 +55,7 @@
     return self;
 }
 
-- (void)drawRect:(CGRect)rect{
+- (void)drawRect:(CGRect)rect {
     [super drawRect:rect];
     
     switch (self.overlayMode) {
@@ -75,7 +75,7 @@
     }
 }
 
-- (void)_buildGradient{
+- (void)_buildGradient {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdirect-ivar-access"
     if (_gradientRef) {
@@ -114,7 +114,7 @@
 #pragma clang diagnostic pop
 }
 
-- (void)_drawRadialGradientInRect:(CGRect)rect{
+- (void)_drawRadialGradientInRect:(CGRect)rect {
     CGContextRef context = UIGraphicsGetCurrentContext();
     
     CGContextSaveGState(context);
@@ -137,7 +137,7 @@
     CGContextRestoreGState(context);
 }
 
-- (void)_drawLinearOverlayInRect:(CGRect)rect{
+- (void)_drawLinearOverlayInRect:(CGRect)rect {
     CGContextRef context = UIGraphicsGetCurrentContext();
     
     CGContextSaveGState(context);
@@ -153,7 +153,7 @@
     CGContextRestoreGState(context);
 }
 
-- (void)setOverlayMode:(MMProgressHUDWindowOverlayMode)overlayMode{
+- (void)setOverlayMode:(MMProgressHUDWindowOverlayMode)overlayMode {
     if (_overlayMode != overlayMode) {
         _overlayMode = overlayMode;
     }
@@ -161,7 +161,7 @@
     [self setNeedsDisplay];
 }
 
-- (void)setOverlayColor:(CGColorRef)overlayColor{
+- (void)setOverlayColor:(CGColorRef)overlayColor {
     CGColorRelease(_overlayColor);
     _overlayColor = CGColorCreateCopy(overlayColor);
     
@@ -169,7 +169,7 @@
     [self setNeedsDisplay];
 }
 
-- (void)dealloc{
+- (void)dealloc {
     CGGradientRelease(_gradientRef);
     CGColorRelease(_overlayColor);
 }

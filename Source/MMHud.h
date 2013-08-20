@@ -28,7 +28,7 @@ typedef NS_ENUM(NSInteger, MMProgressHUDDisplayStyle) {
     MMProgressHUDDisplayStyleBordered,
 };
 
-typedef NS_ENUM(NSInteger, MMProgressHUDCompletionState){
+typedef NS_ENUM(NSInteger, MMProgressHUDCompletionState) {
     MMProgressHUDCompletionStateNone = 0,
     MMProgressHUDCompletionStateError,
     MMProgressHUDCompletionStateSuccess,

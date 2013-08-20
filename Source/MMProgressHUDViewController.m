@@ -46,7 +46,7 @@ _Pragma("clang diagnostic pop") \
                             
                             shouldRotateToOrientation = [rootViewController shouldAutorotateToInterfaceOrientation:toInterfaceOrientation];
                         }
-                        else if(rootViewController == nil){
+                        else if (rootViewController == nil) {
                             MMHudWLog(@"Root view controller for your application cannot be found! Defaulting to liberal rotation handling for your device!");
                             
                             shouldRotateToOrientation = [super shouldAutorotateToInterfaceOrientation:toInterfaceOrientation];
@@ -59,17 +59,17 @@ _Pragma("clang diagnostic pop") \
 /** The rotation callbacks for this view controller will never get fired on iOS <5.0. This must be related to creating a view controller in a new window besides the default keyWindow. Since this is the case, the manual method of animating the rotating the view's transform is used via notification observers added in setView: above.
  
  */
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation{
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
     
     if ([self.view.window isKindOfClass:[MMProgressHUDWindow class]]) {
         return [self oldRootViewControllerShouldRotateToOrientation:toInterfaceOrientation];;
     }
-    else{
+    else {
         return [super shouldAutorotateToInterfaceOrientation:toInterfaceOrientation];
     }
 }
 
-- (NSUInteger)supportedInterfaceOrientations{
+- (NSUInteger)supportedInterfaceOrientations {
     MMProgressHUDWindow *win = (MMProgressHUDWindow *)self.view.window;
     UIViewController *rootViewController = win.oldWindow.rootViewController;
     
@@ -77,14 +77,14 @@ _Pragma("clang diagnostic pop") \
         [rootViewController respondsToSelector:@selector(supportedInterfaceOrientations)]) {
         return [rootViewController supportedInterfaceOrientations];
     }
-    else{
+    else {
         MMHudWLog(@"Root view controller for your application cannot be found! Defaulting to liberal rotation handling for your device!");
     }
     
     return [super supportedInterfaceOrientations];
 }
 
-- (BOOL)shouldAutorotate{
+- (BOOL)shouldAutorotate {
     MMProgressHUDWindow *win = (MMProgressHUDWindow *)self.view.window;
     UIViewController *rootViewController = win.oldWindow.rootViewController;
     
@@ -93,14 +93,14 @@ _Pragma("clang diagnostic pop") \
         
         return [rootViewController shouldAutorotate];
     }
-    else{
+    else {
         MMHudWLog(@"Root view controller for your application cannot be found! Defaulting to liberal rotation handling for your device!");
     }
     
     return [super shouldAutorotate];
 }
 
-- (void)dealloc{
+- (void)dealloc {
     MMHudLog(@"dealloc");
 }
 

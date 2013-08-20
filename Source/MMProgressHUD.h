@@ -34,7 +34,7 @@ extern float const MMProgressHUDStandardDismissDelay;
 @class MMProgressHUDWindow;
 @class MMProgressHUDOverlayView;
 
-typedef NS_ENUM(NSInteger, MMProgressHUDPresentationStyle){
+typedef NS_ENUM(NSInteger, MMProgressHUDPresentationStyle) {
     MMProgressHUDPresentationStyleDrop = 0, //default
     MMProgressHUDPresentationStyleExpand,
     MMProgressHUDPresentationStyleShrink,
@@ -45,7 +45,7 @@ typedef NS_ENUM(NSInteger, MMProgressHUDPresentationStyle){
     MMProgressHUDPresentationStyleNone
 };
 
-typedef NS_ENUM(NSInteger, MMProgressHUDWindowOverlayMode){
+typedef NS_ENUM(NSInteger, MMProgressHUDWindowOverlayMode) {
     MMProgressHUDWindowOverlayModeNone = -1,
     MMProgressHUDWindowOverlayModeGradient = 0,
     MMProgressHUDWindowOverlayModeLinear,

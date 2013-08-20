@@ -49,18 +49,18 @@
     return glowGroup;
 }
 
-- (void)_beginGlowAnimation{
+- (void)_beginGlowAnimation {
     
     CAAnimationGroup *glowGroup = [self _glowAnimation];
     
     [self.hud.layer addAnimation:glowGroup forKey:@"glow-animation"];
 }
 
-- (void)_endGlowAnimation{
+- (void)_endGlowAnimation {
     [self.hud.layer removeAnimationForKey:@"glow-animation"];
 }
 
-- (void)_showWithDropAnimation{
+- (void)_showWithDropAnimation {
     self.hud.layer.anchorPoint = CGPointMake(0.5f, 0.f);
     
     CGPoint newCenter = [self _windowCenterForHUDAnchor:self.hud.layer.anchorPoint];
@@ -76,7 +76,7 @@
     [CATransaction commit];
 }
 
-- (void)_dismissWithDropAnimation{
+- (void)_dismissWithDropAnimation {
     
     double newAngle = arc4random_uniform(1000)/1000.f*M_2_PI-(M_2_PI)/2.f;
     CGPoint newPosition = CGPointMake(self.hud.layer.position.x, self.frame.size.height + self.hud.frame.size.height);
@@ -92,7 +92,7 @@
     [CATransaction commit];
 }
 
-- (void)_showWithExpandAnimation{
+- (void)_showWithExpandAnimation {
     self.hud.layer.anchorPoint = CGPointMake(0.5, 0.5);
     self.hud.layer.position =  [self _windowCenterForHUDAnchor:self.hud.layer.anchorPoint];
     self.hud.alpha = 0.f;
@@ -108,7 +108,7 @@
     [CATransaction commit];
 }
 
-- (void)_dismissWithExpandAnimation{
+- (void)_dismissWithExpandAnimation {
     [CATransaction begin];
     [CATransaction setDisableActions:YES];
     {   
@@ -120,7 +120,7 @@
     [CATransaction commit];
 }
 
-- (void)_showWithShrinkAnimation{
+- (void)_showWithShrinkAnimation {
     self.hud.layer.anchorPoint = CGPointMake(0.5, 0.5);
     self.hud.layer.position = [self _windowCenterForHUDAnchor:self.hud.layer.anchorPoint];
     self.hud.alpha = 0.f;
@@ -136,7 +136,7 @@
     [CATransaction commit];
 }
 
-- (void)_dismissWithShrinkAnimation{
+- (void)_dismissWithShrinkAnimation {
     [CATransaction begin];
     [CATransaction setDisableActions:YES];
     {   
@@ -148,7 +148,7 @@
     [CATransaction commit];
 }
 
-- (void)_showWithSwingInAnimationFromLeft:(BOOL)fromLeft{
+- (void)_showWithSwingInAnimationFromLeft:(BOOL)fromLeft {
     self.hud.layer.anchorPoint = CGPointMake(0.5f, 0.0f);
     
     [CATransaction begin];
@@ -162,15 +162,15 @@
     [CATransaction commit];
 }
 
-- (void)_dismissWithSwingRightAnimation{
+- (void)_dismissWithSwingRightAnimation {
     [self _dismissWithDropAnimation];
 }
 
-- (void)_dismissWithSwingLeftAnimation{
+- (void)_dismissWithSwingLeftAnimation {
     [self _dismissWithDropAnimation];
 }
 
-- (void)_showWithBalloonAnimation{
+- (void)_showWithBalloonAnimation {
     self.hud.layer.anchorPoint = CGPointMake(0.5, 1.0);
     
     [CATransaction begin];
@@ -187,7 +187,7 @@
     [CATransaction commit];
 }
 
-- (void)_dismissWithBalloonAnimation{
+- (void)_dismissWithBalloonAnimation {
     self.hud.layer.anchorPoint = CGPointMake(0.5f, 1.0f);
     
     [CATransaction begin];
@@ -203,7 +203,7 @@
     [CATransaction commit];
 }
 
-- (void)_showWithFadeAnimation{
+- (void)_showWithFadeAnimation {
     self.hud.layer.anchorPoint = CGPointMake(0.5, 0.5);
     self.hud.layer.transform = CATransform3DIdentity;
     
@@ -218,7 +218,7 @@
     [CATransaction commit];
 }
 
-- (void)_dismissWithFadeAnimation{
+- (void)_dismissWithFadeAnimation {
     self.hud.layer.anchorPoint = CGPointMake(0.5, 0.5);
     self.hud.layer.transform = CATransform3DIdentity;
     
@@ -267,7 +267,7 @@
     return dropInPositionAnimation;
 }
 
-- (CAKeyframeAnimation *)_dropInAnimationRotationAnimationWithInitialAngle:(CGFloat)initialAngle keyTimes:(NSArray *)keyTimes{
+- (CAKeyframeAnimation *)_dropInAnimationRotationAnimationWithInitialAngle:(CGFloat)initialAngle keyTimes:(NSArray *)keyTimes {
     CAKeyframeAnimation *rotation = [CAKeyframeAnimation animationWithKeyPath:@"transform.rotation.z"];
     rotation.values = @[@(initialAngle),
                         @(-initialAngle * 0.85),
@@ -281,7 +281,7 @@
     return rotation;
 }
 
-- (CAAnimation *)_dropAnimationIn{
+- (CAAnimation *)_dropAnimationIn {
     CGFloat initialAngle = M_2_PI/10.f + arc4random_uniform(1000)/1000.f*M_2_PI/5.f;
     CGPoint newCenter = [self _windowCenterForHUDAnchor:self.hud.layer.anchorPoint];
     
@@ -303,7 +303,7 @@
     return showAnimation;
 }
 
-- (CAAnimation *)_dropAnimationOut{
+- (CAAnimation *)_dropAnimationOut {
     double newAngle = arc4random_uniform(1000)/1000.f*M_2_PI-(M_2_PI)/2.f;
     CATransform3D rotation = CATransform3DMakeRotation(newAngle, 0.f, 0.f, 1.f);
     CGPoint newPosition = CGPointMake(self.hud.layer.position.x, self.frame.size.height + self.hud.frame.size.height);
@@ -325,7 +325,7 @@
     return fallOffAnimation;
 }
 
-- (CAAnimation *)_shrinkAnimation:(BOOL)shrink animateOut:(BOOL)fadeOut{
+- (CAAnimation *)_shrinkAnimation:(BOOL)shrink animateOut:(BOOL)fadeOut {
     CGFloat startingOpacity;// = fadeOut ? 1.0 : 0.f;
     CGFloat startingScale;// = shrink ? 0.25 : 1.0f;
     CGFloat endingOpacity;
@@ -339,11 +339,11 @@
         if (shrink) {
             endingScale = 0.25f;
         }
-        else{
+        else {
             endingScale = 3.f;
         }
     }
-    else{
+    else {
         startingOpacity = 0.f;
         endingScale = 1.f;
         endingOpacity = 1.f;
@@ -351,7 +351,7 @@
         if (shrink) {//shrink in
             startingScale = 3.f;
         }
-        else{//expand in
+        else {//expand in
             startingScale = 0.25f;
         }
     }
@@ -367,13 +367,13 @@
                              @(startingScale*1.2f),
                              @(endingScale)];
         }
-        else{
+        else {
             expand.values = @[@(startingScale),
                              @(startingScale*0.8f),
                              @(endingScale)];
         }
     }
-    else{
+    else {
         expand.keyTimes = @[@0.f,
                            @0.65f,
                            @0.80f,
@@ -385,7 +385,7 @@
                              @(endingScale*1.1f),
                              @(endingScale)];
         }
-        else{
+        else {
             expand.values = @[@(startingScale),
                              @(endingScale*1.1f),
                              @(endingScale*0.9f),
@@ -408,7 +408,7 @@
     return animationGroup;
 }
 
-- (CAAnimation *)_swingInAnimationFromLeft:(BOOL)fromLeft{
+- (CAAnimation *)_swingInAnimationFromLeft:(BOOL)fromLeft {
     CAKeyframeAnimation *rotate = [CAKeyframeAnimation animationWithKeyPath:@"transform.rotation"];
     
     CGPoint endPoint = [self _windowCenterForHUDAnchor:self.hud.layer.anchorPoint];
@@ -424,7 +424,7 @@
         height = CGRectGetHeight(self.window.frame);
         width = CGRectGetWidth(self.window.frame);
     }
-    else{
+    else {
         height = CGRectGetWidth(self.window.frame);
         width = CGRectGetHeight(self.window.frame);
     }
@@ -441,11 +441,11 @@
                          [NSNumber numberWithFloat:M_PI_4/12],
                          @0.0f];
     }
-    else{//swing in from right
+    else {//swing in from right
         if (UIInterfaceOrientationIsPortrait([[[[UIApplication sharedApplication] keyWindow] rootViewController] interfaceOrientation])) {
             startPoint = CGPointMake(CGRectGetWidth(self.window.frame) + CGRectGetWidth(self.hud.frame), 0.f);
         }
-        else{
+        else {
             startPoint = CGPointMake(CGRectGetHeight(self.window.frame) + CGRectGetWidth(self.hud.frame), 0.f);
         }
         
@@ -498,7 +498,7 @@
     return group;
 }
 
-- (CAAnimation *)_moveInAnimation{
+- (CAAnimation *)_moveInAnimation {
     CATransition *transition = [CATransition animation];
     transition.type = kCATransitionMoveIn;
     transition.subtype = kCATransitionFromRight;
@@ -507,14 +507,14 @@
     return transition;
 }
 
-- (CAAnimation *)_fadeInAnimation{
+- (CAAnimation *)_fadeInAnimation {
     NSString *opacityKey = @"opacity";
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:opacityKey];
     NSNumber *currentValue = [self.hud.layer valueForKey:opacityKey];
     if ([currentValue floatValue] == 1.f) {
         animation.fromValue = @(0.f);
     }
-    else{
+    else {
         animation.fromValue = [self.hud.layer.presentationLayer valueForKey:opacityKey];;
     }
     animation.toValue = @(1.f);
@@ -523,7 +523,7 @@
     return animation;
 }
 
-- (CAAnimation *)_fadeOutAnimation{
+- (CAAnimation *)_fadeOutAnimation {
     NSString *opacityKey = @"opacity";
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:opacityKey];
     animation.fromValue = [self.hud.layer.presentationLayer valueForKey:opacityKey];
@@ -533,11 +533,11 @@
     return animation;
 }
 
-- (CAAnimation *)_balloonAnimationIn{
+- (CAAnimation *)_balloonAnimationIn {
     return [self _dropAnimationIn];
 }
 
-- (CAAnimation *)_balloonAnimationOut{
+- (CAAnimation *)_balloonAnimationOut {
     CGPoint newPosition = CGPointMake(self.hud.layer.position.x, -self.hud.frame.size.height);
     
     CAKeyframeAnimation *positionAnimation = [CAKeyframeAnimation animationWithKeyPath:@"position"];
@@ -564,19 +564,19 @@
     return positionAnimation;
 }
 
-- (CAAnimation *)_confettiAnimationOut{
+- (CAAnimation *)_confettiAnimationOut {
     //    self.hud.layer dr
     return nil;
 }
 
 #pragma mark - Execution
-- (void)_executeShowAnimation:(CAAnimation *)animation{
+- (void)_executeShowAnimation:(CAAnimation *)animation {
     [animation setValue:MMProgressHUDAnimationShow forKey:@"name"];
     
     self.visible = YES;
     
     __typeof(self) __weak weakSelf = self;
-    void(^showCompletion)(void) = ^(void){
+    void(^showCompletion)(void) = ^(void) {
         MMProgressHUD *blockSelf = weakSelf;
         MMHudLog(@"Show animation ended: %@", blockSelf.hud);
         
@@ -591,7 +591,7 @@
     if ([self.hud.layer animationForKey:MMProgressHUDAnimationKeyDismissAnimation] != nil) {
         self.queuedShowAnimation = animation;
     }
-    else if([self.hud.layer animationForKey:MMProgressHUDAnimationKeyShowAnimation] == nil){
+    else if ([self.hud.layer animationForKey:MMProgressHUDAnimationKeyShowAnimation] == nil) {
         self.queuedShowAnimation = nil;
         
         [CATransaction begin];
@@ -603,11 +603,11 @@
     }
 }
 
-- (void)_executeDismissAnimation:(CAAnimation *)animation{
+- (void)_executeDismissAnimation:(CAAnimation *)animation {
     [animation setValue:MMProgressHUDAnimationDismiss forKey:@"name"];
     
     __typeof(self) __weak weakSelf = self;
-    void(^endCompletion)(void) = ^(void){
+    void(^endCompletion)(void) = ^(void) {
         MMProgressHUD *blockSelf = weakSelf;
         MMHudLog(@"Dismiss animation ended");
         
@@ -630,7 +630,7 @@
     if ([self.hud.layer animationForKey:MMProgressHUDAnimationKeyShowAnimation] != nil) {
         self.queuedDismissAnimation = animation;
     }
-    else if([self.hud.layer animationForKey:MMProgressHUDAnimationKeyDismissAnimation] == nil){
+    else if ([self.hud.layer animationForKey:MMProgressHUDAnimationKeyDismissAnimation] == nil) {
         self.queuedDismissAnimation = nil;
         
         [CATransaction begin];

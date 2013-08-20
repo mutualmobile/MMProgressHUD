@@ -17,11 +17,11 @@
 
 @dynamic progress;
 
-+(BOOL)needsDisplayForKey:(NSString *)key{
++(BOOL)needsDisplayForKey:(NSString *)key {
     return [key isEqualToString:@"progress"] || [super needsDisplayForKey:key];
 }
 
-- (id<CAAction>)actionForKey:(NSString *)key{
+- (id<CAAction>)actionForKey:(NSString *)key {
     if ([key isEqualToString:@"progress"]) {
         CABasicAnimation *progressAnimation = [CABasicAnimation animation];
         progressAnimation.fromValue = [self.presentationLayer valueForKey:key];
@@ -74,18 +74,18 @@
     float aspectRatio = (11.0f/140.0f);
     CGFloat expectedHeight = roundf(totalAvailableSize.width*aspectRatio);
     if (expectedHeight > totalAvailableSize.height) {
-        return (CGSize){roundf(totalAvailableSize.width/aspectRatio), totalAvailableSize.height};
+        return (CGSize) {roundf(totalAvailableSize.width/aspectRatio), totalAvailableSize.height};
     }
     else {
-        return (CGSize){totalAvailableSize.width, roundf(totalAvailableSize.width*aspectRatio)};
+        return (CGSize) {totalAvailableSize.width, roundf(totalAvailableSize.width*aspectRatio)};
     }
 }
 
-+ (Class)layerClass{
++ (Class)layerClass {
     return [MMLinearProgressLayer class];
 }
 
-- (instancetype)initWithFrame:(CGRect)frame{
+- (instancetype)initWithFrame:(CGRect)frame {
     if ((self = [super initWithFrame:frame])) {
         self.backgroundColor = [UIColor clearColor];
         self.layer.contentsScale = [[UIScreen mainScreen] scale];//set this or have fuzzy drawing on retina
@@ -94,15 +94,15 @@
     return self;
 }
 
-- (void)setProgress:(CGFloat)progress{
+- (void)setProgress:(CGFloat)progress {
     [self setProgress:progress animated:NO];
 }
 
-- (void)setProgress:(CGFloat)progress animated:(BOOL)animated{
+- (void)setProgress:(CGFloat)progress animated:(BOOL)animated {
     [self setProgress:progress animated:animated withCompletion:nil];
 }
 
-- (void)setProgress:(CGFloat)progress animated:(BOOL)animated withCompletion:(void(^)(BOOL completed))completion{
+- (void)setProgress:(CGFloat)progress animated:(BOOL)animated withCompletion:(void(^)(BOOL completed))completion {
     NSUInteger options = (UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionBeginFromCurrentState);
     
     [UIView
@@ -115,7 +115,7 @@
      completion:completion];
 }
 
-- (CGFloat)progress{
+- (CGFloat)progress {
     return [((MMLinearProgressLayer *)self.layer) progress];
 }
 
