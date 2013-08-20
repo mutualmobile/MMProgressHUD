@@ -74,10 +74,10 @@
     float aspectRatio = (11.0f/140.0f);
     CGFloat expectedHeight = roundf(totalAvailableSize.width*aspectRatio);
     if (expectedHeight > totalAvailableSize.height) {
-        return (CGSize) {roundf(totalAvailableSize.width/aspectRatio), totalAvailableSize.height};
+        return CGSizeMake(roundf(totalAvailableSize.width/aspectRatio), totalAvailableSize.height);
     }
     else {
-        return (CGSize) {totalAvailableSize.width, roundf(totalAvailableSize.width*aspectRatio)};
+        return CGSizeMake(totalAvailableSize.width, roundf(totalAvailableSize.width*aspectRatio));
     }
 }
 
@@ -102,17 +102,22 @@
     [self setProgress:progress animated:animated withCompletion:nil];
 }
 
-- (void)setProgress:(CGFloat)progress animated:(BOOL)animated withCompletion:(void(^)(BOOL completed))completion {
-    NSUInteger options = (UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionBeginFromCurrentState);
+- (void)setProgress:(CGFloat)progress animated:(BOOL)animated withCompletion:(void(^)(BOOL completed))completion {    
+    [CATransaction begin];
+    [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
+    if (animated == NO) {
+        [CATransaction setDisableActions:YES];
+    }
     
-    [UIView
-     animateWithDuration:animated ? 0.25f : 0.f
-     delay:0.f
-     options:options
-     animations:^{
-         [((MMLinearProgressLayer *)self.layer) setProgress:progress];
-     }
-     completion:completion];
+    [CATransaction setCompletionBlock:^{
+        if (completion) {
+            completion(YES);
+        }
+    }];
+    
+    [((MMLinearProgressLayer *)self.layer) setProgress:progress];
+    
+    [CATransaction commit];
 }
 
 - (CGFloat)progress {

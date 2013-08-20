@@ -34,10 +34,13 @@
 
 - (void)verify;
 
+- (void)stopMocking;
+
 // internal use only
 
 - (id)getNewRecorder;
 - (BOOL)handleInvocation:(NSInvocation *)anInvocation;
 - (void)handleUnRecordedInvocation:(NSInvocation *)anInvocation;
+- (BOOL)handleSelector:(SEL)sel;
 
 @end
