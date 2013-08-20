@@ -655,7 +655,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MMProgressHUDDemo/MMProgressHUDDemo-Prefix.pch";
@@ -673,6 +676,7 @@
 					"-Wunreachable-code",
 					"-Wimplicit-retain-self",
 					"-Wno-unused-parameter",
+					"-Wdeprecated-declarations",
 				);
 				WRAPPER_EXTENSION = app;
 			};
@@ -682,7 +686,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MMProgressHUDDemo/MMProgressHUDDemo-Prefix.pch";
@@ -700,6 +707,7 @@
 					"-Wunreachable-code",
 					"-Wimplicit-retain-self",
 					"-Wno-unused-parameter",
+					"-Wdeprecated-declarations",
 				);
 				WRAPPER_EXTENSION = app;
 			};
@@ -781,20 +789,16 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
-					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)\"/**",
 				);
 				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LogicTests/LogicTests-Prefix.pch";
-				HEADER_SEARCH_PATHS = "\"$(PROJECT_DIR)\"/**";
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/OCMock\"/**";
 				INFOPLIST_FILE = "LogicTests/LogicTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				LIBRARY_SEARCH_PATHS = (
-					"\\\"$(SRCROOT)\\\"/**",
-					"\\\"$(SRCROOT)/OCMock\\\"",
-					"/Volumes/Macintosh\\ SSD/Users/lars/Projects/MMProgressHUD/Demo/OCMock",
-				);
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/OCMock\"";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-force_load",
@@ -813,20 +817,16 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
-					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)\"/**",
 				);
 				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LogicTests/LogicTests-Prefix.pch";
-				HEADER_SEARCH_PATHS = "\"$(PROJECT_DIR)\"/**";
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/OCMock\"/**";
 				INFOPLIST_FILE = "LogicTests/LogicTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				LIBRARY_SEARCH_PATHS = (
-					"\\\"$(SRCROOT)\\\"/**",
-					"\\\"$(SRCROOT)/OCMock\\\"",
-					"/Volumes/Macintosh\\ SSD/Users/lars/Projects/MMProgressHUD/Demo/OCMock",
-				);
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/OCMock\"";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-force_load",
