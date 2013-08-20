@@ -10,7 +10,7 @@
 
 @implementation MMVectorImage
 
-+ (UIImage *)vectorImageShapeOfType:(MMVectorShapeType)shapeType size:(CGSize)size fillColor:(UIColor *)fillColor{
++ (UIImage *)vectorImageShapeOfType:(MMVectorShapeType)shapeType size:(CGSize)size fillColor:(UIColor *)fillColor {
     CGFloat scale = [[UIScreen mainScreen] scale];
     
     CGSize imageSize = size;
@@ -29,7 +29,7 @@
     return image;
 }
 
-+ (void)drawShapeOfType:(MMVectorShapeType)shapeType size:(CGSize)size fillColor:(UIColor *)fillColor{
++ (void)drawShapeOfType:(MMVectorShapeType)shapeType size:(CGSize)size fillColor:(UIColor *)fillColor {
     CGSize vectorSize = CGSizeMake(512.f, 512.f);//vector strings based on 512x512 size
     NSString *pointsString = [self vectorPointStringForShapeType:shapeType];
     NSArray *pointsStringArray = [pointsString componentsSeparatedByString:@" "];
@@ -42,7 +42,7 @@
         if ([vectorPath isEmpty]) {
             [vectorPath moveToPoint:newPoint];
         }
-        else{
+        else {
             [vectorPath addLineToPoint:newPoint];
         }
     }
@@ -56,15 +56,15 @@
     }
 }
 
-+ (NSString *)checkMarkVectorString{
++ (NSString *)checkMarkVectorString {
     return @"434.442,58.997 195.559,297.881 77.554,179.88 0,257.438 195.559,453.003 512,136.551";
 }
 
-+ (NSString *)xMarkVectorString{
++ (NSString *)xMarkVectorString {
     return @"512,120.859 391.141,0 255.997,135.146 120.855,0 0,120.859 135.132,256.006 0,391.146 120.855,512 255.997,376.872 391.141,512 512,391.146 376.862,256.006";
 }
 
-+ (NSString *)vectorPointStringForShapeType:(MMVectorShapeType)shapeType{
++ (NSString *)vectorPointStringForShapeType:(MMVectorShapeType)shapeType {
     switch (shapeType) {
         case MMVectorShapeTypeCheck:
             return [self checkMarkVectorString];

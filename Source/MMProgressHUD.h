@@ -34,7 +34,7 @@ extern float const MMProgressHUDStandardDismissDelay;
 @class MMProgressHUDWindow;
 @class MMProgressHUDOverlayView;
 
-typedef NS_ENUM(NSInteger, MMProgressHUDPresentationStyle){
+typedef NS_ENUM(NSInteger, MMProgressHUDPresentationStyle) {
     MMProgressHUDPresentationStyleDrop = 0, //default
     MMProgressHUDPresentationStyleExpand,
     MMProgressHUDPresentationStyleShrink,
@@ -45,7 +45,7 @@ typedef NS_ENUM(NSInteger, MMProgressHUDPresentationStyle){
     MMProgressHUDPresentationStyleNone
 };
 
-typedef NS_ENUM(NSInteger, MMProgressHUDWindowOverlayMode){
+typedef NS_ENUM(NSInteger, MMProgressHUDWindowOverlayMode) {
     MMProgressHUDWindowOverlayModeNone = -1,
     MMProgressHUDWindowOverlayModeGradient = 0,
     MMProgressHUDWindowOverlayModeLinear,
@@ -59,12 +59,10 @@ typedef NS_ENUM(NSInteger, MMProgressHUDWindowOverlayMode){
 //};
 
 @interface MMProgressHUD : UIView
-/** An enum to specify the style in which to display progress.
- 
- The default style is indeterminate progress.
- */
-@property (nonatomic, assign) MMProgressHUDProgressStyle progressStyle;
 
+
+/** A boolean value that indicates whether or not the HUD has been cancelled manually. */
+@property (nonatomic, assign, getter = isCancelled) BOOL cancelled;
 /** The determinate progress state.
  
  The progress ranges from 0-1.
@@ -360,37 +358,37 @@ This message will be presented to the user when a cancelBlock is present after t
 + (void)dismissWithSuccess:(NSString *)message;
 
 //-----------------------------------------------
-/** @name Determinate Progress */
+/** @name Determinate Progress. When progressClass is Nil the progress will be indeterminate. */
 //-----------------------------------------------
 
-+ (void)showProgressWithStyle:(MMProgressHUDProgressStyle)progressStyle
++ (void)showProgressWithProgressViewClass:(Class)progressClass
                         title:(NSString *)title
                        status:(NSString *)status;
 
-+ (void)showProgressWithStyle:(MMProgressHUDProgressStyle)progressStyle
++ (void)showProgressWithProgressViewClass:(Class)progressClass
                         title:(NSString *)title
                        status:(NSString *)status
                         image:(UIImage *)image;
 
-+ (void)showProgressWithStyle:(MMProgressHUDProgressStyle)progressStyle
++ (void)showProgressWithProgressViewClass:(Class)progressClass
                         title:(NSString *)title
                        status:(NSString *)status
                        images:(NSArray *)images;
 
-+ (void)showProgressWithStyle:(MMProgressHUDProgressStyle)progressStyle
++ (void)showProgressWithProgressViewClass:(Class)progressClass
                         title:(NSString *)title
                        status:(NSString *)status
           confirmationMessage:(NSString *)confirmation
                   cancelBlock:(void (^)(void))cancelBlock;
 
-+ (void)showProgressWithStyle:(MMProgressHUDProgressStyle)progressStyle 
++ (void)showProgressWithProgressViewClass:(Class)progressClass
                         title:(NSString *)title
                        status:(NSString *)status
           confirmationMessage:(NSString *)confirmation
                   cancelBlock:(void (^)(void))cancelBlock
                         image:(UIImage *)image;
 
-+ (void)showProgressWithStyle:(MMProgressHUDProgressStyle)progressStyle
++ (void)showProgressWithProgressViewClass:(Class)progressClass
                         title:(NSString *)title
                        status:(NSString *)status
           confirmationMessage:(NSString *)confirmation

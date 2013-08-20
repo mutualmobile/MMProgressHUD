@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-typedef NS_ENUM(NSInteger, MMVectorShapeType){
+typedef NS_ENUM(NSInteger, MMVectorShapeType) {
     MMVectorShapeTypeCheck = 0,
     MMVectorShapeTypeX
 };
