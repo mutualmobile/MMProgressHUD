@@ -61,15 +61,8 @@ typedef NS_ENUM(NSInteger, MMProgressHUDWindowOverlayMode){
 @interface MMProgressHUD : UIView
 
 
-/** A Boolean value that indicates whether or not the HUD has been cancelled manually. */
+/** A boolean value that indicates whether or not the HUD has been cancelled manually. */
 @property (nonatomic, assign, getter = isCancelled) BOOL cancelled;
-
-/** An enum to specify the style in which to display progress.
- 
- The default style is indeterminate progress.
- */
-@property (nonatomic, assign) MMProgressHUDProgressStyle progressStyle;
-
 /** The determinate progress state.
  
  The progress ranges from 0-1.
@@ -365,37 +358,37 @@ This message will be presented to the user when a cancelBlock is present after t
 + (void)dismissWithSuccess:(NSString *)message;
 
 //-----------------------------------------------
-/** @name Determinate Progress */
+/** @name Determinate Progress. When progressClass is Nil the progress will be indeterminate. */
 //-----------------------------------------------
 
-+ (void)showProgressWithStyle:(MMProgressHUDProgressStyle)progressStyle
++ (void)showProgressWithProgressViewClass:(Class)progressClass
                         title:(NSString *)title
                        status:(NSString *)status;
 
-+ (void)showProgressWithStyle:(MMProgressHUDProgressStyle)progressStyle
++ (void)showProgressWithProgressViewClass:(Class)progressClass
                         title:(NSString *)title
                        status:(NSString *)status
                         image:(UIImage *)image;
 
-+ (void)showProgressWithStyle:(MMProgressHUDProgressStyle)progressStyle
++ (void)showProgressWithProgressViewClass:(Class)progressClass
                         title:(NSString *)title
                        status:(NSString *)status
                        images:(NSArray *)images;
 
-+ (void)showProgressWithStyle:(MMProgressHUDProgressStyle)progressStyle
++ (void)showProgressWithProgressViewClass:(Class)progressClass
                         title:(NSString *)title
                        status:(NSString *)status
           confirmationMessage:(NSString *)confirmation
                   cancelBlock:(void (^)(void))cancelBlock;
 
-+ (void)showProgressWithStyle:(MMProgressHUDProgressStyle)progressStyle 
++ (void)showProgressWithProgressViewClass:(Class)progressClass
                         title:(NSString *)title
                        status:(NSString *)status
           confirmationMessage:(NSString *)confirmation
                   cancelBlock:(void (^)(void))cancelBlock
                         image:(UIImage *)image;
 
-+ (void)showProgressWithStyle:(MMProgressHUDProgressStyle)progressStyle
++ (void)showProgressWithProgressViewClass:(Class)progressClass
                         title:(NSString *)title
                        status:(NSString *)status
           confirmationMessage:(NSString *)confirmation

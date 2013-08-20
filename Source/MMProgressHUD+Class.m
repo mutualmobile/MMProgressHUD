@@ -70,10 +70,10 @@
 }
 
 //with progress
-+ (void)showProgressWithStyle:(MMProgressHUDProgressStyle)progressStyle
++ (void)showProgressWithProgressViewClass:(Class)progressClass
                         title:(NSString *)title
                        status:(NSString *)status{
-    [MMProgressHUD showProgressWithStyle:progressStyle
+    [MMProgressHUD showProgressWithProgressViewClass:progressClass
                                    title:title
                                   status:status
                      confirmationMessage:nil
@@ -81,11 +81,11 @@
                                   images:nil];
 }
 
-+ (void)showProgressWithStyle:(MMProgressHUDProgressStyle)progressStyle
++ (void)showProgressWithProgressViewClass:(Class)progressClass
                         title:(NSString *)title
                        status:(NSString *)status
                         image:(UIImage *)image{
-    [MMProgressHUD showProgressWithStyle:progressStyle
+    [MMProgressHUD showProgressWithProgressViewClass:progressClass
                                    title:title
                                   status:status
                      confirmationMessage:nil
@@ -93,11 +93,11 @@
                                   images:@[image]];
 }
 
-+ (void)showProgressWithStyle:(MMProgressHUDProgressStyle)progressStyle
++ (void)showProgressWithProgressViewClass:(Class)progressClass
                         title:(NSString *)title
                        status:(NSString *)status
                        images:(NSArray *)images{
-    [MMProgressHUD showProgressWithStyle:progressStyle
+    [MMProgressHUD showProgressWithProgressViewClass:progressClass
                                    title:title
                                   status:status
                      confirmationMessage:nil
@@ -105,12 +105,12 @@
                                   images:images];
 }
 
-+ (void)showProgressWithStyle:(MMProgressHUDProgressStyle)progressStyle
++ (void)showProgressWithProgressViewClass:(Class)progressClass
                         title:(NSString *)title
                        status:(NSString *)status
           confirmationMessage:(NSString *)confirmation
                   cancelBlock:(void (^)(void))cancelBlock{
-    [MMProgressHUD showProgressWithStyle:progressStyle
+    [MMProgressHUD showProgressWithProgressViewClass:progressClass
                                    title:title
                                   status:status
                      confirmationMessage:confirmation
@@ -118,12 +118,12 @@
                                   images:nil];
 }
 
-+ (void)showProgressWithStyle:(MMProgressHUDProgressStyle)progressStyle 
++ (void)showProgressWithProgressViewClass:(Class)progressClass 
                         title:(NSString *)title status:(NSString *)status
           confirmationMessage:(NSString *)confirmation
                   cancelBlock:(void (^)(void))cancelBlock
                         image:(UIImage *)image{
-    [MMProgressHUD showProgressWithStyle:progressStyle
+    [MMProgressHUD showProgressWithProgressViewClass:progressClass
                                    title:title
                                   status:status
                      confirmationMessage:confirmation
@@ -131,13 +131,20 @@
                                   images:@[image]];
 }
 
-+ (void)showProgressWithStyle:(MMProgressHUDProgressStyle)progressStyle
++ (void)showProgressWithProgressViewClass:(Class)progressClass
                         title:(NSString *)title
                        status:(NSString *)status
           confirmationMessage:(NSString *)confirmation
                   cancelBlock:(void (^)(void))cancelBlock
                        images:(NSArray *)images{
-    [[MMProgressHUD sharedHUD] setProgressStyle:progressStyle];
+    if (progressClass != Nil) {
+        [[[MMProgressHUD sharedHUD] hud] setProgressViewClass:progressClass];
+        [[[MMProgressHUD sharedHUD] hud] setIndeterminate:NO];
+    }
+    else {
+        [[[MMProgressHUD sharedHUD] hud] setProgressViewClass:Nil];
+    }
+    
     [[MMProgressHUD sharedHUD] showWithTitle:title
                                       status:status
                          confirmationMessage:confirmation
@@ -283,7 +290,7 @@
   confirmationMessage:(NSString *)confirmation
           cancelBlock:(void(^)(void))cancelBlock
                images:(NSArray *)images{
-    [[MMProgressHUD sharedHUD] setProgressStyle:MMProgressHUDProgressStyleIndeterminate];
+    [[[MMProgressHUD sharedHUD] hud] setIndeterminate:YES];
     
     if ([NSThread isMainThread] == NO) {
         dispatch_sync(dispatch_get_main_queue(), ^{

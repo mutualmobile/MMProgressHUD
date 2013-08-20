@@ -1,14 +1,14 @@
 //
-//  MMRadialProgress.h
-//  ImageTransfer
+//  MMProgressView.h
+//  MMProgressHUD
 //
 //  Created by Jonas Gessner on 04.08.13.
-//
+//  Copyright (c) 2012 Jonas Gessner. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
-@protocol MMRadialProgress <NSObject>
+@protocol MMProgressView <NSObject>
 
 /** The percent of the pie that will be filled in. Valid values are between 0 and 1. (Animatable) */
 @property (nonatomic) CGFloat progress;
@@ -29,5 +29,7 @@
 - (void)setProgress:(CGFloat)progress animated:(BOOL)animated withCompletion:(void(^)(BOOL completed))completion;
 
 
+/** The size required of the progress view in bounds of the defaultSize and the totalAvailableSize. */
++ (CGSize)sizeThatFitsSize:(CGSize)defaultSize maximumAvailableSize:(CGSize)totalAvailableSize;
 
 @end

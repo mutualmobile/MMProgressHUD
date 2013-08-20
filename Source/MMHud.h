@@ -7,6 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MMRadialProgressView.h"
+#import "MMLinearProgressView.h"
+
+#define kRadialProgressViewClass [MMRadialProgressView class]
+#define kLinearProgressViewClass [MMLinearProgressView class]
 
 extern CGFloat const MMProgressHUDAnimateInDurationLong;
 extern CGFloat const MMProgressHUDAnimateInDurationNormal;
@@ -21,12 +26,6 @@ extern CGFloat const MMProgressHUDAnimateOutDurationShort;
 typedef NS_ENUM(NSInteger, MMProgressHUDDisplayStyle) {
     MMProgressHUDDisplayStylePlain = 0,
     MMProgressHUDDisplayStyleBordered,
-};
-
-typedef NS_ENUM(NSInteger, MMProgressHUDProgressStyle){
-    MMProgressHUDProgressStyleIndeterminate = 0,
-    MMProgressHUDProgressStyleRadial,
-    MMProgressHUDProgressStyleLinear,
 };
 
 typedef NS_ENUM(NSInteger, MMProgressHUDCompletionState){
@@ -110,17 +109,17 @@ typedef NS_ENUM(NSInteger, MMProgressHUDCompletionState){
  */
 @property (nonatomic, assign) MMProgressHUDDisplayStyle displayStyle;
 
-/** An enum to specifiy the style in which to display progress.
+/** A boolean to indicate whether or not the HUD has indeterminate progess. When set to NO the HUD will display a progress view which can be customized by setting the progressViewClass.
  
- The default style is indeterminate progress.
+ The default value is YES
  */
-@property (nonatomic, assign) MMProgressHUDProgressStyle progressStyle;
+@property (nonatomic, assign, getter = isIndeterminate) BOOL indeterminate;
 
-/** The class to use for the radial progress style. Instances of this class must confrom to the MMRadialProgress protocol. When setting a custom value this value must be set before setting the MMProgressHUDProgressStyle to MMProgressHUDProgressStyleRadial.
+/** The class to use for the progress view. Instances of this class must confrom to the MMProgressView protocol. When setting a custom value this value must be set before setting the indeterminate to YES.
  
  Defaults to MMRadialProgressView
  */
-@property (nonatomic, assign) Class radialProgressViewClass;
+@property (nonatomic, assign) Class progressViewClass;
 
 /** The HUD's indeterminate activity indicator. */
 @property (nonatomic, strong, readonly) UIActivityIndicatorView *activityIndicator;

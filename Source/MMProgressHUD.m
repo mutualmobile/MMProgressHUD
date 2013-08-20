@@ -94,18 +94,18 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
                  status:status
     confirmationMessage:confirmationMessage
             cancelBlock:cancelBlock
-          progressStyle:self.progressStyle];
+          indeterminate:self.hud.isIndeterminate];
 }
 
 - (void)showWithTitle:(NSString *)title
                status:(NSString *)status
   confirmationMessage:(NSString *)confirmationMessage
           cancelBlock:(void(^)(void))cancelBlock
-        progressStyle:(MMProgressHUDProgressStyle)progressStyle{
+        indeterminate:(BOOL)indeterminate {
     
     MMHudLog(@"Beginning %@ show...", NSStringFromClass(self.class));
     
-    self.progressStyle = progressStyle;
+    self.hud.indeterminate = indeterminate;
     self.cancelBlock = cancelBlock;
     self.title = title;
     self.status = status;
@@ -231,22 +231,6 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
 
 - (CGFloat)progress{
     return self.hud.progress;
-}
-
-- (void)setProgressStyle:(MMProgressHUDProgressStyle)progressStyle{
-    self.hud.progressStyle = progressStyle;
-    
-    if ((progressStyle == MMProgressHUDProgressStyleLinear) ||
-        (progressStyle == MMProgressHUDProgressStyleRadial)) {
-        self.accessibilityTraits |= UIAccessibilityTraitUpdatesFrequently;
-    }
-    else{
-        self.accessibilityTraits &= ~UIAccessibilityTraitUpdatesFrequently;
-    }
-}
-
-- (MMProgressHUDProgressStyle)progressStyle{
-    return self.hud.progressStyle;
 }
 
 - (void)setTitle:(NSString *)title{

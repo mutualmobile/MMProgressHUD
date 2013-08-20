@@ -113,6 +113,10 @@
 
 @implementation MMRadialProgressView
 
++ (CGSize)sizeThatFitsSize:(CGSize)defaultSize maximumAvailableSize:(CGSize)totalAvailableSize {
+    return defaultSize;
+}
+
 + (Class)layerClass{
     return [MMRadialProgressLayer class];
 }

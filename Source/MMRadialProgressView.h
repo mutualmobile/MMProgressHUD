@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MMRadialProgress.h"
+#import "MMProgressView.h"
 
-@interface MMRadialProgressView : UIView <MMRadialProgress>
+@interface MMRadialProgressView : UIView <MMProgressView>
 
 @end
