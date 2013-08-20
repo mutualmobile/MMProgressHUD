@@ -7,7 +7,7 @@
 //
 
 #import "MMLinearProgressView.h"
-
+#import <QuartzCore/QuartzCore.h>
 
 @interface MMLinearProgressLayer : CALayer
 @property (nonatomic) CGFloat progress;
