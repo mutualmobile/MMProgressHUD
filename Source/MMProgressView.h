@@ -10,7 +10,10 @@
 
 @protocol MMProgressView <NSObject>
 
-/** The percent of the pie that will be filled in. Valid values are between 0 and 1. (Animatable) */
+/** The percent of the pie that will be filled in. Valid values are between 0 and 1.
+ 
+ @warning When implementing progress changes, the default setter *should* implicitly animate the property change.
+ */
 @property (nonatomic) CGFloat progress;
 
 /** Change the progress percent animated.
