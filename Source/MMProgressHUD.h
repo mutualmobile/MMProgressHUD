@@ -60,9 +60,17 @@ typedef NS_ENUM(NSInteger, MMProgressHUDWindowOverlayMode) {
 
 @interface MMProgressHUD : UIView
 
+/** An enum to specify the style in which to display progress.
+ 
+ The default style is indeterminate progress.
+ 
+ @warning Deprecated: To use determinate progress, set a progressViewClass and call showDeterminateProgressWithTitle:status and friends. All other show methods default to indeterminate progress.
+ */
+@property (nonatomic, assign) MMProgressHUDProgressStyle progressStyle DEPRECATED_ATTRIBUTE;
 
 /** A boolean value that indicates whether or not the HUD has been cancelled manually. */
 @property (nonatomic, assign, getter = isCancelled) BOOL cancelled;
+
 /** The determinate progress state.
  
  The progress ranges from 0-1.
@@ -128,6 +136,29 @@ This message will be presented to the user when a cancelBlock is present after t
 /** The overlay view that is placed just behind the HUD.
  */
 @property (nonatomic, strong, readonly) MMProgressHUDOverlayView *overlayView;
+
+/** The class to use for the progress view. Instances of this class must confrom to the MMProgressView protocol. When setting a custom value this value must be set before setting the indeterminate to YES.
+ 
+ Defaults to MMRadialProgressView
+ */
+@property (nonatomic, assign) Class progressViewClass;
+
+#pragma mark - Instance Methods
+- (void)showWithTitle:(NSString *)title
+               status:(NSString *)status
+  confirmationMessage:(NSString *)confirmationMessage
+          cancelBlock:(void(^)(void))cancelBlock
+               images:(NSArray *)images;
+
+- (void)showDeterminateProgressWithTitle:(NSString *)title
+                                  status:(NSString *)status
+                     confirmationMessage:(NSString *)confirmation
+                             cancelBlock:(void (^)(void))cancelBlock
+                                  images:(NSArray *)images;
+
+- (void)updateProgress:(CGFloat)progress
+            withStatus:(NSString *)status
+                 title:(NSString *)title;
 
 #pragma mark - Class Methods
 /** Gives access to the shared instance of the HUD.
@@ -358,42 +389,40 @@ This message will be presented to the user when a cancelBlock is present after t
 + (void)dismissWithSuccess:(NSString *)message;
 
 //-----------------------------------------------
-/** @name Determinate Progress. When progressClass is Nil the progress will be indeterminate. */
+/** @name Determinate Progress. */
 //-----------------------------------------------
 
-+ (void)showProgressWithProgressViewClass:(Class)progressClass
-                        title:(NSString *)title
-                       status:(NSString *)status;
+/** Sets a determinate progress class on the sharedHUD instance to be used with the `showDeterminateProgress` methods.
+ 
+ @warning When progressClass is nil the progress will be indeterminate.
+ 
+ @param progressClass A class that conforms to the MMProgressView protocol.
+ */
++ (void)setProgressViewClass:(Class)progressClass;
 
-+ (void)showProgressWithProgressViewClass:(Class)progressClass
-                        title:(NSString *)title
-                       status:(NSString *)status
-                        image:(UIImage *)image;
+/** Displays a determinate progress view.
+ 
+ @warning When progressClass is nil the progress will be indeterminate.
+ 
+ @param title The title to be displayed on the HUD
+ @param status The status message to be displayed on the HUD
+ */
++ (void)showDeterminateProgressWithTitle:(NSString *)title
+                                  status:(NSString *)status;
 
-+ (void)showProgressWithProgressViewClass:(Class)progressClass
-                        title:(NSString *)title
-                       status:(NSString *)status
-                       images:(NSArray *)images;
-
-+ (void)showProgressWithProgressViewClass:(Class)progressClass
-                        title:(NSString *)title
-                       status:(NSString *)status
-          confirmationMessage:(NSString *)confirmation
-                  cancelBlock:(void (^)(void))cancelBlock;
-
-+ (void)showProgressWithProgressViewClass:(Class)progressClass
-                        title:(NSString *)title
-                       status:(NSString *)status
-          confirmationMessage:(NSString *)confirmation
-                  cancelBlock:(void (^)(void))cancelBlock
-                        image:(UIImage *)image;
-
-+ (void)showProgressWithProgressViewClass:(Class)progressClass
-                        title:(NSString *)title
-                       status:(NSString *)status
-          confirmationMessage:(NSString *)confirmation
-                  cancelBlock:(void (^)(void))cancelBlock
-                       images:(NSArray *)images;
+/** Displays a determinate progress view.
+ 
+ @warning When progressClass is nil the progress will be indeterminate.
+ 
+ @param title The title to be displayed on the HUD
+ @param status The status message to be displayed on the HUD
+ @param confirmation The confirmation message to be displayed when the user performs a single-tap on the hud.
+ @param cancelBlock A block to be executed after the user has tapped the hud twice (once to prompt to confirm and a second to confirm the "cancellation").
+ */
++ (void)showDeterminateProgressWithTitle:(NSString *)title
+                                  status:(NSString *)status
+                     confirmationMessage:(NSString *)confirmation
+                             cancelBlock:(void (^)(void))cancelBlock;
 
 //-----------------------------------------------
 /** @name Updating Content */
@@ -458,5 +487,73 @@ This message will be presented to the user when a cancelBlock is present after t
  @param displayStyle Style to set the HUD to.
  */
 + (void)setDisplayStyle:(MMProgressHUDDisplayStyle)displayStyle;
+
+@end
+
+@interface MMProgressHUD (Deprecated)
+
+/**
+ The showProgressWithStyle: methods have been deprecated in favor of the new dynamic progress class support. Please specify a determinate progress class to use on MMProgressHUD by using setProgressViewClass:.
+ 
+ @warning This method will be removed in some version in the future.
+ */
++ (void)showProgressWithStyle:(MMProgressHUDProgressStyle)progressStyle
+                        title:(NSString *)title
+                       status:(NSString *)status DEPRECATED_ATTRIBUTE;
+
+/**
+ The showProgressWithStyle: methods have been deprecated in favor of the new dynamic progress class support. Please specify a determinate progress class to use on MMProgressHUD by using setProgressViewClass:.
+ 
+ @warning This method will be removed in some version in the future.
+ */
++ (void)showProgressWithStyle:(MMProgressHUDProgressStyle)progressStyle
+                        title:(NSString *)title
+                       status:(NSString *)status
+                        image:(UIImage *)image DEPRECATED_ATTRIBUTE;
+
+/**
+ The showProgressWithStyle: methods have been deprecated in favor of the new dynamic progress class support. Please specify a determinate progress class to use on MMProgressHUD by using setProgressViewClass:.
+ 
+ @warning This method will be removed in some version in the future.
+ */
++ (void)showProgressWithStyle:(MMProgressHUDProgressStyle)progressStyle
+                        title:(NSString *)title
+                       status:(NSString *)status
+                       images:(NSArray *)images DEPRECATED_ATTRIBUTE;
+
+/**
+ The showProgressWithStyle: methods have been deprecated in favor of the new dynamic progress class support. Please specify a determinate progress class to use on MMProgressHUD by using setProgressViewClass:.
+ 
+ @warning This method will be removed in some version in the future.
+ */
++ (void)showProgressWithStyle:(MMProgressHUDProgressStyle)progressStyle
+                        title:(NSString *)title
+                       status:(NSString *)status
+          confirmationMessage:(NSString *)confirmation
+                  cancelBlock:(void (^)(void))cancelBlock DEPRECATED_ATTRIBUTE;
+
+/**
+ The showProgressWithStyle: methods have been deprecated in favor of the new dynamic progress class support. Please specify a determinate progress class to use on MMProgressHUD by using setProgressViewClass:.
+ 
+ @warning This method will be removed in some version in the future.
+ */
++ (void)showProgressWithStyle:(MMProgressHUDProgressStyle)progressStyle
+                        title:(NSString *)title
+                       status:(NSString *)status
+          confirmationMessage:(NSString *)confirmation
+                  cancelBlock:(void (^)(void))cancelBlock
+                        image:(UIImage *)image DEPRECATED_ATTRIBUTE;
+
+/**
+ The showProgressWithStyle: methods have been deprecated in favor of the new dynamic progress class support. Please specify a determinate progress class to use on MMProgressHUD by using setProgressViewClass:.
+ 
+ @warning This method will be removed in some version in the future.
+ */
++ (void)showProgressWithStyle:(MMProgressHUDProgressStyle)progressStyle
+                        title:(NSString *)title
+                       status:(NSString *)status
+          confirmationMessage:(NSString *)confirmation
+                  cancelBlock:(void (^)(void))cancelBlock
+                       images:(NSArray *)images DEPRECATED_ATTRIBUTE;
 
 @end

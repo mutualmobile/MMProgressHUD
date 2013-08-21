@@ -24,6 +24,8 @@
 		46A19B6C15549F5200D65BB8 /* 5.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A19B6615549F5200D65BB8 /* 5.png */; };
 		46A19B6D15549F5200D65BB8 /* 6.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A19B6715549F5200D65BB8 /* 6.png */; };
 		46ACE86A17C3C1470075C2A0 /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46ACE86917C3C1470075C2A0 /* libOCMock.a */; };
+		46ACE86B17C50A580075C2A0 /* MMLinearProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = DDBCC20417C2822A00C3BF8C /* MMLinearProgressView.m */; };
+		46ACE86C17C50A610075C2A0 /* MMLinearProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = DDBCC20417C2822A00C3BF8C /* MMLinearProgressView.m */; };
 		46F3F73F16D1E76700E255A2 /* MMVectorImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 46F3F73E16D1E76700E255A2 /* MMVectorImage.m */; };
 		46F3F74016D1E76700E255A2 /* MMVectorImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 46F3F73E16D1E76700E255A2 /* MMVectorImage.m */; };
 		46F3F74116D1E76700E255A2 /* MMVectorImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 46F3F73E16D1E76700E255A2 /* MMVectorImage.m */; };
@@ -530,6 +532,7 @@
 				55F0596315A2083C00A47983 /* MMProgressHUD+Animations.m in Sources */,
 				55F0596815A20BDD00A47983 /* MMProgressHUD+Class.m in Sources */,
 				55AC1A0615A602A500D64C1F /* MMProgressHUDOverlayView.m in Sources */,
+				46ACE86C17C50A610075C2A0 /* MMLinearProgressView.m in Sources */,
 				46F3F74116D1E76700E255A2 /* MMVectorImage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -549,6 +552,7 @@
 				55F0596215A2083C00A47983 /* MMProgressHUD+Animations.m in Sources */,
 				55F0596715A20BDD00A47983 /* MMProgressHUD+Class.m in Sources */,
 				55AC1A0815A62B6900D64C1F /* MMProgressHUDOverlayView.m in Sources */,
+				46ACE86B17C50A580075C2A0 /* MMLinearProgressView.m in Sources */,
 				46F3F74016D1E76700E255A2 /* MMVectorImage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

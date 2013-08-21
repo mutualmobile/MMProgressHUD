@@ -9,6 +9,8 @@
 #import "MMViewController.h"
 #import "MMProgressHUD.h"
 #import "MMProgressHUDOverlayView.h"
+#import "MMRadialProgressView.h"
+#import "MMLinearProgressView.h"
 
 typedef NS_ENUM(NSInteger, MMProgressHUDDemoSections){
     MMProgressHUDDemoSectionFeatures = 0,
@@ -119,7 +121,8 @@ typedef NS_ENUM(NSInteger, MMProgressHUDDemoFeatureType){
                     [MMProgressHUD showWithTitle:@"Plain" status:@"No Border"];
                     break;
                 case MMProgressHUDDemoTypeRadialProgress:
-                    [MMProgressHUD showProgressWithProgressViewClass:kRadialProgressViewClass title:@"Radial Progress" status:nil];
+                    [MMProgressHUD setProgressViewClass:[MMRadialProgressView class]];
+                    [MMProgressHUD showDeterminateProgressWithTitle:@"Radial Progress" status:nil];
                     [[MMProgressHUD sharedHUD] setProgressCompletion:^{
                         [MMProgressHUD dismissWithSuccess:@"Done!"];
                     }];
@@ -155,7 +158,10 @@ typedef NS_ENUM(NSInteger, MMProgressHUDDemoFeatureType){
                     });
                     break;
                 case MMProgressHUDDemoTypeLinearProgress:
-                    [MMProgressHUD showProgressWithProgressViewClass:kLinearProgressViewClass title:@"Linear Progress" status:nil];
+//                    [MMProgressHUD setProgressViewClass:[MMLinearProgressView class]];
+//                    [MMProgressHUD showDeterminateProgressWithTitle:@"Linear Progress" status:nil];
+                    [MMProgressHUD showProgressWithStyle:MMProgressHUDProgressStyleLinear
+                                                   title:@"Linear Progress" status:nil];
                     [[MMProgressHUD sharedHUD] setProgressCompletion:^{
                         [MMProgressHUD dismissWithSuccess:@"Done!"];
                     }];

@@ -10,6 +10,7 @@
 #import "MMHud.h"
 #import "MMProgressHUD.h"
 #import "MMProgressView.h"
+#import "MMRadialProgressView.h"
 
 CGFloat    const MMProgressHUDDefaultFontSize           = 16.f;
 
@@ -452,19 +453,14 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
             
             if (self.isIndeterminate) {
                 [self.activityIndicator startAnimating];
+                
+                self.imageView.image = nil;
+                self.imageView.animationImages = nil;
+                
+                [self.progressViewContainer addSubview:self.activityIndicator];
             }
             else {
                 [self.activityIndicator stopAnimating];
-            }
-            
-            if (self.isIndeterminate) {
-                    self.imageView.image = nil;
-                    self.imageView.animationImages = nil;
-                    
-                    [self.progressViewContainer addSubview:self.activityIndicator];
-            }
-            else {
-                
             }
         }
         
@@ -511,11 +507,11 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
         _statusLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         _statusLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
         _statusLabel.numberOfLines = 0;
-//#pragma clang diagnostic push
-//#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
         _statusLabel.lineBreakMode = UILineBreakModeWordWrap;
         _statusLabel.textAlignment = UITextAlignmentCenter;
-//#pragma clang diagnostic pop
+#pragma clang diagnostic pop
         _statusLabel.backgroundColor = [UIColor clearColor];
         _statusLabel.font = [UIFont fontWithName:MMProgressHUDFontNameNormal size:MMProgressHUDDefaultFontSize];
         _statusLabel.textColor = [UIColor colorWithWhite:0.9f alpha:0.95f];
@@ -569,8 +565,18 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
 }
 
 #pragma mark - Property Overrides
+- (void)setProgressStyle:(MMProgressHUDProgressStyle)progressStyle{
+    _progressStyle = progressStyle;
+    
+    MMHudWLog(@"Setting %@ is deprecated, please set an explicit determinate progress class using %@",
+              NSStringFromSelector(@selector(progressStyle)),
+              NSStringFromSelector(@selector(progressViewClass)));
+    
+    self.indeterminate = (progressStyle == MMProgressHUDProgressStyleIndeterminate);
+}
+
 - (void)setProgressViewClass:(Class)progressViewClass {
-    if (progressViewClass != Nil) {
+    if (progressViewClass != nil) {
         Protocol * __unused expectedProtocol = @protocol(MMProgressView);
         
         NSAssert([progressViewClass conformsToProtocol:expectedProtocol], @"Class %@ doesn't conform to %@ protocol", NSStringFromClass(progressViewClass), NSStringFromProtocol(expectedProtocol));
@@ -580,10 +586,6 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
     }
     
     _progressViewClass = progressViewClass;
-    
-    if (![_progressView isKindOfClass:_progressViewClass]) {
-        _progressView = nil;
-    }
 }
 
 - (UIImageView *)imageView {
@@ -598,8 +600,9 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
 }
 
 - (UIView <MMProgressView> *)progressView {
-    if (_progressView == nil) {
-        _progressView = [[[self progressViewClass] alloc] initWithFrame:self.progressViewContainer.bounds];
+    if (_progressView == nil ||
+        (_progressView.class != self.progressViewClass)) {
+        _progressView = [[self.progressViewClass alloc] initWithFrame:self.progressViewContainer.bounds];
         _progressView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [self.progressViewContainer addSubview:_progressView];
     }

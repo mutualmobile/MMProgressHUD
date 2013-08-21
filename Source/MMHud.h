@@ -7,11 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MMRadialProgressView.h"
-#import "MMLinearProgressView.h"
-
-#define kRadialProgressViewClass [MMRadialProgressView class]
-#define kLinearProgressViewClass [MMLinearProgressView class]
 
 extern CGFloat const MMProgressHUDAnimateInDurationLong;
 extern CGFloat const MMProgressHUDAnimateInDurationNormal;
@@ -28,7 +23,13 @@ typedef NS_ENUM(NSInteger, MMProgressHUDDisplayStyle) {
     MMProgressHUDDisplayStyleBordered,
 };
 
-typedef NS_ENUM(NSInteger, MMProgressHUDCompletionState) {
+typedef NS_ENUM(NSInteger, MMProgressHUDProgressStyle){
+    MMProgressHUDProgressStyleIndeterminate = 0,
+    MMProgressHUDProgressStyleRadial,
+    MMProgressHUDProgressStyleLinear,
+} DEPRECATED_ATTRIBUTE;
+
+typedef NS_ENUM(NSInteger, MMProgressHUDCompletionState){
     MMProgressHUDCompletionStateNone = 0,
     MMProgressHUDCompletionStateError,
     MMProgressHUDCompletionStateSuccess,
@@ -109,13 +110,21 @@ typedef NS_ENUM(NSInteger, MMProgressHUDCompletionState) {
  */
 @property (nonatomic, assign) MMProgressHUDDisplayStyle displayStyle;
 
+/** An enum to specifiy the style in which to display progress.
+ 
+ The default style is indeterminate progress.
+ 
+ @warning Deprecated: To use determinate progress, set a progressViewClass on either MMProgressHUD or MMHud and call showDeterminateProgressWithTitle:status and friends. All other show methods default to indeterminate progress.
+ */
+@property (nonatomic, assign) MMProgressHUDProgressStyle progressStyle DEPRECATED_ATTRIBUTE;
+
 /** A boolean to indicate whether or not the HUD has indeterminate progess. When set to NO the HUD will display a progress view which can be customized by setting the progressViewClass.
  
  The default value is YES
  */
 @property (nonatomic, assign, getter = isIndeterminate) BOOL indeterminate;
 
-/** The class to use for the progress view. Instances of this class must confrom to the MMProgressView protocol. When setting a custom value this value must be set before setting the indeterminate to YES.
+/** The class to use for the progress view. Instances of this class must confrom to the MMProgressView protocol. When setting a custom value this value must be set before setting the indeterminate property to YES.
  
  Defaults to MMRadialProgressView
  */

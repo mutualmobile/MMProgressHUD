@@ -17,6 +17,9 @@
 #import "MMProgressHUDOverlayView.h"
 #import "MMVectorImage.h"
 
+#import "MMLinearProgressView.h"
+#import "MMRadialProgressView.h"
+
 #if __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_5_0
 #error MMProgressHUD uses APIs only available in iOS 5.0+
 #endif
@@ -72,6 +75,20 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
 }
 
 #pragma mark - Instance Presentation Methods
+- (void)showDeterminateProgressWithTitle:(NSString *)title
+                                  status:(NSString *)status
+                     confirmationMessage:(NSString *)confirmation
+                             cancelBlock:(void (^)(void))cancelBlock
+                                  images:(NSArray *)images {
+    [self.hud setIndeterminate:NO];
+    
+    [self showWithTitle:title
+                 status:status
+    confirmationMessage:confirmation
+            cancelBlock:cancelBlock
+                 images:images];
+}
+
 - (void)showWithTitle:(NSString *)title
               status:(NSString *)status
   confirmationMessage:(NSString *)confirmationMessage
@@ -162,6 +179,41 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
     }
 }
 
+- (void)updateProgress:(CGFloat)progress withStatus:(NSString *)status title:(NSString *)title{
+    [self setProgress:progress];
+    
+    if (status != nil) {
+        self.hud.messageText = status;
+    }
+    
+    if (title != nil) {
+        self.hud.titleText = title;
+    }
+    
+    if (self.isVisible &&
+        (self.window != nil)) {
+        
+        void(^animationCompletion)(BOOL completed) = ^(BOOL completed) {
+            if (progress >= 1.f &&
+                self.progressCompletion != nil) {
+                double delayInSeconds = 0.33f;//allow enough time for progress to animate
+                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+                dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
+                    if (self.progressCompletion) {
+                        self.progressCompletion();
+                    }
+                });
+            }
+        };
+        
+        [self _updateHUDAnimated:YES
+                 withCompletion:animationCompletion];
+    }
+    else {
+        [self show];
+    }
+}
+
 #pragma mark - Initializers
 - (instancetype)init {
     if ( (self = [super initWithFrame:CGRectZero]) ) {
@@ -231,6 +283,29 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
     return self.hud.progress;
 }
 
+- (void)setProgressStyle:(MMProgressHUDProgressStyle)progressStyle{
+    self.hud.progressStyle = progressStyle;
+    
+    switch (progressStyle) {
+        case MMProgressHUDProgressStyleIndeterminate:
+            self.hud.progressViewClass = nil;
+            self.accessibilityTraits &= ~UIAccessibilityTraitUpdatesFrequently;
+            break;
+        case MMProgressHUDProgressStyleLinear:
+            self.hud.progressViewClass = [MMLinearProgressView class];
+            self.accessibilityTraits |= UIAccessibilityTraitUpdatesFrequently;
+            break;
+        case MMProgressHUDProgressStyleRadial:
+            self.hud.progressViewClass = [MMRadialProgressView class];
+            self.accessibilityTraits |= UIAccessibilityTraitUpdatesFrequently;
+            break;
+    }
+}
+
+- (MMProgressHUDProgressStyle)progressStyle{
+    return self.hud.progressStyle;
+}
+
 - (void)setTitle:(NSString *)title {
     self.hud.titleText = title;
 }
@@ -248,6 +323,14 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
 }
 
 #pragma mark - Property Overrides
+
+- (void)setProgressViewClass:(Class)progressViewClass{
+    self.hud.progressViewClass = progressViewClass;
+}
+
+- (Class)progressViewClass{
+    return self.hud.progressViewClass;
+}
 
 - (MMProgressHUDOverlayView *)overlayView {
     if (_overlayView == nil) {
@@ -464,7 +547,11 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
     
     CGFloat duration = (self.presentationStyle == MMProgressHUDPresentationStyleNone) ? 0.f : MMProgressHUDAnimateInDurationShort;
     
-    [UIView animateWithDuration:duration delay:0.f options:UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionBeginFromCurrentState
+    [UIView
+     animateWithDuration:duration
+     delay:0.f
+     options:UIViewAnimationOptionCurveEaseOut |
+             UIViewAnimationOptionBeginFromCurrentState
      animations:^{
          self.overlayView.alpha = 1.0f;
      }
@@ -583,7 +670,7 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
         
         self.confirmed = YES;
         
-        self.tempStatus = self.status.copy;
+        self.tempStatus = [self.status copy];
         CGFloat timerDuration = MMProgressHUDAnimateInDurationNormal*MMProgressHUDConfirmationPulseCount;
         self.confirmationTimer = [NSTimer scheduledTimerWithTimeInterval:timerDuration
                                                                   target:self

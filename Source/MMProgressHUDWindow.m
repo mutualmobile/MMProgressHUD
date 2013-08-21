@@ -27,7 +27,7 @@
 
 
 #pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdirect-ivar-access"
+#pragma clang diagnostic ignored "-Warc-repeated-use-of-weak"
 - (UIWindow *)oldWindow {
     if (_oldWindow == nil) {
         if ([[[UIApplication sharedApplication] windows] count]) {
