@@ -576,8 +576,8 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
 }
 
 - (void)setProgressViewClass:(Class)progressViewClass {
-    if (progressViewClass != nil) {
-        Protocol * __unused expectedProtocol = @protocol(MMProgressView);
+    if (progressViewClass != Nil) {
+        Protocol * expectedProtocol = @protocol(MMProgressView);
         
         NSAssert([progressViewClass conformsToProtocol:expectedProtocol], @"Class %@ doesn't conform to %@ protocol", NSStringFromClass(progressViewClass), NSStringFromProtocol(expectedProtocol));
     }
