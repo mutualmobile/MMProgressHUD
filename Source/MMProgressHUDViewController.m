@@ -11,7 +11,7 @@
 #import "MMProgressHUD.h"
 
 
-#define suppressDepreciation(Stuff) \
+#define suppressDeprecation(Stuff) \
 do { \
 _Pragma("clang diagnostic push") \
 _Pragma("clang diagnostic ignored \"-Wdeprecated-declarations\"") \
@@ -34,7 +34,7 @@ _Pragma("clang diagnostic pop") \
     BOOL shouldRotateToOrientation = NO;
     MMProgressHUDWindow *win = (MMProgressHUDWindow *)self.view.window;
     UIViewController *rootViewController = win.oldWindow.rootViewController;
-    suppressDepreciation(
+    suppressDeprecation(
         if ([[self superclass] instancesRespondToSelector:@selector(presentedViewController)] &&
             ([rootViewController presentedViewController] != nil)) {
             MMHudLog(@"Presented view controller: %@", rootViewController.presentedViewController);

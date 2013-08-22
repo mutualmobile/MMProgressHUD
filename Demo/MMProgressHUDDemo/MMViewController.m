@@ -12,14 +12,14 @@
 #import "MMRadialProgressView.h"
 #import "MMLinearProgressView.h"
 
-typedef NS_ENUM(NSInteger, MMProgressHUDDemoSections){
+typedef NS_ENUM(NSInteger, MMProgressHUDDemoSections) {
     MMProgressHUDDemoSectionFeatures = 0,
     MMProgressHUDDemoSectionAnimations,
     MMProgressHUDDemoSectionOverlays,
     MMProgressHUDDemoNumberOfSections
 };
 
-typedef NS_ENUM(NSInteger, MMProgressHUDDemoAnimationType){
+typedef NS_ENUM(NSInteger, MMProgressHUDDemoAnimationType) {
     MMProgressHUDDemoAnimationTypeExpand = 0,
     MMProgressHUDDemoAnimationTypeShrink,
     MMProgressHUDDemoAnimationTypeSwingRight,
@@ -30,7 +30,7 @@ typedef NS_ENUM(NSInteger, MMProgressHUDDemoAnimationType){
     MMProgressHUDDemoNumberOfAnimationTypes//I know this goes directly against coding guidelines, but makes creating static tableviews with enums easier
 };
 
-typedef NS_ENUM(NSInteger, MMProgressHUDDemoOverlayType){
+typedef NS_ENUM(NSInteger, MMProgressHUDDemoOverlayType) {
     MMProgressHUDDemoOverlayTypeGradient = 0,
     MMProgressHUDDemoOverlayTypeLinear,
 //    MMProgressHUDDemoOverlayTypeBlur,
@@ -38,7 +38,7 @@ typedef NS_ENUM(NSInteger, MMProgressHUDDemoOverlayType){
     MMProgressHUDDemoNumberOfOverlayTypes
 };
 
-typedef NS_ENUM(NSInteger, MMProgressHUDDemoFeatureType){
+typedef NS_ENUM(NSInteger, MMProgressHUDDemoFeatureType) {
     MMProgressHUDDemoTypeStylePlain = 0,
     MMProgressHUDDemoTypeStyleBordered,
     MMProgressHUDDemoTypeStaticImage,
@@ -123,9 +123,13 @@ typedef NS_ENUM(NSInteger, MMProgressHUDDemoFeatureType){
                 case MMProgressHUDDemoTypeRadialProgress:
                     [MMProgressHUD setProgressViewClass:[MMRadialProgressView class]];
                     [MMProgressHUD showDeterminateProgressWithTitle:@"Radial Progress" status:nil];
+                    
+                    //Deprecated:       [MMProgressHUD showProgressWithStyle:MMProgressHUDProgressStyleRadial title:@"Radial Progress" status:nil];
+                    
                     [[MMProgressHUD sharedHUD] setProgressCompletion:^{
                         [MMProgressHUD dismissWithSuccess:@"Done!"];
                     }];
+                    
                     [[MMProgressHUD sharedHUD] setDismissAnimationCompletion:^{
                         NSLog(@"I've been dismissed!");
                     }];
@@ -158,10 +162,11 @@ typedef NS_ENUM(NSInteger, MMProgressHUDDemoFeatureType){
                     });
                     break;
                 case MMProgressHUDDemoTypeLinearProgress:
-//                    [MMProgressHUD setProgressViewClass:[MMLinearProgressView class]];
-//                    [MMProgressHUD showDeterminateProgressWithTitle:@"Linear Progress" status:nil];
-                    [MMProgressHUD showProgressWithStyle:MMProgressHUDProgressStyleLinear
-                                                   title:@"Linear Progress" status:nil];
+                    [MMProgressHUD setProgressViewClass:[MMLinearProgressView class]];
+                    [MMProgressHUD showDeterminateProgressWithTitle:@"Linear Progress" status:nil];
+                    
+//Deprecated:       [MMProgressHUD showProgressWithStyle:MMProgressHUDProgressStyleLinear title:@"Linear Progress" status:nil];
+                    
                     [[MMProgressHUD sharedHUD] setProgressCompletion:^{
                         [MMProgressHUD dismissWithSuccess:@"Done!"];
                     }];

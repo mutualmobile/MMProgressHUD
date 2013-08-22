@@ -7,29 +7,30 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MMProgressHUDDefines.h"
 
-extern CGFloat const MMProgressHUDAnimateInDurationLong;
-extern CGFloat const MMProgressHUDAnimateInDurationNormal;
-extern CGFloat const MMProgressHUDAnimateInDurationMedium;
-extern CGFloat const MMProgressHUDAnimateInDurationShort;
-extern CGFloat const MMProgressHUDAnimateInDurationVeryShort;
+MMExtern CGFloat const MMProgressHUDAnimateInDurationLong;
+MMExtern CGFloat const MMProgressHUDAnimateInDurationNormal;
+MMExtern CGFloat const MMProgressHUDAnimateInDurationMedium;
+MMExtern CGFloat const MMProgressHUDAnimateInDurationShort;
+MMExtern CGFloat const MMProgressHUDAnimateInDurationVeryShort;
 
-extern CGFloat const MMProgressHUDAnimateOutDurationLong;
-extern CGFloat const MMProgressHUDAnimateOutDurationMedium;
-extern CGFloat const MMProgressHUDAnimateOutDurationShort;
+MMExtern CGFloat const MMProgressHUDAnimateOutDurationLong;
+MMExtern CGFloat const MMProgressHUDAnimateOutDurationMedium;
+MMExtern CGFloat const MMProgressHUDAnimateOutDurationShort;
 
 typedef NS_ENUM(NSInteger, MMProgressHUDDisplayStyle) {
     MMProgressHUDDisplayStylePlain = 0,
     MMProgressHUDDisplayStyleBordered,
 };
 
-typedef NS_ENUM(NSInteger, MMProgressHUDProgressStyle){
+typedef NS_ENUM(NSInteger, MMProgressHUDProgressStyle) {
     MMProgressHUDProgressStyleIndeterminate = 0,
     MMProgressHUDProgressStyleRadial,
     MMProgressHUDProgressStyleLinear,
 } DEPRECATED_ATTRIBUTE;
 
-typedef NS_ENUM(NSInteger, MMProgressHUDCompletionState){
+typedef NS_ENUM(NSInteger, MMProgressHUDCompletionState) {
     MMProgressHUDCompletionStateNone = 0,
     MMProgressHUDCompletionStateError,
     MMProgressHUDCompletionStateSuccess,

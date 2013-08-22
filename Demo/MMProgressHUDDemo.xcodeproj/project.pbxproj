@@ -143,6 +143,7 @@
 		69DA08D1158261EE000DC29E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		69DA08D4158261EE000DC29E /* MMProgressHUDTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MMProgressHUDTests.m; sourceTree = "<group>"; };
 		69DA08D6158261EE000DC29E /* LogicTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LogicTests-Prefix.pch"; sourceTree = "<group>"; };
+		DDB2DD6A17C626570077C18E /* MMProgressHUDDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMProgressHUDDefines.h; sourceTree = "<group>"; };
 		DDBCC20317C2822A00C3BF8C /* MMLinearProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMLinearProgressView.h; sourceTree = "<group>"; };
 		DDBCC20417C2822A00C3BF8C /* MMLinearProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMLinearProgressView.m; sourceTree = "<group>"; };
 		DDBCC20517C2822A00C3BF8C /* MMProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMProgressView.h; sourceTree = "<group>"; };
@@ -255,6 +256,7 @@
 			children = (
 				46F3F73D16D1E76700E255A2 /* MMVectorImage.h */,
 				46F3F73E16D1E76700E255A2 /* MMVectorImage.m */,
+				DDB2DD6A17C626570077C18E /* MMProgressHUDDefines.h */,
 				46A19B5B155493B500D65BB8 /* MMProgressHUD.h */,
 				46A19B5C155493B500D65BB8 /* MMProgressHUD.m */,
 				55AC1A0315A602A500D64C1F /* MMProgressHUDOverlayView.h */,
