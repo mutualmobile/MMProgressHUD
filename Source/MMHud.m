@@ -565,7 +565,7 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
 }
 
 #pragma mark - Property Overrides
-- (void)setProgressStyle:(MMProgressHUDProgressStyle)progressStyle{
+- (void)setProgressStyle:(MMProgressHUDProgressStyle)progressStyle {
     _progressStyle = progressStyle;
     
     MMHudWLog(@"Setting %@ is deprecated, please set an explicit determinate progress class using %@",
@@ -577,7 +577,7 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
 
 - (void)setProgressViewClass:(Class)progressViewClass {
     if (progressViewClass != Nil) {
-        Protocol * expectedProtocol = @protocol(MMProgressView);
+        Protocol *expectedProtocol = @protocol(MMProgressView);
         
         NSAssert([progressViewClass conformsToProtocol:expectedProtocol], @"Class %@ doesn't conform to %@ protocol", NSStringFromClass(progressViewClass), NSStringFromProtocol(expectedProtocol));
     }
@@ -669,6 +669,10 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
 }
 
 - (void)setIndeterminate:(BOOL)indeterminate {
+    if (!indeterminate && self.progressViewClass == Nil) {
+        MMHudWLog(@"HUD %@ set to determinate progress but progress view class is Nil", self);
+    }
+    
     if (indeterminate != self.isIndeterminate) {
         _indeterminate = indeterminate;
         [self setNeedsUpdate:YES];

@@ -9,27 +9,16 @@
 #import <UIKit/UIKit.h>
 #import "MMHud.h"
 
-#ifdef DEBUG
-    #ifdef MM_HUD_DEBUG
-        #define MMHudLog(fmt, ...) NSLog((@"%@ [line %u]: " fmt), NSStringFromClass(self.class), __LINE__, ##__VA_ARGS__)
-    #else
-        #define MMHudLog(...) /* */
-    #endif
-#else
-    #define MMHudLog(...) /* */
-#endif
+MMExtern NSString * const MMProgressHUDDefaultConfirmationMessage;
 
-#define MMHudWLog(fmt, ...) NSLog((@"%@ WARNING [line %u]: " fmt), NSStringFromClass(self.class), __LINE__, ##__VA_ARGS__)
+MMExtern NSString * const MMProgressHUDAnimationShow;
+MMExtern NSString * const MMProgressHUDAnimationDismiss;
+MMExtern NSString * const MMProgressHUDAnimationWindowFadeOut;
+MMExtern NSString * const MMProgressHUDAnimationKeyShowAnimation;
+MMExtern NSString * const MMProgressHUDAnimationKeyDismissAnimation;
 
-extern NSString * const MMProgressHUDDefaultConfirmationMessage;
 
-extern NSString * const MMProgressHUDAnimationShow;
-extern NSString * const MMProgressHUDAnimationDismiss;
-extern NSString * const MMProgressHUDAnimationWindowFadeOut;
-extern NSString * const MMProgressHUDAnimationKeyShowAnimation;
-extern NSString * const MMProgressHUDAnimationKeyDismissAnimation;
-
-extern float const MMProgressHUDStandardDismissDelay;
+MMExtern float const MMProgressHUDStandardDismissDelay;
 
 @class MMProgressHUDWindow;
 @class MMProgressHUDOverlayView;
@@ -137,7 +126,7 @@ This message will be presented to the user when a cancelBlock is present after t
  */
 @property (nonatomic, strong, readonly) MMProgressHUDOverlayView *overlayView;
 
-/** The class to use for the progress view. Instances of this class must confrom to the MMProgressView protocol. When setting a custom value this value must be set before setting the indeterminate to YES.
+/** The class to use for the progress view. Instances of this class must confrom to the MMProgressView protocol. When setting a custom value this value must be set before setting the indeterminate property to YES.
  
  Defaults to MMRadialProgressView
  */
