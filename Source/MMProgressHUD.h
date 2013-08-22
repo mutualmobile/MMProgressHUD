@@ -57,9 +57,6 @@ typedef NS_ENUM(NSInteger, MMProgressHUDWindowOverlayMode) {
  */
 @property (nonatomic, assign) MMProgressHUDProgressStyle progressStyle DEPRECATED_ATTRIBUTE;
 
-/** A boolean value that indicates whether or not the HUD has been cancelled manually. */
-@property (nonatomic, assign, getter = isCancelled) BOOL cancelled;
-
 /** The determinate progress state.
  
  The progress ranges from 0-1.
@@ -68,6 +65,9 @@ typedef NS_ENUM(NSInteger, MMProgressHUDWindowOverlayMode) {
 
 /** A Boolean value that indicates whether or not the HUD is visible. */
 @property(nonatomic, readonly, getter = isVisible) BOOL visible;
+
+/** A boolean value that indicates whether or not the HUD has been cancelled manually. */
+@property (nonatomic, assign, getter = isCancelled) BOOL cancelled;
 
 /** The presentation style for the HUD. 
  

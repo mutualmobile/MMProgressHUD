@@ -90,11 +90,11 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
 }
 
 - (void)showWithTitle:(NSString *)title
-              status:(NSString *)status
+               status:(NSString *)status
   confirmationMessage:(NSString *)confirmationMessage
           cancelBlock:(void(^)(void))cancelBlock
                images:(NSArray *)images {
-
+    
     self.image = nil;
     self.animationImages = nil;
     
@@ -105,22 +105,6 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
         self.animationImages = images;
     }
     
-    [self showWithTitle:title
-                 status:status
-    confirmationMessage:confirmationMessage
-            cancelBlock:cancelBlock
-          indeterminate:self.hud.isIndeterminate];
-}
-
-- (void)showWithTitle:(NSString *)title
-               status:(NSString *)status
-  confirmationMessage:(NSString *)confirmationMessage
-          cancelBlock:(void(^)(void))cancelBlock
-        indeterminate:(BOOL)indeterminate {
-    
-    MMHudLog(@"Beginning %@ show...", NSStringFromClass(self.class));
-    
-    self.hud.indeterminate = indeterminate;
     self.cancelBlock = cancelBlock;
     self.title = title;
     self.status = status;
