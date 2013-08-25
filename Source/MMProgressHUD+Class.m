@@ -169,7 +169,7 @@
     [MMProgressHUD showWithTitle:title
                           status:status
                      cancelBlock:cancelBlock
-                          images:@[image]];
+                          images:(image != nil ? @[image] : nil)];
 }
 
 + (void)showWithTitle:(NSString *)title

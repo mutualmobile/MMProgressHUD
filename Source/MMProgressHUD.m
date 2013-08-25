@@ -35,6 +35,7 @@
 @property (nonatomic, strong) CAAnimation *queuedShowAnimation;
 @property (nonatomic, strong) CAAnimation *queuedDismissAnimation;
 @property (nonatomic, readwrite, strong) MMProgressHUDOverlayView *overlayView;
+@property (nonatomic, strong) NSTimer *dismissDelayTimer;
 @property (nonatomic, copy) NSString *tempStatus;
 @property (nonatomic, strong) NSTimer *confirmationTimer;
 @property (nonatomic, getter = isConfirmed) BOOL confirmed;
@@ -390,6 +391,10 @@
 - (void)_updateHUDAnimated:(BOOL)animated withCompletion:(void(^)(BOOL completed))completionBlock {
     MMHudLog(@"Updating %@ with completion...", NSStringFromClass(self.class));
     
+    if (self.dismissDelayTimer != nil) {
+        [self.dismissDelayTimer invalidate], self.dismissDelayTimer = nil;
+    }
+    
     if (animated) {
         [UIView
          animateWithDuration:0.1f
@@ -441,6 +446,9 @@
 
 #pragma mark - Presentation
 - (void)show {
+    if (self.dismissDelayTimer != nil) {
+        [self.dismissDelayTimer invalidate], self.dismissDelayTimer = nil;
+    }
     
     NSAssert([NSThread isMainThread], @"Show should be run on main thread!");
     
@@ -504,6 +512,11 @@
 }
 
 - (void)dismissAfterDelay:(NSTimeInterval)delay {
+    [self.dismissDelayTimer invalidate];
+    self.dismissDelayTimer = [NSTimer scheduledTimerWithTimeInterval:delay target:self selector:@selector(dismiss) userInfo:nil repeats:NO];
+}
+
+- (void)dismiss {
     NSAssert([NSThread isMainThread], @"Dismiss method should be run on main thread!");
     
     MMHudLog(@"Dismissing...");
@@ -544,6 +557,7 @@
     }
     
     NSTimeInterval duration = (self.presentationStyle == MMProgressHUDPresentationStyleNone) ? 0.0 : MMProgressHUDAnimateOutDurationLong;
+    NSTimeInterval delay = (self.presentationStyle == MMProgressHUDPresentationStyleDrop) ? MMProgressHUDAnimateOutDurationShort : 0.0;
     
     [UIView
      animateWithDuration:duration
@@ -566,12 +580,6 @@
          
          UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, nil);
      }];
-}
-
-- (void)dismiss {
-    NSTimeInterval delay = (self.presentationStyle == MMProgressHUDPresentationStyleDrop) ? MMProgressHUDAnimateOutDurationShort : 0.0;
-    
-    [self dismissAfterDelay:delay];
 }
 
 - (CGPoint)_antialiasedPositionPointForPoint:(CGPoint)oldCenter forLayer:(CALayer *)layer {
