@@ -20,24 +20,7 @@
 #import "MMLinearProgressView.h"
 #import "MMRadialProgressView.h"
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_5_0
-#error MMProgressHUD uses APIs only available in iOS 5.0+
-#endif
-
-static const BOOL kMMProgressHUDDebugMode = NO;
-
-NSString * const MMProgressHUDDefaultConfirmationMessage = @"Cancel?";
-NSString * const MMProgressHUDAnimationShow = @"mm-progress-hud-present-animation";
-NSString * const MMProgressHUDAnimationDismiss = @"mm-progress-hud-dismiss-animation";
-NSString * const MMProgressHUDAnimationWindowFadeOut = @"mm-progress-hud-window-fade-out";
-NSString * const MMProgressHUDAnimationKeyShowAnimation = @"show";
-NSString * const MMProgressHUDAnimationKeyDismissAnimation = @"dismiss";
-
-NSUInteger const MMProgressHUDConfirmationPulseCount = 8;//Keep this number even
-
-CGFloat const MMProgressHUDStandardDismissDelay = 0.75f;
-
-CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
+#import "MMProgressHUDDefines-Private.h"
 
 #pragma mark - MMProgressHUD
 @interface MMProgressHUD () <MMHudDelegate>
@@ -129,7 +112,7 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
 - (void)dismissWithCompletionState:(MMProgressHUDCompletionState)completionState
                              title:(NSString *)title
                            status:(NSString *)status
-                        afterDelay:(float)delay {
+                        afterDelay:(NSTimeInterval)delay {
     if (title) {
         self.title = title;
     }
@@ -544,7 +527,7 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
      }];
 }
 
-- (void)dismiss {
+- (void)dismissAfterDelay:(NSTimeInterval)delay {
     NSAssert([NSThread isMainThread], @"Dismiss method should be run on main thread!");
     
     MMHudLog(@"Dismissing...");
@@ -584,14 +567,13 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
             break;
     }
     
-    CGFloat duration = (self.presentationStyle == MMProgressHUDPresentationStyleNone) ? 0.f : MMProgressHUDAnimateOutDurationLong;
-    CGFloat delay = (self.presentationStyle == MMProgressHUDPresentationStyleDrop) ? MMProgressHUDAnimateOutDurationShort : 0.f;
+    NSTimeInterval duration = (self.presentationStyle == MMProgressHUDPresentationStyleNone) ? 0.0 : MMProgressHUDAnimateOutDurationLong;
     
     [UIView
      animateWithDuration:duration
      delay:delay
      options:UIViewAnimationOptionCurveEaseIn |
-             UIViewAnimationOptionBeginFromCurrentState
+     UIViewAnimationOptionBeginFromCurrentState
      animations:^{
          self.overlayView.alpha = 0.f;
      }
@@ -608,6 +590,12 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
          
          UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, nil);
      }];
+}
+
+- (void)dismiss {
+    NSTimeInterval delay = (self.presentationStyle == MMProgressHUDPresentationStyleDrop) ? MMProgressHUDAnimateOutDurationShort : 0.0;
+    
+    [self dismissAfterDelay:delay];
 }
 
 - (CGPoint)_antialiasedPositionPointForPoint:(CGPoint)oldCenter forLayer:(CALayer *)layer {

@@ -10,6 +10,8 @@
 #import "MMProgressHUDWindow.h"
 #import "MMProgressHUD.h"
 
+#import "MMProgressHUDDefines-Private.h"
+
 
 #define suppressDeprecation(Stuff) \
 do { \

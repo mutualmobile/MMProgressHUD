@@ -8,6 +8,8 @@
 
 #import "MMProgressHUDWindow.h"
 
+#import "MMProgressHUDDefines-Private.h"
+
 @implementation MMProgressHUDWindow
 
 - (instancetype)init {

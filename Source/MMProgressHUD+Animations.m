@@ -8,6 +8,8 @@
 #import <QuartzCore/QuartzCore.h>
 #import "MMProgressHUD+Animations.h"
 
+#import "MMProgressHUDDefines-Private.h"
+
 @interface MMProgressHUD ()
 
 - (CGPoint)_windowCenterForHUDAnchor:(CGPoint)anchor;

@@ -7,6 +7,7 @@
 //
 
 #import "MMProgressHUD.h"
+#import "MMProgressHUDDefines-Private.h"
 
 @interface MMProgressHUD()
 
@@ -14,13 +15,14 @@
 - (void)dismissWithCompletionState:(MMProgressHUDCompletionState)completionState
                              title:(NSString *)title
                             status:(NSString *)status
-                        afterDelay:(float)delay;
+                        afterDelay:(NSTimeInterval)delay;
 
 - (void)_updateHUDAnimated:(BOOL)animated
     withCompletion:(void(^)(BOOL completed))completionBlock;
 
 - (void)show;
 - (void)dismiss;
+- (void)dismissAfterDelay:(NSTimeInterval)delay;
 
 @end
 
@@ -109,6 +111,11 @@
 }
 
 //indeterminate status
++ (void)showWithTitle:(NSString *)title {
+    [MMProgressHUD showWithTitle:title
+                          status:nil];
+}
+
 + (void)showWithStatus:(NSString *)status {
     [MMProgressHUD showWithTitle:nil
                           status:status];
@@ -222,7 +229,7 @@
 //dismissal
 + (void)dismissWithError:(NSString *)status
                    title:(NSString *)title 
-              afterDelay:(float)delay {
+              afterDelay:(NSTimeInterval)delay {
     if ([NSThread isMainThread] == NO) {
         dispatch_sync(dispatch_get_main_queue(), ^{
             [[MMProgressHUD sharedHUD] dismissWithCompletionState:MMProgressHUDCompletionStateError
@@ -252,7 +259,7 @@
 }
 
 + (void)dismissWithError:(NSString *)status
-              afterDelay:(float)delay {
+              afterDelay:(NSTimeInterval)delay {
     [MMProgressHUD dismissWithError:status
                               title:nil
                          afterDelay:delay];
@@ -260,7 +267,7 @@
 
 + (void)dismissWithSuccess:(NSString *)status 
                      title:(NSString *)title 
-                afterDelay:(float)delay {
+                afterDelay:(NSTimeInterval)delay {
     if ([NSThread isMainThread] == NO) {
         dispatch_sync(dispatch_get_main_queue(), ^{
             [[MMProgressHUD sharedHUD] dismissWithCompletionState:MMProgressHUDCompletionStateSuccess
@@ -289,10 +296,14 @@
                                 title:nil];
 }
 
++ (void)dismissAfterDelay:(NSTimeInterval)delay {
+    [[MMProgressHUD sharedHUD] dismissAfterDelay:delay];
+}
+
 + (void)dismiss {
     if ([NSThread isMainThread] == NO) {
         dispatch_sync(dispatch_get_main_queue(), ^{
-            [[MMProgressHUD sharedHUD] dismiss]; 
+            [[MMProgressHUD sharedHUD] dismiss];
         });
     }
     else {

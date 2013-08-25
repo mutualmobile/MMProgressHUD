@@ -9,43 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "MMHud.h"
 
-MMExtern NSString * const MMProgressHUDDefaultConfirmationMessage;
-
-MMExtern NSString * const MMProgressHUDAnimationShow;
-MMExtern NSString * const MMProgressHUDAnimationDismiss;
-MMExtern NSString * const MMProgressHUDAnimationWindowFadeOut;
-MMExtern NSString * const MMProgressHUDAnimationKeyShowAnimation;
-MMExtern NSString * const MMProgressHUDAnimationKeyDismissAnimation;
-
-
-MMExtern float const MMProgressHUDStandardDismissDelay;
-
 @class MMProgressHUDWindow;
 @class MMProgressHUDOverlayView;
-
-typedef NS_ENUM(NSInteger, MMProgressHUDPresentationStyle) {
-    MMProgressHUDPresentationStyleDrop = 0, //default
-    MMProgressHUDPresentationStyleExpand,
-    MMProgressHUDPresentationStyleShrink,
-    MMProgressHUDPresentationStyleSwingLeft,
-    MMProgressHUDPresentationStyleSwingRight,
-    MMProgressHUDPresentationStyleBalloon,
-    MMProgressHUDPresentationStyleFade,
-    MMProgressHUDPresentationStyleNone
-};
-
-typedef NS_ENUM(NSInteger, MMProgressHUDWindowOverlayMode) {
-    MMProgressHUDWindowOverlayModeNone = -1,
-    MMProgressHUDWindowOverlayModeGradient = 0,
-    MMProgressHUDWindowOverlayModeLinear,
-    /*MMProgressHUDWindowOverlayModeBlur*/ //iOS 7 only
-};
-
-//iOS 7 only
-//typedef NS_ENUM(NSInteger, MMProgressHUDOptions) {
-//    MMProgressHUDOptionGravityEnabled = 1 << 0,
-//    MMProgressHUDOptionGyroEnabled = 1 << 1,
-//};
 
 @interface MMProgressHUD : UIView
 
@@ -163,6 +128,27 @@ This message will be presented to the user when a cancelBlock is present after t
 //-----------------------------------------------
 /** @name Presentation */
 //-----------------------------------------------
+
+
+/** Shows indeterminate HUD with specified title.
+ 
+ @warning All show methods are mutually exclusive of one another. Use the updateStatus: method to update the HUD's status while maintaining all previously set presentation attributes such as image, images, cancelBlock, title, or confirmationMessage. For example: calling showWithTitle:status: after calling showWithTitle:status:image: will wipe out the image specified in the latter call.
+ 
+ @param title Title to display.
+ */
++ (void)showWithTitle:(NSString *)title;
+
+
+/** Shows user-blocking HUD with only a status message.
+ 
+ Since the title of this HUD is nil, the status message font will become bold by default.
+ 
+ @warning All show methods are mutually exclusive of one another. Use the updateStatus: method to update the HUD's status while maintaining all previously set presentation attributes such as image, images, cancelBlock, title, or confirmationMessage. For example: calling showWithTitle:status: after calling showWithTitle:status:image: will wipe out the image specified in the latter call.
+ 
+ @param status Status message to display.
+ */
++ (void)showWithStatus:(NSString *)status;
+
 
 /** Shows indeterminate HUD with specified title and status.
  
@@ -301,22 +287,18 @@ This message will be presented to the user when a cancelBlock is present after t
                status:(NSString *)status 
                images:(NSArray *)images;
 
-/** Shows user-blocking HUD with only a status message.
- 
- Since the title of this HUD is nil, the status message font will become bold by default.
- 
- @warning All show methods are mutually exclusive of one another. Use the updateStatus: method to update the HUD's status while maintaining all previously set presentation attributes such as image, images, cancelBlock, title, or confirmationMessage. For example: calling showWithTitle:status: after calling showWithTitle:status:image: will wipe out the image specified in the latter call.
- 
- @param status Status message to display.
- */
-+ (void)showWithStatus:(NSString *)status;
-
 //-----------------------------------------------
 /** @name Dismissal */
 //-----------------------------------------------
 
 /** Dismisses the shared HUD with the current presentationStyle and default delay. */
 + (void)dismiss;
+
+
+/** Dismisses the shared HUD with the current presentationStyle and specified delay. 
+ @param delay Delay to wait before animating the dismiss of the HUD.
+ */
++ (void)dismissAfterDelay:(NSTimeInterval)delay;
 
 #pragma mark - Dismiss with Error
 
@@ -328,7 +310,7 @@ This message will be presented to the user when a cancelBlock is present after t
  */
 + (void)dismissWithError:(NSString *)message
                    title:(NSString *)title
-              afterDelay:(float)delay;
+              afterDelay:(NSTimeInterval)delay;
 
 /** Dismisses the shared HUD with the current presentationStyle in an error-state after a standard delay.
  
@@ -350,7 +332,7 @@ This message will be presented to the user when a cancelBlock is present after t
  @param delay Delay to wait before animating the dismiss of the HUD.
  */
 + (void)dismissWithError:(NSString *)message
-              afterDelay:(float)delay;
+              afterDelay:(NSTimeInterval)delay;
 
 #pragma mark - Dismiss with Success
 /** Dismisses the shared HUD with the current presentationStyle in a success-state after a user-specified delay.
@@ -361,7 +343,7 @@ This message will be presented to the user when a cancelBlock is present after t
  */
 + (void)dismissWithSuccess:(NSString *)message
                      title:(NSString *)title
-                afterDelay:(float)delay;
+                afterDelay:(NSTimeInterval)delay;
 
 /** Dismisses the shared HUD with the current presentationStyle in a success-state.
  
