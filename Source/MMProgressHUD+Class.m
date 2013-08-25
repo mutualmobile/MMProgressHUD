@@ -111,6 +111,11 @@
 }
 
 //indeterminate status
+
++ (void)show {
+    [MMProgressHUD showWithTitle:nil status:nil];
+}
+
 + (void)showWithTitle:(NSString *)title {
     [MMProgressHUD showWithTitle:title
                           status:nil];

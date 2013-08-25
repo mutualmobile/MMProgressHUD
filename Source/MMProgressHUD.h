@@ -129,6 +129,13 @@ This message will be presented to the user when a cancelBlock is present after t
 /** @name Presentation */
 //-----------------------------------------------
 
+/** Shows indeterminate HUD.
+ 
+ @warning All show methods are mutually exclusive of one another. Use the updateStatus: method to update the HUD's status while maintaining all previously set presentation attributes such as image, images, cancelBlock, title, or confirmationMessage. For example: calling showWithTitle:status: after calling showWithTitle:status:image: will wipe out the image specified in the latter call.
+ 
+ */
++ (void)show;
+
 
 /** Shows indeterminate HUD with specified title.
  
