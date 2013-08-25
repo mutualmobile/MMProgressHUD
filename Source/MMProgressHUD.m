@@ -35,7 +35,6 @@
 @property (nonatomic, strong) CAAnimation *queuedShowAnimation;
 @property (nonatomic, strong) CAAnimation *queuedDismissAnimation;
 @property (nonatomic, readwrite, strong) MMProgressHUDOverlayView *overlayView;
-@property (nonatomic, strong) NSTimer *dismissDelayTimer;
 @property (nonatomic, copy) NSString *tempStatus;
 @property (nonatomic, strong) NSTimer *confirmationTimer;
 @property (nonatomic, getter = isConfirmed) BOOL confirmed;
@@ -125,24 +124,8 @@
     
     if (self.isVisible) {
         [self _updateHUDAnimated:YES withCompletion:^(BOOL completed) {
-            if (delay != INFINITY && delay != DISPATCH_TIME_FOREVER) {
-                //create a timer in order to be cancellable
-                [self.dismissDelayTimer invalidate];
-                self.dismissDelayTimer = [NSTimer scheduledTimerWithTimeInterval:delay
-                                                                          target:self
-                                                                        selector:@selector(dismiss)
-                                                                        userInfo:nil
-                                                                         repeats:NO];
-            }
+            [self dismissAfterDelay:delay];
         }];
-    }
-    else {
-        [self.dismissDelayTimer invalidate];
-        self.dismissDelayTimer = [NSTimer scheduledTimerWithTimeInterval:delay
-                                                                  target:self
-                                                                selector:@selector(dismiss)
-                                                                userInfo:nil
-                                                                 repeats:NO];
     }
 }
 
@@ -407,10 +390,6 @@
 - (void)_updateHUDAnimated:(BOOL)animated withCompletion:(void(^)(BOOL completed))completionBlock {
     MMHudLog(@"Updating %@ with completion...", NSStringFromClass(self.class));
     
-    if (self.dismissDelayTimer != nil) {
-        [self.dismissDelayTimer invalidate], self.dismissDelayTimer = nil;
-    }
-    
     if (animated) {
         [UIView
          animateWithDuration:0.1f
@@ -462,9 +441,6 @@
 
 #pragma mark - Presentation
 - (void)show {
-    if (self.dismissDelayTimer != nil) {
-        [self.dismissDelayTimer invalidate], self.dismissDelayTimer = nil;
-    }
     
     NSAssert([NSThread isMainThread], @"Show should be run on main thread!");
     
