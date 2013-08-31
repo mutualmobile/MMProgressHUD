@@ -14,7 +14,7 @@
 
 #import "MMProgressHUDDefines-Private.h"
 
-@interface MMHud()
+@interface MMHud ()
 
 @property (nonatomic, strong) UIView *progressViewContainer;
 @property (nonatomic, strong) UIView <MMProgressView> *progressView;

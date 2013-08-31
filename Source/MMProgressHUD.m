@@ -378,6 +378,8 @@
     
     self.hud.layer.transform = CATransform3DIdentity;
     
+    [self.hud setNeedsUpdate:YES];
+    
     [self.hud applyLayoutFrames];
     
     [self addSubview:self.hud];
