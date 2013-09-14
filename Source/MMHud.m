@@ -475,11 +475,8 @@
         _statusLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         _statusLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
         _statusLabel.numberOfLines = 0;
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-        _statusLabel.lineBreakMode = UILineBreakModeWordWrap;
-        _statusLabel.textAlignment = UITextAlignmentCenter;
-#pragma clang diagnostic pop
+        _statusLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        _statusLabel.textAlignment = NSTextAlignmentCenter;
         _statusLabel.backgroundColor = [UIColor clearColor];
         _statusLabel.font = [UIFont fontWithName:MMProgressHUDFontNameNormal size:MMProgressHUDDefaultFontSize];
         _statusLabel.textColor = [UIColor colorWithWhite:0.9f alpha:0.95f];
@@ -507,11 +504,8 @@
         _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         _titleLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
         _titleLabel.numberOfLines = 0;
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-        _titleLabel.lineBreakMode = UILineBreakModeWordWrap;
-        _titleLabel.textAlignment = UITextAlignmentCenter;
-#pragma clang diagnostic pop
+        _titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        _titleLabel.textAlignment = NSTextAlignmentCenter;
         _titleLabel.backgroundColor = [UIColor clearColor];
         _titleLabel.font = [UIFont fontWithName:MMProgressHUDFontNameBold size:MMProgressHUDDefaultFontSize];
         _titleLabel.textColor = [UIColor whiteColor];

@@ -70,6 +70,33 @@
 		69DA08CC158261EE000DC29E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A19B38155492E000D65BB8 /* Foundation.framework */; };
 		69DA08D2158261EE000DC29E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 69DA08D0158261EE000DC29E /* InfoPlist.strings */; };
 		69DA08D5158261EE000DC29E /* MMProgressHUDTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 69DA08D4158261EE000DC29E /* MMProgressHUDTests.m */; };
+		DD29615D17E4BC2700AC6831 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A19B42155492E000D65BB8 /* main.m */; };
+		DD29615E17E4BC2700AC6831 /* MMAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A19B46155492E000D65BB8 /* MMAppDelegate.m */; };
+		DD29615F17E4BC2700AC6831 /* MMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A19B49155492E000D65BB8 /* MMViewController.m */; };
+		DD29616017E4BC2700AC6831 /* MMProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A19B5C155493B500D65BB8 /* MMProgressHUD.m */; };
+		DD29616117E4BC2700AC6831 /* MMRadialProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 550D504B15615BEF0092B975 /* MMRadialProgressView.m */; };
+		DD29616217E4BC2700AC6831 /* MMProgressHUDDefines.m in Sources */ = {isa = PBXBuildFile; fileRef = DDBE93BD17CA561D00B78C77 /* MMProgressHUDDefines.m */; };
+		DD29616317E4BC2700AC6831 /* MMHud.m in Sources */ = {isa = PBXBuildFile; fileRef = 5527AEFA159CD7650037D67D /* MMHud.m */; };
+		DD29616417E4BC2700AC6831 /* MMProgressHUDWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 5527AEFE159CD7D50037D67D /* MMProgressHUDWindow.m */; };
+		DD29616517E4BC2700AC6831 /* MMProgressHUDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5527AF02159CD8200037D67D /* MMProgressHUDViewController.m */; };
+		DD29616617E4BC2700AC6831 /* MMProgressHUD+Animations.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F0596015A2083C00A47983 /* MMProgressHUD+Animations.m */; };
+		DD29616717E4BC2700AC6831 /* MMProgressHUD+Class.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F0596515A20BDD00A47983 /* MMProgressHUD+Class.m */; };
+		DD29616817E4BC2700AC6831 /* MMProgressHUDDefines-Private.m in Sources */ = {isa = PBXBuildFile; fileRef = DDBE93C217CA5BF300B78C77 /* MMProgressHUDDefines-Private.m */; };
+		DD29616917E4BC2700AC6831 /* MMProgressHUDOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55AC1A0415A602A500D64C1F /* MMProgressHUDOverlayView.m */; };
+		DD29616A17E4BC2700AC6831 /* MMLinearProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = DDBCC20417C2822A00C3BF8C /* MMLinearProgressView.m */; };
+		DD29616B17E4BC2700AC6831 /* MMVectorImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 46F3F73E16D1E76700E255A2 /* MMVectorImage.m */; };
+		DD29616D17E4BC2700AC6831 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A19B5F15549B0300D65BB8 /* QuartzCore.framework */; };
+		DD29616E17E4BC2700AC6831 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A19B36155492E000D65BB8 /* UIKit.framework */; };
+		DD29616F17E4BC2700AC6831 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A19B38155492E000D65BB8 /* Foundation.framework */; };
+		DD29617017E4BC2700AC6831 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A19B3A155492E000D65BB8 /* CoreGraphics.framework */; };
+		DD29617217E4BC2700AC6831 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 46A19B3F155492E000D65BB8 /* InfoPlist.strings */; };
+		DD29617317E4BC2700AC6831 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A19B6215549F5200D65BB8 /* 1.png */; };
+		DD29617417E4BC2700AC6831 /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A19B6315549F5200D65BB8 /* 2.png */; };
+		DD29617517E4BC2700AC6831 /* 3.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A19B6415549F5200D65BB8 /* 3.png */; };
+		DD29617617E4BC2700AC6831 /* 4.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A19B6515549F5200D65BB8 /* 4.png */; };
+		DD29617717E4BC2700AC6831 /* 5.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A19B6615549F5200D65BB8 /* 5.png */; };
+		DD29617817E4BC2700AC6831 /* 6.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A19B6715549F5200D65BB8 /* 6.png */; };
+		DD29617917E4BC2700AC6831 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 463AE40616B105B300A93EED /* Default-568h@2x.png */; };
 		DDBCC20617C2822A00C3BF8C /* MMLinearProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = DDBCC20417C2822A00C3BF8C /* MMLinearProgressView.m */; };
 		DDBE93BE17CA59FD00B78C77 /* MMProgressHUDDefines.m in Sources */ = {isa = PBXBuildFile; fileRef = DDBE93BD17CA561D00B78C77 /* MMProgressHUDDefines.m */; };
 		DDBE93BF17CA59FE00B78C77 /* MMProgressHUDDefines.m in Sources */ = {isa = PBXBuildFile; fileRef = DDBE93BD17CA561D00B78C77 /* MMProgressHUDDefines.m */; };
@@ -81,6 +108,13 @@
 
 /* Begin PBXContainerItemProxy section */
 		69DA08DD15826291000DC29E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 46A19B29155492E000D65BB8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 69DA08C7158261EE000DC29E;
+			remoteInfo = LogicTests;
+		};
+		DD29615B17E4BC2700AC6831 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 46A19B29155492E000D65BB8 /* Project object */;
 			proxyType = 1;
@@ -149,6 +183,7 @@
 		69DA08D1158261EE000DC29E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		69DA08D4158261EE000DC29E /* MMProgressHUDTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MMProgressHUDTests.m; sourceTree = "<group>"; };
 		69DA08D6158261EE000DC29E /* LogicTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LogicTests-Prefix.pch"; sourceTree = "<group>"; };
+		DD29617E17E4BC2700AC6831 /* MMProgressHUDDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MMProgressHUDDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDB2DD6A17C626570077C18E /* MMProgressHUDDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMProgressHUDDefines.h; sourceTree = "<group>"; };
 		DDBCC20317C2822A00C3BF8C /* MMLinearProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMLinearProgressView.h; sourceTree = "<group>"; };
 		DDBCC20417C2822A00C3BF8C /* MMLinearProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMLinearProgressView.m; sourceTree = "<group>"; };
@@ -196,6 +231,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DD29616C17E4BC2700AC6831 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DD29616D17E4BC2700AC6831 /* QuartzCore.framework in Frameworks */,
+				DD29616E17E4BC2700AC6831 /* UIKit.framework in Frameworks */,
+				DD29616F17E4BC2700AC6831 /* Foundation.framework in Frameworks */,
+				DD29617017E4BC2700AC6831 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -219,6 +265,7 @@
 				46A19B32155492E000D65BB8 /* MMProgressHUDDemo.app */,
 				69DA08C8158261EE000DC29E /* LogicTests.octest */,
 				55F0587C159E02DD00A47983 /* GHUnitTests.app */,
+				DD29617E17E4BC2700AC6831 /* MMProgressHUDDemo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -419,6 +466,25 @@
 			productReference = 69DA08C8158261EE000DC29E /* LogicTests.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
+		DD29615917E4BC2700AC6831 /* MMProgressHUDDemo64 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DD29617B17E4BC2700AC6831 /* Build configuration list for PBXNativeTarget "MMProgressHUDDemo64" */;
+			buildPhases = (
+				DD29615C17E4BC2700AC6831 /* Sources */,
+				DD29616C17E4BC2700AC6831 /* Frameworks */,
+				DD29617117E4BC2700AC6831 /* Resources */,
+				DD29617A17E4BC2700AC6831 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DD29615A17E4BC2700AC6831 /* PBXTargetDependency */,
+			);
+			name = MMProgressHUDDemo64;
+			productName = MMProgressHUDDemo;
+			productReference = DD29617E17E4BC2700AC6831 /* MMProgressHUDDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -442,6 +508,7 @@
 			projectRoot = "";
 			targets = (
 				46A19B31155492E000D65BB8 /* MMProgressHUDDemo */,
+				DD29615917E4BC2700AC6831 /* MMProgressHUDDemo64 */,
 				69DA08C7158261EE000DC29E /* LogicTests */,
 				55F0587B159E02DD00A47983 /* GHUnitTests */,
 			);
@@ -479,6 +546,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DD29617117E4BC2700AC6831 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DD29617217E4BC2700AC6831 /* InfoPlist.strings in Resources */,
+				DD29617317E4BC2700AC6831 /* 1.png in Resources */,
+				DD29617417E4BC2700AC6831 /* 2.png in Resources */,
+				DD29617517E4BC2700AC6831 /* 3.png in Resources */,
+				DD29617617E4BC2700AC6831 /* 4.png in Resources */,
+				DD29617717E4BC2700AC6831 /* 5.png in Resources */,
+				DD29617817E4BC2700AC6831 /* 6.png in Resources */,
+				DD29617917E4BC2700AC6831 /* Default-568h@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -507,6 +589,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+		DD29617A17E4BC2700AC6831 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "KEYWORDS=\"TODO:|FIXME:|\\?\\?\\?:|\\!\\!\\!:\"\nfind \"${SRCROOT}/..\" \\( -name \"*.h\" -or -name \"*.m\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($KEYWORDS).*\\$\" | perl -p -e \"s/($KEYWORDS)/ warning: \\$1/\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -577,6 +672,28 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DD29615C17E4BC2700AC6831 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DD29615D17E4BC2700AC6831 /* main.m in Sources */,
+				DD29615E17E4BC2700AC6831 /* MMAppDelegate.m in Sources */,
+				DD29615F17E4BC2700AC6831 /* MMViewController.m in Sources */,
+				DD29616017E4BC2700AC6831 /* MMProgressHUD.m in Sources */,
+				DD29616117E4BC2700AC6831 /* MMRadialProgressView.m in Sources */,
+				DD29616217E4BC2700AC6831 /* MMProgressHUDDefines.m in Sources */,
+				DD29616317E4BC2700AC6831 /* MMHud.m in Sources */,
+				DD29616417E4BC2700AC6831 /* MMProgressHUDWindow.m in Sources */,
+				DD29616517E4BC2700AC6831 /* MMProgressHUDViewController.m in Sources */,
+				DD29616617E4BC2700AC6831 /* MMProgressHUD+Animations.m in Sources */,
+				DD29616717E4BC2700AC6831 /* MMProgressHUD+Class.m in Sources */,
+				DD29616817E4BC2700AC6831 /* MMProgressHUDDefines-Private.m in Sources */,
+				DD29616917E4BC2700AC6831 /* MMProgressHUDOverlayView.m in Sources */,
+				DD29616A17E4BC2700AC6831 /* MMLinearProgressView.m in Sources */,
+				DD29616B17E4BC2700AC6831 /* MMVectorImage.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -584,6 +701,11 @@
 			isa = PBXTargetDependency;
 			target = 69DA08C7158261EE000DC29E /* LogicTests */;
 			targetProxy = 69DA08DD15826291000DC29E /* PBXContainerItemProxy */;
+		};
+		DD29615A17E4BC2700AC6831 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 69DA08C7158261EE000DC29E /* LogicTests */;
+			targetProxy = DD29615B17E4BC2700AC6831 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -861,6 +983,70 @@
 			};
 			name = Release;
 		};
+		DD29617C17E4BC2700AC6831 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MMProgressHUDDemo/MMProgressHUDDemo-Prefix.pch";
+				GCC_VERSION = "";
+				INFOPLIST_FILE = "MMProgressHUDDemo/MMProgressHUDDemo-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = MMProgressHUDDemo;
+				PROVISIONING_PROFILE = "";
+				WARNING_CFLAGS = (
+					"-Wall",
+					"-Wextra",
+					"-Wobjc-interface-ivars",
+					"-Wunused-macros",
+					"-Wunreachable-code",
+					"-Wimplicit-retain-self",
+					"-Wno-unused-parameter",
+					"-Wdeprecated-declarations",
+				);
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		DD29617D17E4BC2700AC6831 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MMProgressHUDDemo/MMProgressHUDDemo-Prefix.pch";
+				GCC_VERSION = "";
+				INFOPLIST_FILE = "MMProgressHUDDemo/MMProgressHUDDemo-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = MMProgressHUDDemo;
+				PROVISIONING_PROFILE = "";
+				WARNING_CFLAGS = (
+					"-Wall",
+					"-Wextra",
+					"-Wobjc-interface-ivars",
+					"-Wunused-macros",
+					"-Wunreachable-code",
+					"-Wimplicit-retain-self",
+					"-Wno-unused-parameter",
+					"-Wdeprecated-declarations",
+				);
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -896,6 +1082,15 @@
 			buildConfigurations = (
 				69DA08D7158261EE000DC29E /* Debug */,
 				69DA08D8158261EE000DC29E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DD29617B17E4BC2700AC6831 /* Build configuration list for PBXNativeTarget "MMProgressHUDDemo64" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DD29617C17E4BC2700AC6831 /* Debug */,
+				DD29617D17E4BC2700AC6831 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
