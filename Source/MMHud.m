@@ -9,44 +9,15 @@
 #import <QuartzCore/QuartzCore.h>
 #import "MMHud.h"
 #import "MMProgressHUD.h"
+#import "MMProgressView-Protocol.h"
 #import "MMRadialProgressView.h"
 
-CGFloat    const MMProgressHUDDefaultFontSize           = 16.f;
+#import "MMProgressHUDDefines-Private.h"
 
-CGFloat    const MMProgressHUDMaximumWidth              = 300.f;
-CGFloat    const MMProgressHUDMinimumWidth              = 100.f;
-CGFloat    const MMProgressHUDContentPadding            = 5.f;
-
-CGFloat    const MMProgressHUDAnimateInDurationLong     = 1.5f;
-CGFloat    const MMProgressHUDAnimateInDurationMedium   = 0.75f;
-CGFloat    const MMProgressHUDAnimateInDurationNormal   = 0.35f;
-CGFloat    const MMProgressHUDAnimateInDurationShort    = 0.25f;
-CGFloat    const MMProgressHUDAnimateInDurationVeryShort= 0.15f;
-
-CGFloat    const MMProgressHUDAnimateOutDurationLong    = 0.75f;
-CGFloat    const MMProgressHUDAnimateOutDurationMedium  = 0.55f;
-CGFloat    const MMProgressHUDAnimateOutDurationShort   = 0.35f;
-
-CGSize const MMProgressHUDDefaultContentAreaSize = { 100.f, 100.f };
-CGSize const MMProgressHUDProgressContentAreaSize = { 40.f, 40.f };
-
-NSString * const MMProgressHUDFontNameBold = @"HelveticaNeue-Bold";
-NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
-
-#ifdef DEBUG
-    #ifdef MM_HUD_FRAME_DEBUG
-        static const BOOL MMProgressHUDFrameDebugModeEnabled = YES;
-    #else
-        static const BOOL MMProgressHUDFrameDebugModeEnabled = NO;
-    #endif
-#else
-    static const BOOL MMProgressHUDFrameDebugModeEnabled = NO;
-#endif
-
-@interface MMHud()
+@interface MMHud ()
 
 @property (nonatomic, strong) UIView *progressViewContainer;
-@property (nonatomic, strong) MMRadialProgressView *radialProgressView;
+@property (nonatomic, strong) UIView <MMProgressView> *progressView;
 @property (nonatomic, readwrite, getter = isVisible) BOOL visible;
 @property (nonatomic, strong, readwrite) UIActivityIndicatorView *activityIndicator;
 @property (nonatomic, assign) CGRect contentAreaFrame;
@@ -57,24 +28,27 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
 
 @implementation MMHud
 
-- (instancetype)init{
+- (instancetype)init {
     if ( (self = [super init]) ) {
         _needsUpdate = YES;
+        
+        self.indeterminate = YES;
         
         [self configureInitialDisplayAttributes];
         
         self.isAccessibilityElement = YES;
+        self.progressViewClass = [MMRadialProgressView class];
     }
     
     return self;
 }
 
-- (void)dealloc{
+- (void)dealloc {
     MMHudLog(@"dealloc");
 }
 
 #pragma mark - Construction
-- (void)buildHUDAnimated:(BOOL)animated{
+- (void)buildHUDAnimated:(BOOL)animated {
     if (animated == YES) {
         [UIView
          animateWithDuration:MMProgressHUDAnimateInDurationNormal
@@ -82,7 +56,7 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
              [self buildHUDAnimated:NO];
          }];
     }
-    else{
+    else {
         [self applyLayoutFrames];
     }
 }
@@ -93,7 +67,7 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
     CGFloat lineHeight = [titleText sizeWithFont:self.titleLabel.font].height;
     CGFloat targetWidthIncrementor = 25.f;
     for (CGFloat targetWidth = MMProgressHUDMinimumWidth; numberOfLines > 2; targetWidth += targetWidthIncrementor) {
-        if(targetWidth >= MMProgressHUDMaximumWidth)
+        if (targetWidth >= MMProgressHUDMaximumWidth)
             break;
         titleSize = [titleText sizeWithFont:self.titleLabel.font constrainedToSize:CGSizeMake(targetWidth, 500.f)];
         numberOfLines = titleSize.height/lineHeight;
@@ -109,32 +83,26 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
                                            MMProgressHUDDefaultContentAreaSize.width,
                                            MMProgressHUDDefaultContentAreaSize.height);
     }
-    else if(self.completionState == MMProgressHUDCompletionStateError ||
-            self.completionState == MMProgressHUDCompletionStateSuccess){
+    else if (self.completionState == MMProgressHUDCompletionStateError ||
+            self.completionState == MMProgressHUDCompletionStateSuccess) {
         UIImage *image = [self.delegate hud:self imageForCompletionState:self.completionState];
-        
         self.contentAreaFrame = CGRectMake(0.f,
                                            CGRectGetMaxY(self.titleFrame) + MMProgressHUDContentPadding,
                                            image.size.width,
                                            image.size.height);
     }
-    else{
-        switch (self.progressStyle) {
-            case MMProgressHUDProgressStyleIndeterminate:
-                self.contentAreaFrame = CGRectMake(0.f,
-                                                   CGRectGetMaxY(self.titleFrame) + MMProgressHUDContentPadding,
-                                                   CGRectGetWidth(self.activityIndicator.frame),
-                                                   CGRectGetHeight(self.activityIndicator.frame));
-                break;
-            case MMProgressHUDProgressStyleLinear:
-                NSAssert(NO, @"Linear progress not yet implemented");
-                break;
-            case MMProgressHUDProgressStyleRadial:
-                self.contentAreaFrame = CGRectMake(0.f,
-                                                   CGRectGetMaxY(self.titleFrame) + MMProgressHUDContentPadding,
-                                                   MMProgressHUDProgressContentAreaSize.width,
-                                                   MMProgressHUDProgressContentAreaSize.height);
-                break;
+    else {
+        if (self.isIndeterminate) {
+            self.contentAreaFrame = CGRectMake(0.f,
+                                               CGRectGetMaxY(self.titleFrame) + MMProgressHUDContentPadding,
+                                               CGRectGetWidth(self.activityIndicator.frame),
+                                               CGRectGetHeight(self.activityIndicator.frame));
+        }
+        else {
+            CGSize fittingSize = [[self progressViewClass] sizeThatFitsSize:MMProgressHUDProgressContentAreaSize maximumAvailableSize:MMProgressHUDProgressMaximumAreaSize];
+            
+            self.contentAreaFrame = (CGRect) {{0.f,
+                CGRectGetMaxY(self.titleFrame) + MMProgressHUDContentPadding}, fittingSize};
         }
     }
 }
@@ -144,7 +112,7 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
     CGFloat additiveHeightConstant = 35.f;//35 is a fudge number from trial/error
     CGFloat targetWidthIncrementor = 25.f;
     for (CGFloat targetWidth = MMProgressHUDMinimumWidth; statusSize.width < statusSize.height + additiveHeightConstant; targetWidth += targetWidthIncrementor) {
-        if(targetWidth >= MMProgressHUDMaximumWidth)
+        if (targetWidth >= MMProgressHUDMaximumWidth)
             break;
         statusSize = [self.messageText sizeWithFont:self.statusLabel.font
                                   constrainedToSize:CGSizeMake(targetWidth, 500.f)];
@@ -165,7 +133,7 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
                                                     self.titleFrame.size.height));
     }
     
-    if(self.messageText){
+    if (self.messageText) {
         self.statusFrame = CGRectIntegral(CGRectMake(self.statusFrame.origin.x,
                                                      self.statusFrame.origin.y,
                                                      hudWidth,
@@ -195,7 +163,7 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
     self.contentAreaFrame = CGRectIntegral(self.contentAreaFrame);
 }
 
-- (void)updateLayoutFrames{
+- (void)updateLayoutFrames {
     
     self.titleFrame = CGRectZero;
     self.statusFrame = CGRectZero;
@@ -203,7 +171,7 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
     
     CGSize titleSize = CGSizeZero;
     
-    if(self.titleText != nil){
+    if (self.titleText != nil) {
         titleSize = [self titleLabelSizeForTitleText:self.titleText];
         
         self.titleFrame = CGRectMake(MMProgressHUDContentPadding,
@@ -257,7 +225,7 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
     self.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
 }
 
-- (void)frameInitialHUDPositionOffscreenWithDelegate:(id)localDelegate finalHudBounds:(CGRect)finalHudBounds {
+- (void)frameInitialHUDPositionOffscreenWithDelegate:(id<MMHudDelegate>)localDelegate finalHudBounds:(CGRect)finalHudBounds {
     //create offscreen
     CGRect hudRect;
     CGPoint center = [localDelegate hudCenterPointForDisplay:self];
@@ -275,14 +243,14 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
     [self configureInitialDisplayAttributes];
 }
 
-- (void)frameHUDPositionPreservingCenterWithDelegate:(id)localDelegate finalHudBounds:(CGRect)finalHudBounds {
+- (void)frameHUDPositionPreservingCenterWithDelegate:(id<MMHudDelegate>)localDelegate finalHudBounds:(CGRect)finalHudBounds {
     //preserve center
     CGRect hudRect;
     CGPoint center;
-    if(self.isVisible){
+    if (self.isVisible) {
         center = [localDelegate hudCenterPointForDisplay:self];
     }
-    else{
+    else {
         center = self.center;
     }
     
@@ -300,7 +268,7 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
     self.frame = hudRect;
 }
 
-- (void)applyLayoutFrames{
+- (void)applyLayoutFrames {
     if (self.needsUpdate == YES) {
         [self updateLayoutFrames];
     }
@@ -309,7 +277,7 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
         self.statusLabel.font = [UIFont fontWithName:MMProgressHUDFontNameBold
                                                 size:MMProgressHUDDefaultFontSize];
     }
-    else{
+    else {
         self.statusLabel.font = [UIFont fontWithName:MMProgressHUDFontNameNormal
                                                 size:MMProgressHUDDefaultFontSize];
     }
@@ -336,7 +304,7 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
         [self frameHUDPositionPreservingCenterWithDelegate:localDelegate
                                             finalHudBounds:finalHudBounds];
     }
-    else{
+    else {
         [self frameInitialHUDPositionOffscreenWithDelegate:localDelegate
                                             finalHudBounds:finalHudBounds];
     }
@@ -352,26 +320,26 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
 }
 
 #pragma mark - Updating Content
-- (void)updateTitle:(NSString *)title animated:(BOOL)animated{
+- (void)updateTitle:(NSString *)title animated:(BOOL)animated {
     self.titleText = title;
     
     [self updateAnimated:animated withCompletion:nil];
 }
 
-- (void)updateMessage:(NSString *)message animated:(BOOL)animated{
+- (void)updateMessage:(NSString *)message animated:(BOOL)animated {
     self.messageText = message;
     
     [self updateAnimated:animated withCompletion:nil];
 }
 
-- (void)updateTitle:(NSString *)title message:(NSString *)message animated:(BOOL)animated{
+- (void)updateTitle:(NSString *)title message:(NSString *)message animated:(BOOL)animated {
     self.messageText = message;
     self.titleText = title;
     
     [self updateAnimated:animated withCompletion:nil];
 }
 
-- (void)updateAnimated:(BOOL)animated withCompletion:(void(^)(BOOL completed))updateCompletion{
+- (void)updateAnimated:(BOOL)animated withCompletion:(void(^)(BOOL completed))updateCompletion {
     if (animated) {
         [UIView
          animateWithDuration:MMProgressHUDAnimateInDurationShort
@@ -382,7 +350,7 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
          }
          completion:updateCompletion];
     }
-    else{
+    else {
         [self applyLayoutFrames];
         
         if (updateCompletion != nil) {
@@ -401,29 +369,29 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
         (yRatio < 1.f)) {
         contentMode = UIViewContentModeCenter;
     }
-    else if((xRatio > 1.f) &&
-            (yRatio > 1.f)){
+    else if ((xRatio > 1.f) &&
+            (yRatio > 1.f)) {
         contentMode = UIViewContentModeScaleAspectFit;
     }
-    else{
+    else {
         contentMode = UIViewContentModeScaleAspectFill;
     }
     
     return contentMode;
 }
 
-- (void)_layoutContentArea{
+- (void)_layoutContentArea {
     //hud should already be the correct size before getting into this method
     self.progressViewContainer.frame = self.contentAreaFrame;
     
     self.imageView.hidden = (self.image == nil && self.animationImages.count == 0);
-    self.radialProgressView.hidden = (self.progressStyle != MMProgressHUDProgressStyleRadial);
+    self.progressView.hidden = self.isIndeterminate;
     
     if (self.completionState == MMProgressHUDCompletionStateNone) {
         [CATransaction begin];
         [CATransaction setDisableActions:YES];
         
-        if(self.animationImages.count > 0){
+        if (self.animationImages.count > 0) {
             self.imageView.image = nil;
             self.imageView.animationImages = self.animationImages;
             
@@ -432,7 +400,7 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
             if (self.animationLoopDuration) {
                 self.imageView.animationDuration = self.animationLoopDuration;
             }
-            else{
+            else {
                 self.imageView.animationDuration = 0.5;
             }
             
@@ -440,7 +408,7 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
             
             [self.imageView startAnimating];
         }
-        else if(self.image != nil){
+        else if (self.image != nil) {
             self.imageView.animationImages = nil;
             self.imageView.image = self.image;
             
@@ -451,34 +419,22 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
         else {
             self.imageView.hidden = YES;
             
-            if(self.progressStyle == MMProgressHUDProgressStyleIndeterminate){
+            if (self.isIndeterminate) {
                 [self.activityIndicator startAnimating];
+                
+                self.imageView.image = nil;
+                self.imageView.animationImages = nil;
+                
+                [self.progressViewContainer addSubview:self.activityIndicator];
             }
-            else{
+            else {
                 [self.activityIndicator stopAnimating];
-            }
-            
-            switch (self.progressStyle) {
-                case MMProgressHUDProgressStyleIndeterminate:
-                    self.imageView.image = nil;
-                    self.imageView.animationImages = nil;
-                    
-                    [self.progressViewContainer addSubview:self.activityIndicator];
-                    break;
-                case MMProgressHUDProgressStyleLinear:
-                    NSAssert(NO, @"Linear progress not yet implemented");
-                    break;
-                case MMProgressHUDProgressStyleRadial:
-                    break;
-                default:
-                    NSAssert(NO, @"Invalid progress style");
-                    break;
             }
         }
         
         [CATransaction commit];
     }
-    else{
+    else {
         UIImage *completionImage = [self.delegate hud:self imageForCompletionState:self.completionState];
         UIViewAnimationOptions animationOptions =
             UIViewAnimationOptionTransitionCrossDissolve |
@@ -499,7 +455,7 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
                  self.imageView.contentMode = [self contentModeForImage:completionImage];
                  
                  [self.activityIndicator stopAnimating];
-                 self.radialProgressView.hidden = YES;
+                 self.progressView.hidden = YES;
                  
                  self.imageView.image = completionImage;
                  self.imageView.hidden = NO;
@@ -512,18 +468,15 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
     self.completionState = MMProgressHUDCompletionStateNone;
 }
 
-- (void)_buildStatusLabel{
+- (void)_buildStatusLabel {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdirect-ivar-access"
     if (_statusLabel == nil) {
         _statusLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         _statusLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
         _statusLabel.numberOfLines = 0;
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-        _statusLabel.lineBreakMode = UILineBreakModeWordWrap;
-        _statusLabel.textAlignment = UITextAlignmentCenter;
-#pragma clang diagnostic pop
+        _statusLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        _statusLabel.textAlignment = NSTextAlignmentCenter;
         _statusLabel.backgroundColor = [UIColor clearColor];
         _statusLabel.font = [UIFont fontWithName:MMProgressHUDFontNameNormal size:MMProgressHUDDefaultFontSize];
         _statusLabel.textColor = [UIColor colorWithWhite:0.9f alpha:0.95f];
@@ -544,18 +497,15 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
 #pragma clang diagnostic pop
 }
 
-- (void)_buildTitleLabel{
+- (void)_buildTitleLabel {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdirect-ivar-access"
     if (_titleLabel == nil) {
         _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         _titleLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
         _titleLabel.numberOfLines = 0;
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-        _titleLabel.lineBreakMode = UILineBreakModeWordWrap;
-        _titleLabel.textAlignment = UITextAlignmentCenter;
-#pragma clang diagnostic pop
+        _titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        _titleLabel.textAlignment = NSTextAlignmentCenter;
         _titleLabel.backgroundColor = [UIColor clearColor];
         _titleLabel.font = [UIFont fontWithName:MMProgressHUDFontNameBold size:MMProgressHUDDefaultFontSize];
         _titleLabel.textColor = [UIColor whiteColor];
@@ -577,7 +527,30 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
 }
 
 #pragma mark - Property Overrides
-- (UIImageView *)imageView{
+- (void)setProgressStyle:(MMProgressHUDProgressStyle)progressStyle {
+    _progressStyle = progressStyle;
+    
+    MMHudWLog(@"Setting %@ is deprecated, please set an explicit determinate progress class using %@",
+              NSStringFromSelector(@selector(progressStyle)),
+              NSStringFromSelector(@selector(progressViewClass)));
+    
+    self.indeterminate = (progressStyle == MMProgressHUDProgressStyleIndeterminate);
+}
+
+- (void)setProgressViewClass:(Class)progressViewClass {
+    if (progressViewClass != Nil) {
+        Protocol *expectedProtocol = @protocol(MMProgressView);
+        
+        NSAssert([progressViewClass conformsToProtocol:expectedProtocol], @"Class %@ doesn't conform to %@ protocol", NSStringFromClass(progressViewClass), NSStringFromProtocol(expectedProtocol));
+    }
+    else {
+        [self setIndeterminate:YES];
+    }
+    
+    _progressViewClass = progressViewClass;
+}
+
+- (UIImageView *)imageView {
     if (_imageView == nil) {
         _imageView = [[UIImageView alloc] initWithFrame:self.progressViewContainer.bounds];
         _imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -588,17 +561,18 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
     return _imageView;
 }
 
-- (MMRadialProgressView *)radialProgressView{
-    if (_radialProgressView == nil) {
-        _radialProgressView = [[MMRadialProgressView alloc] initWithFrame:self.progressViewContainer.bounds];
-        _radialProgressView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        [self.progressViewContainer addSubview:_radialProgressView];
+- (UIView <MMProgressView> *)progressView {
+    if (_progressView == nil ||
+        (_progressView.class != self.progressViewClass)) {
+        _progressView = [[self.progressViewClass alloc] initWithFrame:self.progressViewContainer.bounds];
+        _progressView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        [self.progressViewContainer addSubview:_progressView];
     }
     
-    return _radialProgressView;
+    return _progressView;
 }
 
-- (UIView *)progressViewContainer{
+- (UIView *)progressViewContainer {
     if (_progressViewContainer == nil) {
         _progressViewContainer = [[UIView alloc] initWithFrame:self.contentAreaFrame];
         _progressViewContainer.backgroundColor = [UIColor clearColor];
@@ -618,7 +592,7 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
     return _progressViewContainer;
 }
 
-- (UIActivityIndicatorView *)activityIndicator{
+- (UIActivityIndicatorView *)activityIndicator {
     if (_activityIndicator == nil) {
         _activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
         
@@ -628,16 +602,16 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
     return _activityIndicator;
 }
 
-- (void)setProgress:(CGFloat)progress{
+- (void)setProgress:(CGFloat)progress {
     [self setProgress:progress animated:YES];
 }
 
-- (void)setProgress:(CGFloat)progress animated:(BOOL)animated{
+- (void)setProgress:(CGFloat)progress animated:(BOOL)animated {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdirect-ivar-access"
     _progress = progress;
     
-    typeof(self) __weak weakSelf = self;
+    __typeof(self) __weak weakSelf = self;
     
     void(^completionBlock)(BOOL completed) = ^(BOOL completed) {
         MMHud *blockSelf = weakSelf;
@@ -645,30 +619,41 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
         
         if ( (completed == YES) &&
             (progress >= 1.f) &&
-            ([blockDelegate respondsToSelector:@selector(hudDidCompleteProgress:)] == YES)){
+            ([blockDelegate respondsToSelector:@selector(hudDidCompleteProgress:)] == YES)) {
             [blockDelegate hudDidCompleteProgress:blockSelf];
         }
     };
     
-    [self.radialProgressView setProgress:progress
+    [self.progressView setProgress:progress
                                 animated:animated
                           withCompletion:completionBlock];
 #pragma clang diagnostic pop
 }
 
-- (UILabel *)statusLabel{
+- (void)setIndeterminate:(BOOL)indeterminate {
+    if (!indeterminate && self.progressViewClass == Nil) {
+        MMHudWLog(@"HUD %@ set to determinate progress but progress view class is Nil", self);
+    }
+    
+    if (indeterminate != self.isIndeterminate) {
+        _indeterminate = indeterminate;
+        [self setNeedsUpdate:YES];
+    }
+}
+
+- (UILabel *)statusLabel {
     [self _buildStatusLabel];
     
     return _statusLabel;
 }
 
-- (UILabel *)titleLabel{
+- (UILabel *)titleLabel {
     [self _buildTitleLabel];
     
     return _titleLabel;
 }
 
-- (void)setMessageText:(NSString *)messageText{
+- (void)setMessageText:(NSString *)messageText {
     if ([messageText isEqualToString:self.messageText]) {
         return;
     }
@@ -677,14 +662,14 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
     if (self.titleText == nil) {
         self.accessibilityLabel = _messageText;
     }
-    else{
+    else {
         self.accessibilityHint = _messageText;
     }
     
     [self setNeedsUpdate:YES];
 }
 
-- (void)setTitleText:(NSString *)titleText{
+- (void)setTitleText:(NSString *)titleText {
     if ([titleText isEqualToString:self.titleText]) {
         return;
     }
@@ -696,7 +681,7 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
     [self setNeedsUpdate:YES];
 }
 
-- (void)setDisplayStyle:(MMProgressHUDDisplayStyle)style{
+- (void)setDisplayStyle:(MMProgressHUDDisplayStyle)style {
     _displayStyle = style;
     
     switch (style) {
@@ -713,7 +698,7 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
     }
 }
 
-- (void)prepareForReuse{
+- (void)prepareForReuse {
     self.titleLabel.text = nil;
     self.statusLabel.text = nil;
     self.imageView.image = nil;

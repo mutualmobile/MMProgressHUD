@@ -17,24 +17,10 @@
 #import "MMProgressHUDOverlayView.h"
 #import "MMVectorImage.h"
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_5_0
-#error MMProgressHUD uses APIs only available in iOS 5.0+
-#endif
+#import "MMLinearProgressView.h"
+#import "MMRadialProgressView.h"
 
-static const BOOL kMMProgressHUDDebugMode = NO;
-
-NSString * const MMProgressHUDDefaultConfirmationMessage = @"Cancel?";
-NSString * const MMProgressHUDAnimationShow = @"mm-progress-hud-present-animation";
-NSString * const MMProgressHUDAnimationDismiss = @"mm-progress-hud-dismiss-animation";
-NSString * const MMProgressHUDAnimationWindowFadeOut = @"mm-progress-hud-window-fade-out";
-NSString * const MMProgressHUDAnimationKeyShowAnimation = @"show";
-NSString * const MMProgressHUDAnimationKeyDismissAnimation = @"dismiss";
-
-NSUInteger const MMProgressHUDConfirmationPulseCount = 8;//Keep this number even
-
-CGFloat const MMProgressHUDStandardDismissDelay = 0.75f;
-
-CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
+#import "MMProgressHUDDefines-Private.h"
 
 #pragma mark - MMProgressHUD
 @interface MMProgressHUD () <MMHudDelegate>
@@ -60,7 +46,7 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
 @implementation MMProgressHUD
 
 #pragma mark - Class Methods
-+ (instancetype)sharedHUD{
++ (instancetype)sharedHUD {
     static MMProgressHUD *__sharedHUD = nil;
     
     static dispatch_once_t mmSharedHUDOnceToken;
@@ -72,38 +58,36 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
 }
 
 #pragma mark - Instance Presentation Methods
-- (void)showWithTitle:(NSString *)title
-              status:(NSString *)status
-  confirmationMessage:(NSString *)confirmationMessage
-          cancelBlock:(void(^)(void))cancelBlock
-               images:(NSArray *)images{
-
-    self.image = nil;
-    self.animationImages = nil;
-    
-    if (images.count == 1) {
-        self.image = images[0];
-    }
-    else if(images.count > 0){
-        self.animationImages = images;
-    }
+- (void)showDeterminateProgressWithTitle:(NSString *)title
+                                  status:(NSString *)status
+                     confirmationMessage:(NSString *)confirmation
+                             cancelBlock:(void (^)(void))cancelBlock
+                                  images:(NSArray *)images {
+    [self.hud setIndeterminate:NO];
     
     [self showWithTitle:title
                  status:status
-    confirmationMessage:confirmationMessage
+    confirmationMessage:confirmation
             cancelBlock:cancelBlock
-          progressStyle:self.progressStyle];
+                 images:images];
 }
 
 - (void)showWithTitle:(NSString *)title
                status:(NSString *)status
   confirmationMessage:(NSString *)confirmationMessage
           cancelBlock:(void(^)(void))cancelBlock
-        progressStyle:(MMProgressHUDProgressStyle)progressStyle{
+               images:(NSArray *)images {
     
-    MMHudLog(@"Beginning %@ show...", NSStringFromClass(self.class));
+    self.image = nil;
+    self.animationImages = nil;
     
-    self.progressStyle = progressStyle;
+    if (images.count == 1) {
+        self.image = images[0];
+    }
+    else if (images.count > 0) {
+        self.animationImages = images;
+    }
+    
     self.cancelBlock = cancelBlock;
     self.title = title;
     self.status = status;
@@ -111,7 +95,7 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
     if (confirmationMessage.length > 0) {
         self.confirmationMessage = confirmationMessage;
     }
-    else{
+    else {
         self.confirmationMessage = MMProgressHUDDefaultConfirmationMessage;
     }
     
@@ -120,7 +104,7 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
         ([self.hud.layer animationForKey:MMProgressHUDAnimationKeyDismissAnimation] == nil)) {
         [self _updateHUDAnimated:YES withCompletion:nil];
     }
-    else{
+    else {
         [self show];
     }
 }
@@ -128,7 +112,7 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
 - (void)dismissWithCompletionState:(MMProgressHUDCompletionState)completionState
                              title:(NSString *)title
                            status:(NSString *)status
-                        afterDelay:(float)delay{
+                        afterDelay:(NSTimeInterval)delay {
     if (title) {
         self.title = title;
     }
@@ -141,30 +125,49 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
     
     if (self.isVisible) {
         [self _updateHUDAnimated:YES withCompletion:^(BOOL completed) {
-            if (delay != INFINITY && delay != DISPATCH_TIME_FOREVER) {
-                //create a timer in order to be cancellable
-                [self.dismissDelayTimer invalidate];
-                self.dismissDelayTimer = [NSTimer scheduledTimerWithTimeInterval:delay
-                                                                          target:self
-                                                                        selector:@selector(dismiss)
-                                                                        userInfo:nil
-                                                                         repeats:NO];
-            }
+            [self dismissAfterDelay:delay];
         }];
     }
-    else{
-        [self.dismissDelayTimer invalidate];
-        self.dismissDelayTimer = [NSTimer scheduledTimerWithTimeInterval:delay
-                                                                  target:self
-                                                                selector:@selector(dismiss)
-                                                                userInfo:nil
-                                                                 repeats:NO];
+}
+
+- (void)updateProgress:(CGFloat)progress withStatus:(NSString *)status title:(NSString *)title{
+    [self setProgress:progress];
+    
+    if (status != nil) {
+        self.hud.messageText = status;
+    }
+    
+    if (title != nil) {
+        self.hud.titleText = title;
+    }
+    
+    if (self.isVisible &&
+        (self.window != nil)) {
+        
+        void(^animationCompletion)(BOOL completed) = ^(BOOL completed) {
+            if (progress >= 1.f &&
+                self.progressCompletion != nil) {
+                double delayInSeconds = 0.33f;//allow enough time for progress to animate
+                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+                dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
+                    if (self.progressCompletion) {
+                        self.progressCompletion();
+                    }
+                });
+            }
+        };
+        
+        [self _updateHUDAnimated:YES
+                 withCompletion:animationCompletion];
+    }
+    else {
+        [self show];
     }
 }
 
 #pragma mark - Initializers
-- (instancetype)init{
-    if( (self = [super initWithFrame:CGRectZero]) ){
+- (instancetype)init {
+    if ( (self = [super initWithFrame:CGRectZero]) ) {
         self.hud = [[MMHud alloc] init];
         self.hud.delegate = self;
 
@@ -186,7 +189,7 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
     return self;
 }
 
-- (void)dealloc{
+- (void)dealloc {
     MMHudLog(@"dealloc");
     
     if (_window != nil) {
@@ -194,7 +197,7 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
     }
 }
 
-- (void)forceCleanup{
+- (void)forceCleanup {
     //Do not invoke this method unless you are in a unit test environment
     if (self.window != nil) {
         [self.window setHidden:YES];
@@ -204,42 +207,49 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
 }
 
 #pragma mark - Passthrough Properties
-- (void)setOverlayMode:(MMProgressHUDWindowOverlayMode)overlayMode{
+- (void)setOverlayMode:(MMProgressHUDWindowOverlayMode)overlayMode {
     self.overlayView.overlayMode = overlayMode;
 }
 
-- (MMProgressHUDWindowOverlayMode)overlayMode{
+- (MMProgressHUDWindowOverlayMode)overlayMode {
     return self.overlayView.overlayMode;
 }
 
-- (void)setAnimationLoopDuration:(CGFloat)animationLoopDuration{
+- (void)setAnimationLoopDuration:(CGFloat)animationLoopDuration {
     self.hud.animationLoopDuration = animationLoopDuration;
 }
 
-- (CGFloat)animationLoopDuration{
+- (CGFloat)animationLoopDuration {
     return self.hud.animationLoopDuration;
 }
 
-- (void)setProgress:(CGFloat)progress{
+- (void)setProgress:(CGFloat)progress {
     [self.hud setProgress:progress animated:YES];
     
     self.hud.accessibilityValue = [NSString stringWithFormat:@"%i%%", (int)(progress/1.f*100)];
     UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, [NSString stringWithFormat:@"%@ %@", self.hud.accessibilityLabel, self.hud.accessibilityValue]);
 }
 
-- (CGFloat)progress{
+- (CGFloat)progress {
     return self.hud.progress;
 }
 
 - (void)setProgressStyle:(MMProgressHUDProgressStyle)progressStyle{
     self.hud.progressStyle = progressStyle;
     
-    if ((progressStyle == MMProgressHUDProgressStyleLinear) ||
-        (progressStyle == MMProgressHUDProgressStyleRadial)) {
-        self.accessibilityTraits |= UIAccessibilityTraitUpdatesFrequently;
-    }
-    else{
-        self.accessibilityTraits &= ~UIAccessibilityTraitUpdatesFrequently;
+    switch (progressStyle) {
+        case MMProgressHUDProgressStyleIndeterminate:
+            self.hud.progressViewClass = nil;
+            self.accessibilityTraits &= ~UIAccessibilityTraitUpdatesFrequently;
+            break;
+        case MMProgressHUDProgressStyleLinear:
+            self.hud.progressViewClass = [MMLinearProgressView class];
+            self.accessibilityTraits |= UIAccessibilityTraitUpdatesFrequently;
+            break;
+        case MMProgressHUDProgressStyleRadial:
+            self.hud.progressViewClass = [MMRadialProgressView class];
+            self.accessibilityTraits |= UIAccessibilityTraitUpdatesFrequently;
+            break;
     }
 }
 
@@ -247,25 +257,33 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
     return self.hud.progressStyle;
 }
 
-- (void)setTitle:(NSString *)title{
+- (void)setTitle:(NSString *)title {
     self.hud.titleText = title;
 }
 
-- (NSString *)title{
+- (NSString *)title {
     return self.hud.titleText;
 }
 
-- (void)setStatus:(NSString *)status{
+- (void)setStatus:(NSString *)status {
     self.hud.messageText = status;
 }
 
-- (NSString *)status{
+- (NSString *)status {
     return self.hud.messageText;
 }
 
 #pragma mark - Property Overrides
 
-- (MMProgressHUDOverlayView *)overlayView{
+- (void)setProgressViewClass:(Class)progressViewClass{
+    self.hud.progressViewClass = progressViewClass;
+}
+
+- (Class)progressViewClass{
+    return self.hud.progressViewClass;
+}
+
+- (MMProgressHUDOverlayView *)overlayView {
     if (_overlayView == nil) {
         _overlayView = [[MMProgressHUDOverlayView alloc] init];
         _overlayView.alpha = 0.f;
@@ -274,7 +292,7 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
     return _overlayView;
 }
 
-- (CGColorRef)glowColor{
+- (CGColorRef)glowColor {
     if (_glowColor == NULL) {
         CGColorRef redColor = CGColorRetain([UIColor redColor].CGColor);
         self.glowColor = redColor;
@@ -292,21 +310,21 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
     return _hud;
 }
 
-- (void)setProgressCompletion:(void (^)(void))progressCompletion{
+- (void)setProgressCompletion:(void (^)(void))progressCompletion {
     if (progressCompletion != nil) {
-        typeof(self) __weak weakSelf = self;
-        _progressCompletion = ^(void){
+        __typeof(self) __weak weakSelf = self;
+        _progressCompletion = ^(void) {
             progressCompletion();
             
             weakSelf.progressCompletion = nil;
         };
     }
-    else{
+    else {
         _progressCompletion = nil;
     }
 }
 
-- (void)setCancelBlock:(void (^)(void))cancelBlock{
+- (void)setCancelBlock:(void (^)(void))cancelBlock {
     _cancelBlock = cancelBlock;
     
     if (cancelBlock != nil) {
@@ -314,7 +332,7 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
         (UIAccessibilityTraitAllowsDirectInteraction |
         UIAccessibilityTraitButton);
     }
-    else{
+    else {
         self.hud.accessibilityTraits &= ~(UIAccessibilityTraitAllowsDirectInteraction |
                                          UIAccessibilityTraitButton);
     }
@@ -335,7 +353,7 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
     }
 }
 
-- (void)_buildOverlayViewForMode:(MMProgressHUDWindowOverlayMode)overlayMode inView:(UIView *)view{
+- (void)_buildOverlayViewForMode:(MMProgressHUDWindowOverlayMode)overlayMode inView:(UIView *)view {
     
     self.overlayView.frame = view.bounds;
     self.overlayView.overlayMode = overlayMode;
@@ -343,7 +361,7 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
     [view insertSubview:self.overlayView atIndex:0];
 }
 
-- (void)_buildHUD{
+- (void)_buildHUD {
     [self setAutoresizingMask:
      UIViewAutoresizingFlexibleHeight | 
      UIViewAutoresizingFlexibleWidth];
@@ -360,17 +378,19 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
     
     self.hud.layer.transform = CATransform3DIdentity;
     
+    [self.hud setNeedsUpdate:YES];
+    
     [self.hud applyLayoutFrames];
     
     [self addSubview:self.hud];
 }
 
 #pragma mark - Layout
-- (void)_updateMessageLabelsAnimated:(BOOL)animated{
+- (void)_updateMessageLabelsAnimated:(BOOL)animated {
     [self.hud updateTitle:self.title message:self.status animated:animated];
 }
 
-- (void)_updateHUDAnimated:(BOOL)animated withCompletion:(void(^)(BOOL completed))completionBlock{
+- (void)_updateHUDAnimated:(BOOL)animated withCompletion:(void(^)(BOOL completed))completionBlock {
     MMHudLog(@"Updating %@ with completion...", NSStringFromClass(self.class));
     
     if (self.dismissDelayTimer != nil) {
@@ -387,7 +407,7 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
          }
          completion:completionBlock];
     }
-    else{
+    else {
         [self _updateHUD];
         
         if (completionBlock != nil) {
@@ -396,7 +416,7 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
     }
 }
 
-- (void)_updateHUD{
+- (void)_updateHUD {
     [self.hud updateLayoutFrames];
     
     [self.hud updateAnimated:YES withCompletion:nil];
@@ -404,19 +424,19 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
     self.hud.center = [self _windowCenterForHUDAnchor:self.hud.layer.anchorPoint];
 }
 
-- (CGPoint)_windowCenterForHUDAnchor:(CGPoint)anchor{
+- (CGPoint)_windowCenterForHUDAnchor:(CGPoint)anchor {
     
     CGFloat hudHeight = CGRectGetHeight(self.hud.frame);
     
     CGPoint position;
-    if (UIInterfaceOrientationIsPortrait([[[[UIApplication sharedApplication] keyWindow] rootViewController] interfaceOrientation])) {
+    if (UIInterfaceOrientationIsPortrait([[self.window rootViewController] interfaceOrientation])) {
         
         CGFloat y = roundf(self.window.center.y + (anchor.y - 0.5f) * hudHeight);
         CGFloat x = roundf(self.window.center.x);
         
         position = CGPointMake(x, y);
     }
-    else{
+    else {
         CGFloat x = roundf(self.window.center.y);
         CGFloat y = roundf(self.window.center.x + (anchor.y - 0.5f) * hudHeight);
         
@@ -427,7 +447,7 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
 }
 
 #pragma mark - Presentation
-- (void)show{
+- (void)show {
     if (self.dismissDelayTimer != nil) {
         [self.dismissDelayTimer invalidate], self.dismissDelayTimer = nil;
     }
@@ -488,12 +508,17 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
      animations:^{
          self.overlayView.alpha = 1.0f;
      }
-     completion:^(BOOL completed){
+     completion:^(BOOL completed) {
          UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, self.hud.accessibilityLabel);
      }];
 }
 
-- (void)dismiss{
+- (void)dismissAfterDelay:(NSTimeInterval)delay {
+    [self.dismissDelayTimer invalidate];
+    self.dismissDelayTimer = [NSTimer scheduledTimerWithTimeInterval:delay target:self selector:@selector(dismiss) userInfo:nil repeats:NO];
+}
+
+- (void)dismiss {
     NSAssert([NSThread isMainThread], @"Dismiss method should be run on main thread!");
     
     MMHudLog(@"Dismissing...");
@@ -533,14 +558,14 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
             break;
     }
     
-    CGFloat duration = (self.presentationStyle == MMProgressHUDPresentationStyleNone) ? 0.f : MMProgressHUDAnimateOutDurationLong;
-    CGFloat delay = (self.presentationStyle == MMProgressHUDPresentationStyleDrop) ? MMProgressHUDAnimateOutDurationShort : 0.f;
+    NSTimeInterval duration = (self.presentationStyle == MMProgressHUDPresentationStyleNone) ? 0.0 : MMProgressHUDAnimateOutDurationLong;
+    NSTimeInterval delay = (self.presentationStyle == MMProgressHUDPresentationStyleDrop) ? MMProgressHUDAnimateOutDurationShort : 0.0;
     
     [UIView
      animateWithDuration:duration
      delay:delay
      options:UIViewAnimationOptionCurveEaseIn |
-             UIViewAnimationOptionBeginFromCurrentState
+     UIViewAnimationOptionBeginFromCurrentState
      animations:^{
          self.overlayView.alpha = 0.f;
      }
@@ -553,11 +578,13 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
          
          [self.window setHidden:YES], self.window = nil;
          
+         self.cancelled = NO;
+         
          UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, nil);
      }];
 }
 
-- (CGPoint)_antialiasedPositionPointForPoint:(CGPoint)oldCenter forLayer:(CALayer *)layer{
+- (CGPoint)_antialiasedPositionPointForPoint:(CGPoint)oldCenter forLayer:(CALayer *)layer {
     CGPoint newCenter = oldCenter;
     
     CGSize viewSize = layer.bounds.size;
@@ -592,12 +619,14 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
 }
 
 #pragma mark - Gestures
-- (void)_handleTap:(UITapGestureRecognizer *)recognizer{
+- (void)_handleTap:(UITapGestureRecognizer *)recognizer {
     MMHudLog(@"Handling tap");
     
-    if((self.cancelBlock != nil) &&
-       (self.confirmed == NO)){
+    if ((self.cancelBlock != nil) &&
+       (self.confirmed == NO)) {
         MMHudLog(@"Asking to confirm cancel");
+        
+        self.confirmed = YES;
         
         self.tempStatus = [self.status copy];
         CGFloat timerDuration = MMProgressHUDAnimateInDurationNormal*MMProgressHUDConfirmationPulseCount;
@@ -606,20 +635,22 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
                                                                 selector:@selector(_resetConfirmationTimer:)
                                                                 userInfo:nil
                                                                  repeats:NO];
+        
         self.status = self.confirmationMessage;
     
         [self.hud updateTitle:self.hud.titleText message:self.confirmationMessage animated:YES];
         
-        self.confirmed = YES;
+        
         
         [self _beginGlowAnimation];
     }
-    else if(self.confirmed){
+    else if (self.confirmed) {
+        self.cancelled = YES;
         MMHudLog(@"confirmed to dismiss!");
         
         [self.confirmationTimer invalidate], self.confirmationTimer = nil;
         
-        if(self.cancelBlock != nil){
+        if (self.cancelBlock != nil) {
             self.cancelBlock();
         }
         
@@ -634,7 +665,7 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
     }
 }
 
-- (void)_resetConfirmationTimer:(NSTimer *)timer{
+- (void)_resetConfirmationTimer:(NSTimer *)timer {
     MMHudLog(@"Resetting confirmation timer");
     
     [self.confirmationTimer invalidate], self.confirmationTimer = nil;
@@ -648,7 +679,7 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
     [self.hud updateTitle:self.hud.titleText message:self.status animated:YES];
 }
 
-- (UIImage *)_imageForCompletionState:(MMProgressHUDCompletionState)completionState{
+- (UIImage *)_imageForCompletionState:(MMProgressHUDCompletionState)completionState {
     switch (completionState) {
         case MMProgressHUDCompletionStateError:
             return self.errorImage;
@@ -660,19 +691,19 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
 }
 
 #pragma mark - MMHud Delegate
-- (void)hudDidCompleteProgress:(MMHud *)hud{
-    if(self.progressCompletion != nil){
+- (void)hudDidCompleteProgress:(MMHud *)hud {
+    if (self.progressCompletion != nil) {
         self.progressCompletion();
     }
     
     self.hud.accessibilityValue = nil;
 }
 
-- (UIImage *)hud:(MMHud *)hud imageForCompletionState:(MMProgressHUDCompletionState)completionState{
+- (UIImage *)hud:(MMHud *)hud imageForCompletionState:(MMProgressHUDCompletionState)completionState {
     return [self _imageForCompletionState:completionState];
 }
 
-- (CGPoint)hudCenterPointForDisplay:(MMHud *)hud{
+- (CGPoint)hudCenterPointForDisplay:(MMHud *)hud {
     return [self _windowCenterForHUDAnchor:hud.layer.anchorPoint];
 }
 

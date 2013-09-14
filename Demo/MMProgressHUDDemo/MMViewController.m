@@ -9,15 +9,17 @@
 #import "MMViewController.h"
 #import "MMProgressHUD.h"
 #import "MMProgressHUDOverlayView.h"
+#import "MMRadialProgressView.h"
+#import "MMLinearProgressView.h"
 
-typedef NS_ENUM(NSInteger, MMProgressHUDDemoSections){
+typedef NS_ENUM(NSInteger, MMProgressHUDDemoSections) {
     MMProgressHUDDemoSectionFeatures = 0,
     MMProgressHUDDemoSectionAnimations,
     MMProgressHUDDemoSectionOverlays,
     MMProgressHUDDemoNumberOfSections
 };
 
-typedef NS_ENUM(NSInteger, MMProgressHUDDemoAnimationType){
+typedef NS_ENUM(NSInteger, MMProgressHUDDemoAnimationType) {
     MMProgressHUDDemoAnimationTypeExpand = 0,
     MMProgressHUDDemoAnimationTypeShrink,
     MMProgressHUDDemoAnimationTypeSwingRight,
@@ -28,7 +30,7 @@ typedef NS_ENUM(NSInteger, MMProgressHUDDemoAnimationType){
     MMProgressHUDDemoNumberOfAnimationTypes//I know this goes directly against coding guidelines, but makes creating static tableviews with enums easier
 };
 
-typedef NS_ENUM(NSInteger, MMProgressHUDDemoOverlayType){
+typedef NS_ENUM(NSInteger, MMProgressHUDDemoOverlayType) {
     MMProgressHUDDemoOverlayTypeGradient = 0,
     MMProgressHUDDemoOverlayTypeLinear,
 //    MMProgressHUDDemoOverlayTypeBlur,
@@ -36,7 +38,7 @@ typedef NS_ENUM(NSInteger, MMProgressHUDDemoOverlayType){
     MMProgressHUDDemoNumberOfOverlayTypes
 };
 
-typedef NS_ENUM(NSInteger, MMProgressHUDDemoFeatureType){
+typedef NS_ENUM(NSInteger, MMProgressHUDDemoFeatureType) {
     MMProgressHUDDemoTypeStylePlain = 0,
     MMProgressHUDDemoTypeStyleBordered,
     MMProgressHUDDemoTypeStaticImage,
@@ -44,6 +46,7 @@ typedef NS_ENUM(NSInteger, MMProgressHUDDemoFeatureType){
     MMProgressHUDDemoTypeAutosizing,
     MMProgressHUDDemoTypeConfirmation,
     MMProgressHUDDemoTypeRadialProgress,
+     MMProgressHUDDemoTypeLinearProgress,
     MMProgressHUDDemoTypeOverlayColor,
     MMProgressHUDDemoNumberOfFeatureTypes
 };
@@ -76,11 +79,11 @@ typedef NS_ENUM(NSInteger, MMProgressHUDDemoFeatureType){
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     NSArray *images = @[[UIImage imageNamed:@"1.png"],
-                       [UIImage imageNamed:@"2.png"],
-                       [UIImage imageNamed:@"3.png"],
-                       [UIImage imageNamed:@"4.png"],
-                       [UIImage imageNamed:@"5.png"],
-                       [UIImage imageNamed:@"6.png"]];
+                        [UIImage imageNamed:@"2.png"],
+                        [UIImage imageNamed:@"3.png"],
+                        [UIImage imageNamed:@"4.png"],
+                        [UIImage imageNamed:@"5.png"],
+                        [UIImage imageNamed:@"6.png"]];
     UIImage *staticImage = [UIImage imageNamed:@"1.png"];
     BOOL autodismiss = YES;
     
@@ -101,7 +104,7 @@ typedef NS_ENUM(NSInteger, MMProgressHUDDemoFeatureType){
                                           status:@"Reticulating Splines..."
                              confirmationMessage:@"Cancel Download?"
                                      cancelBlock:^{
-                                         NSLog(@"Task was cancelled!"); 
+                                         NSLog(@"Task was cancelled!");
                                      }];
                     break;
                 case MMProgressHUDDemoTypeStaticImage:
@@ -118,12 +121,17 @@ typedef NS_ENUM(NSInteger, MMProgressHUDDemoFeatureType){
                     [MMProgressHUD showWithTitle:@"Plain" status:@"No Border"];
                     break;
                 case MMProgressHUDDemoTypeRadialProgress:
-                    [MMProgressHUD showProgressWithStyle:MMProgressHUDProgressStyleRadial title:@"Radial Progress" status:nil];
+                    [MMProgressHUD setProgressViewClass:[MMRadialProgressView class]];
+                    [MMProgressHUD showDeterminateProgressWithTitle:@"Radial Progress" status:nil];
+                    
+                    //Deprecated:       [MMProgressHUD showProgressWithStyle:MMProgressHUDProgressStyleRadial title:@"Radial Progress" status:nil];
+                    
                     [[MMProgressHUD sharedHUD] setProgressCompletion:^{
-                       [MMProgressHUD dismissWithSuccess:@"Done!"]; 
+                        [MMProgressHUD dismissWithSuccess:@"Done!"];
                     }];
+                    
                     [[MMProgressHUD sharedHUD] setDismissAnimationCompletion:^{
-                        NSLog(@"I've been dismissed!"); 
+                        NSLog(@"I've been dismissed!");
                     }];
                     
                     autodismiss = NO;
@@ -153,6 +161,47 @@ typedef NS_ENUM(NSInteger, MMProgressHUDDemoFeatureType){
                         });
                     });
                     break;
+                case MMProgressHUDDemoTypeLinearProgress:
+                    [MMProgressHUD setProgressViewClass:[MMLinearProgressView class]];
+                    [MMProgressHUD showDeterminateProgressWithTitle:@"Linear Progress" status:nil];
+                    
+//Deprecated:       [MMProgressHUD showProgressWithStyle:MMProgressHUDProgressStyleLinear title:@"Linear Progress" status:nil];
+                    
+                    [[MMProgressHUD sharedHUD] setProgressCompletion:^{
+                        [MMProgressHUD dismissWithSuccess:@"Done!"];
+                    }];
+                    [[MMProgressHUD sharedHUD] setDismissAnimationCompletion:^{
+                        NSLog(@"I've been dismissed!");
+                    }];
+                    
+                    autodismiss = NO;
+                    
+                    double _delayInSeconds = 1;
+                    dispatch_time_t _popTime = dispatch_time(DISPATCH_TIME_NOW, _delayInSeconds * NSEC_PER_SEC);
+                    dispatch_after(_popTime, dispatch_get_main_queue(), ^(void){
+                        [MMProgressHUD updateProgress:0.33f];
+                        
+                        double delayInSeconds = 0.5;
+                        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+                        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                            [MMProgressHUD updateProgress:0.55f];
+                            
+                            double delayInSeconds = 0.8;
+                            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+                            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                                [MMProgressHUD updateProgress:0.80f];
+                                
+                                double delayInSeconds = 1.5;
+                                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+                                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                                    [MMProgressHUD updateProgress:1.f];
+                                    
+                                });
+                            });
+                        });
+                    });
+                    break;
+                    
                 case MMProgressHUDDemoTypeOverlayColor:{
                     
                     //random color
@@ -216,8 +265,8 @@ typedef NS_ENUM(NSInteger, MMProgressHUDDemoFeatureType){
                     
                     [MMProgressHUD showWithTitle:@"Overlay" status:@"Linear"];
                     break;
-//                case MMProgressHUDDemoOverlayTypeBlur:
-//                    break;
+                    //                case MMProgressHUDDemoOverlayTypeBlur:
+                    //                    break;
                 default:
                     break;
             }
@@ -301,6 +350,9 @@ typedef NS_ENUM(NSInteger, MMProgressHUDDemoFeatureType){
                     break;
                 case MMProgressHUDDemoTypeRadialProgress:
                     title = @"Determinate Progress (Radial)";
+                    break;
+                case MMProgressHUDDemoTypeLinearProgress:
+                    title = @"Determinate Progress (Linear)";
                     break;
                 case MMProgressHUDDemoTypeOverlayColor:
                     title = @"Custom Overlay Color (Random)";

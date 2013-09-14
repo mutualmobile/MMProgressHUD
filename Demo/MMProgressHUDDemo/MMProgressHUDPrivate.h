@@ -96,7 +96,7 @@
                status:(NSString *)status
   confirmationMessage:(NSString *)confirmationMessage
           cancelBlock:(void(^)(void))cancelBlock
-        progressStyle:(MMProgressHUDProgressStyle)progressStyle;
+        indeterminate:(BOOL)indeterminate;
 
 - (void)dismissWithCompletionState:(MMProgressHUDCompletionState)completionState
                              title:(NSString *)title
