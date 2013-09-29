@@ -546,15 +546,21 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
      }
      completion:^(BOOL finished) {
          
-         self.image = nil;
-         self.animationImages = nil;
-         self.progress = 0.f;
-         self.hud.completionState = MMProgressHUDCompletionStateNone;
-         
-         [self.window setHidden:YES], self.window = nil;
-         
+         NSTimeInterval t = (self.hud.progress < 1.0) ? MMProgressHUDAnimateInDurationLong : 0.0;
+         [NSTimer scheduledTimerWithTimeInterval:t target:self selector:@selector(_cleanupAfterDismiss) userInfo:nil repeats:NO];
+             
          UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, nil);
      }];
+}
+
+- (void)_cleanupAfterDismiss
+{
+    self.image = nil;
+    self.animationImages = nil;
+    self.progress = 0.f;
+    self.hud.completionState = MMProgressHUDCompletionStateNone;
+
+    [self.window setHidden:YES], self.window = nil;
 }
 
 - (CGPoint)_antialiasedPositionPointForPoint:(CGPoint)oldCenter forLayer:(CALayer *)layer{
