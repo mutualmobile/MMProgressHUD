@@ -88,7 +88,7 @@
 
         // Don't shift the position if we're in a queue...
         if ([self.hud.layer animationForKey:MMProgressHUDAnimationKeyShowAnimation] == nil) {
-            
+        
             self.hud.layer.position = newPosition;
             self.hud.layer.transform = CATransform3DMakeRotation(newAngle, 0.f, 0.f, 1.f);
         }

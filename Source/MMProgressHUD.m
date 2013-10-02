@@ -533,6 +533,22 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
             break;
     }
     
+    typeof(self) __weak weakSelf = self;
+    if (!self.queuedDismissAnimation) {
+        [self _fadeOutAndCleanUp];
+    } else {
+        void (^oldCompletion)(void) = [self.dismissAnimationCompletion copy];
+        self.dismissAnimationCompletion = ^{
+            MMProgressHUD *self = weakSelf;
+            [self _fadeOutAndCleanUp];
+            if (oldCompletion)
+                oldCompletion();
+        };
+    }
+}
+
+- (void)_fadeOutAndCleanUp
+{
     CGFloat duration = (self.presentationStyle == MMProgressHUDPresentationStyleNone) ? 0.f : MMProgressHUDAnimateOutDurationLong;
     CGFloat delay = (self.presentationStyle == MMProgressHUDPresentationStyleDrop) ? MMProgressHUDAnimateOutDurationShort : 0.f;
     
@@ -540,27 +556,20 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
      animateWithDuration:duration
      delay:delay
      options:UIViewAnimationOptionCurveEaseIn |
-             UIViewAnimationOptionBeginFromCurrentState
+     UIViewAnimationOptionBeginFromCurrentState
      animations:^{
          self.overlayView.alpha = 0.f;
      }
      completion:^(BOOL finished) {
          
-         NSTimeInterval t = (self.hud.progress < 1.0) ? MMProgressHUDAnimateInDurationLong : 0.0;
-         [NSTimer scheduledTimerWithTimeInterval:t target:self selector:@selector(_cleanupAfterDismiss) userInfo:nil repeats:NO];
-             
+         self.image = nil;
+         self.animationImages = nil;
+         self.progress = 0.f;
+         self.hud.completionState = MMProgressHUDCompletionStateNone;
+         
+         [self.window setHidden:YES], self.window = nil;
          UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, nil);
      }];
-}
-
-- (void)_cleanupAfterDismiss
-{
-    self.image = nil;
-    self.animationImages = nil;
-    self.progress = 0.f;
-    self.hud.completionState = MMProgressHUDCompletionStateNone;
-
-    [self.window setHidden:YES], self.window = nil;
 }
 
 - (CGPoint)_antialiasedPositionPointForPoint:(CGPoint)oldCenter forLayer:(CALayer *)layer{
