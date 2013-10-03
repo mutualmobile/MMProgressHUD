@@ -537,10 +537,9 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
     if (!self.queuedDismissAnimation) {
         [self _fadeOutAndCleanUp];
     } else {
-        void (^oldCompletion)(void) = [self.dismissAnimationCompletion copy];
-        self.dismissAnimationCompletion = ^{
-            MMProgressHUD *self = weakSelf;
-            [self _fadeOutAndCleanUp];
+        void (^oldCompletion)(void) = [self.showAnimationCompletion copy];
+        self.showAnimationCompletion = ^{
+            [weakSelf _fadeOutAndCleanUp];
             if (oldCompletion)
                 oldCompletion();
         };
@@ -549,8 +548,8 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
 
 - (void)_fadeOutAndCleanUp
 {
-    CGFloat duration = (self.presentationStyle == MMProgressHUDPresentationStyleNone) ? 0.f : MMProgressHUDAnimateOutDurationLong;
-    CGFloat delay = (self.presentationStyle == MMProgressHUDPresentationStyleDrop) ? MMProgressHUDAnimateOutDurationShort : 0.f;
+    CGFloat duration = (self.presentationStyle == MMProgressHUDPresentationStyleNone) ? 0.f : MMProgressHUDAnimateOutDurationLong;// - 0.15;
+    CGFloat delay = 0.0;//(self.presentationStyle == MMProgressHUDPresentationStyleDrop) ? MMProgressHUDAnimateOutDurationShort : 0.f;
     
     [UIView
      animateWithDuration:duration

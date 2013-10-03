@@ -81,6 +81,7 @@
     double newAngle = arc4random_uniform(1000)/1000.f*M_2_PI-(M_2_PI)/2.f;
     CGPoint newPosition = CGPointMake(self.hud.layer.position.x, self.frame.size.height + self.hud.frame.size.height);
     
+    
     [CATransaction begin];
     [CATransaction setDisableActions:YES];
     {
@@ -586,6 +587,12 @@
         
         blockSelf.queuedShowAnimation = nil;
         
+        if (blockSelf.showAnimationCompletion != nil) {
+            blockSelf.showAnimationCompletion();
+            blockSelf.showAnimationCompletion = nil;
+        }
+        
+        
         if (blockSelf.queuedDismissAnimation != nil) {
             [blockSelf _executeDismissAnimation:blockSelf.queuedDismissAnimation];
             blockSelf.queuedDismissAnimation = nil;
@@ -617,6 +624,7 @@
         
         if (blockSelf.dismissAnimationCompletion != nil) {
             blockSelf.dismissAnimationCompletion();
+            blockSelf.dismissAnimationCompletion = nil;
         }
         
         [blockSelf.hud removeFromSuperview];

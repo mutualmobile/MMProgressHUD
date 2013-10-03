@@ -121,6 +121,12 @@ This message will be presented to the user when a cancelBlock is present after t
  */
 @property (nonatomic, copy) void(^dismissAnimationCompletion)(void);
 
+/** A block to be executed as soon as the show animation has completed and the HUD is fully on screen.
+ 
+ This block will be automatically released and nil'd after firing and is guaranteed to fire only once.
+ */
+@property (nonatomic, copy) void(^showAnimationCompletion)(void);
+
 /** The HUD that is displaying all information. */
 @property (nonatomic, strong) MMHud *hud;
 
