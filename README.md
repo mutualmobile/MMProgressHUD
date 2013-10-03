@@ -127,7 +127,7 @@ Created by [Lars Anderson](http://twitter.com/theonlylars) at [Mutual Mobile](ht
 
 ##Contributors (Thank you!)
 
-- Hari Karam Singh (@Club15CC) (#15)
+- Hari Karam Singh, [@Club15CC](https://github.com/club15cc) - [#5](https://github.com/mutualmobile/MMProgressHUD/pull/5)
 
 ##License
 Standard MIT License
