@@ -81,14 +81,19 @@
     double newAngle = arc4random_uniform(1000)/1000.f*M_2_PI-(M_2_PI)/2.f;
     CGPoint newPosition = CGPointMake(self.hud.layer.position.x, self.frame.size.height + self.hud.frame.size.height);
     
+    
     [CATransaction begin];
     [CATransaction setDisableActions:YES];
     {
         [self _executeDismissAnimation:[self _dropAnimationOut]];
+
+        // Don't shift the position if we're in a queue...
+        if ([self.hud.layer animationForKey:MMProgressHUDAnimationKeyShowAnimation] == nil) {
         
-        self.hud.layer.position = newPosition;
-        self.hud.layer.transform = CATransform3DMakeRotation(newAngle, 0.f, 0.f, 1.f);
-    }         
+            self.hud.layer.position = newPosition;
+            self.hud.layer.transform = CATransform3DMakeRotation(newAngle, 0.f, 0.f, 1.f);
+        }
+    }
     [CATransaction commit];
 }
 
@@ -582,6 +587,12 @@
         
         blockSelf.queuedShowAnimation = nil;
         
+        if (blockSelf.showAnimationCompletion != nil) {
+            blockSelf.showAnimationCompletion();
+            blockSelf.showAnimationCompletion = nil;
+        }
+        
+        
         if (blockSelf.queuedDismissAnimation != nil) {
             [blockSelf _executeDismissAnimation:blockSelf.queuedDismissAnimation];
             blockSelf.queuedDismissAnimation = nil;
@@ -613,6 +624,7 @@
         
         if (blockSelf.dismissAnimationCompletion != nil) {
             blockSelf.dismissAnimationCompletion();
+            blockSelf.dismissAnimationCompletion = nil;
         }
         
         [blockSelf.hud removeFromSuperview];
