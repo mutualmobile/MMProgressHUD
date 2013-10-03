@@ -533,14 +533,29 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
             break;
     }
     
-    CGFloat duration = (self.presentationStyle == MMProgressHUDPresentationStyleNone) ? 0.f : MMProgressHUDAnimateOutDurationLong;
-    CGFloat delay = (self.presentationStyle == MMProgressHUDPresentationStyleDrop) ? MMProgressHUDAnimateOutDurationShort : 0.f;
+    typeof(self) __weak weakSelf = self;
+    if (!self.queuedDismissAnimation) {
+        [self _fadeOutAndCleanUp];
+    } else {
+        void (^oldCompletion)(void) = [self.showAnimationCompletion copy];
+        self.showAnimationCompletion = ^{
+            [weakSelf _fadeOutAndCleanUp];
+            if (oldCompletion)
+                oldCompletion();
+        };
+    }
+}
+
+- (void)_fadeOutAndCleanUp
+{
+    CGFloat duration = (self.presentationStyle == MMProgressHUDPresentationStyleNone) ? 0.f : MMProgressHUDAnimateOutDurationLong;// - 0.15;
+    CGFloat delay = 0.0;//(self.presentationStyle == MMProgressHUDPresentationStyleDrop) ? MMProgressHUDAnimateOutDurationShort : 0.f;
     
     [UIView
      animateWithDuration:duration
      delay:delay
      options:UIViewAnimationOptionCurveEaseIn |
-             UIViewAnimationOptionBeginFromCurrentState
+     UIViewAnimationOptionBeginFromCurrentState
      animations:^{
          self.overlayView.alpha = 0.f;
      }
@@ -552,7 +567,6 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
          self.hud.completionState = MMProgressHUDCompletionStateNone;
          
          [self.window setHidden:YES], self.window = nil;
-         
          UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, nil);
      }];
 }
