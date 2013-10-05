@@ -9,61 +9,18 @@
 #import <UIKit/UIKit.h>
 #import "MMHud.h"
 
-#ifdef DEBUG
-    #ifdef MM_HUD_DEBUG
-        #define MMHudLog(fmt, ...) NSLog((@"%@ [line %u]: " fmt), NSStringFromClass(self.class), __LINE__, ##__VA_ARGS__)
-    #else
-        #define MMHudLog(...) /* */
-    #endif
-#else
-    #define MMHudLog(...) /* */
-#endif
-
-#define MMHudWLog(fmt, ...) NSLog((@"%@ WARNING [line %u]: " fmt), NSStringFromClass(self.class), __LINE__, ##__VA_ARGS__)
-
-extern NSString * const MMProgressHUDDefaultConfirmationMessage;
-
-extern NSString * const MMProgressHUDAnimationShow;
-extern NSString * const MMProgressHUDAnimationDismiss;
-extern NSString * const MMProgressHUDAnimationWindowFadeOut;
-extern NSString * const MMProgressHUDAnimationKeyShowAnimation;
-extern NSString * const MMProgressHUDAnimationKeyDismissAnimation;
-
-extern float const MMProgressHUDStandardDismissDelay;
-
 @class MMProgressHUDWindow;
 @class MMProgressHUDOverlayView;
 
-typedef NS_ENUM(NSInteger, MMProgressHUDPresentationStyle){
-    MMProgressHUDPresentationStyleDrop = 0, //default
-    MMProgressHUDPresentationStyleExpand,
-    MMProgressHUDPresentationStyleShrink,
-    MMProgressHUDPresentationStyleSwingLeft,
-    MMProgressHUDPresentationStyleSwingRight,
-    MMProgressHUDPresentationStyleBalloon,
-    MMProgressHUDPresentationStyleFade,
-    MMProgressHUDPresentationStyleNone
-};
-
-typedef NS_ENUM(NSInteger, MMProgressHUDWindowOverlayMode){
-    MMProgressHUDWindowOverlayModeNone = -1,
-    MMProgressHUDWindowOverlayModeGradient = 0,
-    MMProgressHUDWindowOverlayModeLinear,
-    /*MMProgressHUDWindowOverlayModeBlur*/ //iOS 7 only
-};
-
-//iOS 7 only
-//typedef NS_ENUM(NSInteger, MMProgressHUDOptions) {
-//    MMProgressHUDOptionGravityEnabled = 1 << 0,
-//    MMProgressHUDOptionGyroEnabled = 1 << 1,
-//};
-
 @interface MMProgressHUD : UIView
+
 /** An enum to specify the style in which to display progress.
  
  The default style is indeterminate progress.
+ 
+ @warning Deprecated: To use determinate progress, set a progressViewClass and call showDeterminateProgressWithTitle:status and friends. All other show methods default to indeterminate progress.
  */
-@property (nonatomic, assign) MMProgressHUDProgressStyle progressStyle;
+@property (nonatomic, assign) MMProgressHUDProgressStyle progressStyle DEPRECATED_ATTRIBUTE;
 
 /** The determinate progress state.
  
@@ -73,6 +30,9 @@ typedef NS_ENUM(NSInteger, MMProgressHUDWindowOverlayMode){
 
 /** A Boolean value that indicates whether or not the HUD is visible. */
 @property(nonatomic, readonly, getter = isVisible) BOOL visible;
+
+/** A boolean value that indicates whether or not the HUD has been cancelled manually. */
+@property (nonatomic, assign, getter = isCancelled) BOOL cancelled;
 
 /** The presentation style for the HUD. 
  
@@ -137,6 +97,29 @@ This message will be presented to the user when a cancelBlock is present after t
  */
 @property (nonatomic, strong, readonly) MMProgressHUDOverlayView *overlayView;
 
+/** The class to use for the progress view. Instances of this class must confrom to the MMProgressView protocol. When setting a custom value this value must be set before setting the indeterminate property to YES.
+ 
+ Defaults to MMRadialProgressView
+ */
+@property (nonatomic, assign) Class progressViewClass;
+
+#pragma mark - Instance Methods
+- (void)showWithTitle:(NSString *)title
+               status:(NSString *)status
+  confirmationMessage:(NSString *)confirmationMessage
+          cancelBlock:(void(^)(void))cancelBlock
+               images:(NSArray *)images;
+
+- (void)showDeterminateProgressWithTitle:(NSString *)title
+                                  status:(NSString *)status
+                     confirmationMessage:(NSString *)confirmation
+                             cancelBlock:(void (^)(void))cancelBlock
+                                  images:(NSArray *)images;
+
+- (void)updateProgress:(CGFloat)progress
+            withStatus:(NSString *)status
+                 title:(NSString *)title;
+
 #pragma mark - Class Methods
 /** Gives access to the shared instance of the HUD.
  
@@ -151,6 +134,34 @@ This message will be presented to the user when a cancelBlock is present after t
 //-----------------------------------------------
 /** @name Presentation */
 //-----------------------------------------------
+
+/** Shows indeterminate HUD.
+ 
+ @warning All show methods are mutually exclusive of one another. Use the updateStatus: method to update the HUD's status while maintaining all previously set presentation attributes such as image, images, cancelBlock, title, or confirmationMessage. For example: calling showWithTitle:status: after calling showWithTitle:status:image: will wipe out the image specified in the latter call.
+ 
+ */
++ (void)show;
+
+
+/** Shows indeterminate HUD with specified title.
+ 
+ @warning All show methods are mutually exclusive of one another. Use the updateStatus: method to update the HUD's status while maintaining all previously set presentation attributes such as image, images, cancelBlock, title, or confirmationMessage. For example: calling showWithTitle:status: after calling showWithTitle:status:image: will wipe out the image specified in the latter call.
+ 
+ @param title Title to display.
+ */
++ (void)showWithTitle:(NSString *)title;
+
+
+/** Shows user-blocking HUD with only a status message.
+ 
+ Since the title of this HUD is nil, the status message font will become bold by default.
+ 
+ @warning All show methods are mutually exclusive of one another. Use the updateStatus: method to update the HUD's status while maintaining all previously set presentation attributes such as image, images, cancelBlock, title, or confirmationMessage. For example: calling showWithTitle:status: after calling showWithTitle:status:image: will wipe out the image specified in the latter call.
+ 
+ @param status Status message to display.
+ */
++ (void)showWithStatus:(NSString *)status;
+
 
 /** Shows indeterminate HUD with specified title and status.
  
@@ -289,22 +300,18 @@ This message will be presented to the user when a cancelBlock is present after t
                status:(NSString *)status 
                images:(NSArray *)images;
 
-/** Shows user-blocking HUD with only a status message.
- 
- Since the title of this HUD is nil, the status message font will become bold by default.
- 
- @warning All show methods are mutually exclusive of one another. Use the updateStatus: method to update the HUD's status while maintaining all previously set presentation attributes such as image, images, cancelBlock, title, or confirmationMessage. For example: calling showWithTitle:status: after calling showWithTitle:status:image: will wipe out the image specified in the latter call.
- 
- @param status Status message to display.
- */
-+ (void)showWithStatus:(NSString *)status;
-
 //-----------------------------------------------
 /** @name Dismissal */
 //-----------------------------------------------
 
 /** Dismisses the shared HUD with the current presentationStyle and default delay. */
 + (void)dismiss;
+
+
+/** Dismisses the shared HUD with the current presentationStyle and specified delay. 
+ @param delay Delay to wait before animating the dismiss of the HUD.
+ */
++ (void)dismissAfterDelay:(NSTimeInterval)delay;
 
 #pragma mark - Dismiss with Error
 
@@ -316,7 +323,7 @@ This message will be presented to the user when a cancelBlock is present after t
  */
 + (void)dismissWithError:(NSString *)message
                    title:(NSString *)title
-              afterDelay:(float)delay;
+              afterDelay:(NSTimeInterval)delay;
 
 /** Dismisses the shared HUD with the current presentationStyle in an error-state after a standard delay.
  
@@ -338,7 +345,7 @@ This message will be presented to the user when a cancelBlock is present after t
  @param delay Delay to wait before animating the dismiss of the HUD.
  */
 + (void)dismissWithError:(NSString *)message
-              afterDelay:(float)delay;
+              afterDelay:(NSTimeInterval)delay;
 
 #pragma mark - Dismiss with Success
 /** Dismisses the shared HUD with the current presentationStyle in a success-state after a user-specified delay.
@@ -349,7 +356,7 @@ This message will be presented to the user when a cancelBlock is present after t
  */
 + (void)dismissWithSuccess:(NSString *)message
                      title:(NSString *)title
-                afterDelay:(float)delay;
+                afterDelay:(NSTimeInterval)delay;
 
 /** Dismisses the shared HUD with the current presentationStyle in a success-state.
  
@@ -366,42 +373,40 @@ This message will be presented to the user when a cancelBlock is present after t
 + (void)dismissWithSuccess:(NSString *)message;
 
 //-----------------------------------------------
-/** @name Determinate Progress */
+/** @name Determinate Progress. */
 //-----------------------------------------------
 
-+ (void)showProgressWithStyle:(MMProgressHUDProgressStyle)progressStyle
-                        title:(NSString *)title
-                       status:(NSString *)status;
+/** Sets a determinate progress class on the sharedHUD instance to be used with the `showDeterminateProgress` methods.
+ 
+ @warning When progressClass is nil the progress will be indeterminate.
+ 
+ @param progressClass A class that conforms to the MMProgressView protocol.
+ */
++ (void)setProgressViewClass:(Class)progressClass;
 
-+ (void)showProgressWithStyle:(MMProgressHUDProgressStyle)progressStyle
-                        title:(NSString *)title
-                       status:(NSString *)status
-                        image:(UIImage *)image;
+/** Displays a determinate progress view.
+ 
+ @warning When progressClass is nil the progress will be indeterminate.
+ 
+ @param title The title to be displayed on the HUD
+ @param status The status message to be displayed on the HUD
+ */
++ (void)showDeterminateProgressWithTitle:(NSString *)title
+                                  status:(NSString *)status;
 
-+ (void)showProgressWithStyle:(MMProgressHUDProgressStyle)progressStyle
-                        title:(NSString *)title
-                       status:(NSString *)status
-                       images:(NSArray *)images;
-
-+ (void)showProgressWithStyle:(MMProgressHUDProgressStyle)progressStyle
-                        title:(NSString *)title
-                       status:(NSString *)status
-          confirmationMessage:(NSString *)confirmation
-                  cancelBlock:(void (^)(void))cancelBlock;
-
-+ (void)showProgressWithStyle:(MMProgressHUDProgressStyle)progressStyle 
-                        title:(NSString *)title
-                       status:(NSString *)status
-          confirmationMessage:(NSString *)confirmation
-                  cancelBlock:(void (^)(void))cancelBlock
-                        image:(UIImage *)image;
-
-+ (void)showProgressWithStyle:(MMProgressHUDProgressStyle)progressStyle
-                        title:(NSString *)title
-                       status:(NSString *)status
-          confirmationMessage:(NSString *)confirmation
-                  cancelBlock:(void (^)(void))cancelBlock
-                       images:(NSArray *)images;
+/** Displays a determinate progress view.
+ 
+ @warning When progressClass is nil the progress will be indeterminate.
+ 
+ @param title The title to be displayed on the HUD
+ @param status The status message to be displayed on the HUD
+ @param confirmation The confirmation message to be displayed when the user performs a single-tap on the hud.
+ @param cancelBlock A block to be executed after the user has tapped the hud twice (once to prompt to confirm and a second to confirm the "cancellation").
+ */
++ (void)showDeterminateProgressWithTitle:(NSString *)title
+                                  status:(NSString *)status
+                     confirmationMessage:(NSString *)confirmation
+                             cancelBlock:(void (^)(void))cancelBlock;
 
 //-----------------------------------------------
 /** @name Updating Content */
@@ -466,5 +471,73 @@ This message will be presented to the user when a cancelBlock is present after t
  @param displayStyle Style to set the HUD to.
  */
 + (void)setDisplayStyle:(MMProgressHUDDisplayStyle)displayStyle;
+
+@end
+
+@interface MMProgressHUD (Deprecated)
+
+/**
+ The showProgressWithStyle: methods have been deprecated in favor of the new dynamic progress class support. Please specify a determinate progress class to use on MMProgressHUD by using setProgressViewClass:.
+ 
+ @warning This method will be removed in some version in the future.
+ */
++ (void)showProgressWithStyle:(MMProgressHUDProgressStyle)progressStyle
+                        title:(NSString *)title
+                       status:(NSString *)status DEPRECATED_ATTRIBUTE;
+
+/**
+ The showProgressWithStyle: methods have been deprecated in favor of the new dynamic progress class support. Please specify a determinate progress class to use on MMProgressHUD by using setProgressViewClass:.
+ 
+ @warning This method will be removed in some version in the future.
+ */
++ (void)showProgressWithStyle:(MMProgressHUDProgressStyle)progressStyle
+                        title:(NSString *)title
+                       status:(NSString *)status
+                        image:(UIImage *)image DEPRECATED_ATTRIBUTE;
+
+/**
+ The showProgressWithStyle: methods have been deprecated in favor of the new dynamic progress class support. Please specify a determinate progress class to use on MMProgressHUD by using setProgressViewClass:.
+ 
+ @warning This method will be removed in some version in the future.
+ */
++ (void)showProgressWithStyle:(MMProgressHUDProgressStyle)progressStyle
+                        title:(NSString *)title
+                       status:(NSString *)status
+                       images:(NSArray *)images DEPRECATED_ATTRIBUTE;
+
+/**
+ The showProgressWithStyle: methods have been deprecated in favor of the new dynamic progress class support. Please specify a determinate progress class to use on MMProgressHUD by using setProgressViewClass:.
+ 
+ @warning This method will be removed in some version in the future.
+ */
++ (void)showProgressWithStyle:(MMProgressHUDProgressStyle)progressStyle
+                        title:(NSString *)title
+                       status:(NSString *)status
+          confirmationMessage:(NSString *)confirmation
+                  cancelBlock:(void (^)(void))cancelBlock DEPRECATED_ATTRIBUTE;
+
+/**
+ The showProgressWithStyle: methods have been deprecated in favor of the new dynamic progress class support. Please specify a determinate progress class to use on MMProgressHUD by using setProgressViewClass:.
+ 
+ @warning This method will be removed in some version in the future.
+ */
++ (void)showProgressWithStyle:(MMProgressHUDProgressStyle)progressStyle
+                        title:(NSString *)title
+                       status:(NSString *)status
+          confirmationMessage:(NSString *)confirmation
+                  cancelBlock:(void (^)(void))cancelBlock
+                        image:(UIImage *)image DEPRECATED_ATTRIBUTE;
+
+/**
+ The showProgressWithStyle: methods have been deprecated in favor of the new dynamic progress class support. Please specify a determinate progress class to use on MMProgressHUD by using setProgressViewClass:.
+ 
+ @warning This method will be removed in some version in the future.
+ */
++ (void)showProgressWithStyle:(MMProgressHUDProgressStyle)progressStyle
+                        title:(NSString *)title
+                       status:(NSString *)status
+          confirmationMessage:(NSString *)confirmation
+                  cancelBlock:(void (^)(void))cancelBlock
+                       images:(NSArray *)images DEPRECATED_ATTRIBUTE;
 
 @end

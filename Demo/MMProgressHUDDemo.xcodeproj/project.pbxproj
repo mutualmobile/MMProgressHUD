@@ -23,6 +23,9 @@
 		46A19B6B15549F5200D65BB8 /* 4.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A19B6515549F5200D65BB8 /* 4.png */; };
 		46A19B6C15549F5200D65BB8 /* 5.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A19B6615549F5200D65BB8 /* 5.png */; };
 		46A19B6D15549F5200D65BB8 /* 6.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A19B6715549F5200D65BB8 /* 6.png */; };
+		46ACE86A17C3C1470075C2A0 /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46ACE86917C3C1470075C2A0 /* libOCMock.a */; };
+		46ACE86B17C50A580075C2A0 /* MMLinearProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = DDBCC20417C2822A00C3BF8C /* MMLinearProgressView.m */; };
+		46ACE86C17C50A610075C2A0 /* MMLinearProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = DDBCC20417C2822A00C3BF8C /* MMLinearProgressView.m */; };
 		46F3F73F16D1E76700E255A2 /* MMVectorImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 46F3F73E16D1E76700E255A2 /* MMVectorImage.m */; };
 		46F3F74016D1E76700E255A2 /* MMVectorImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 46F3F73E16D1E76700E255A2 /* MMVectorImage.m */; };
 		46F3F74116D1E76700E255A2 /* MMVectorImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 46F3F73E16D1E76700E255A2 /* MMVectorImage.m */; };
@@ -47,7 +50,6 @@
 		55F0589E159E058600A47983 /* MMProgressHUDWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 5527AEFE159CD7D50037D67D /* MMProgressHUDWindow.m */; };
 		55F0589F159E058600A47983 /* MMProgressHUDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5527AF02159CD8200037D67D /* MMProgressHUDViewController.m */; };
 		55F058A1159E059E00A47983 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A19B5F15549B0300D65BB8 /* QuartzCore.framework */; };
-		55F0592B159E291700A47983 /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F05922159E291700A47983 /* libOCMock.a */; };
 		55F0592C159E39B300A47983 /* GHUnitIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F05891159E039800A47983 /* GHUnitIOS.framework */; };
 		55F0592D159E39C400A47983 /* MMProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A19B5C155493B500D65BB8 /* MMProgressHUD.m */; };
 		55F0592E159E39CB00A47983 /* MMRadialProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 550D504B15615BEF0092B975 /* MMRadialProgressView.m */; };
@@ -68,10 +70,51 @@
 		69DA08CC158261EE000DC29E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A19B38155492E000D65BB8 /* Foundation.framework */; };
 		69DA08D2158261EE000DC29E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 69DA08D0158261EE000DC29E /* InfoPlist.strings */; };
 		69DA08D5158261EE000DC29E /* MMProgressHUDTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 69DA08D4158261EE000DC29E /* MMProgressHUDTests.m */; };
+		DD29615D17E4BC2700AC6831 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A19B42155492E000D65BB8 /* main.m */; };
+		DD29615E17E4BC2700AC6831 /* MMAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A19B46155492E000D65BB8 /* MMAppDelegate.m */; };
+		DD29615F17E4BC2700AC6831 /* MMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A19B49155492E000D65BB8 /* MMViewController.m */; };
+		DD29616017E4BC2700AC6831 /* MMProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A19B5C155493B500D65BB8 /* MMProgressHUD.m */; };
+		DD29616117E4BC2700AC6831 /* MMRadialProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 550D504B15615BEF0092B975 /* MMRadialProgressView.m */; };
+		DD29616217E4BC2700AC6831 /* MMProgressHUDDefines.m in Sources */ = {isa = PBXBuildFile; fileRef = DDBE93BD17CA561D00B78C77 /* MMProgressHUDDefines.m */; };
+		DD29616317E4BC2700AC6831 /* MMHud.m in Sources */ = {isa = PBXBuildFile; fileRef = 5527AEFA159CD7650037D67D /* MMHud.m */; };
+		DD29616417E4BC2700AC6831 /* MMProgressHUDWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 5527AEFE159CD7D50037D67D /* MMProgressHUDWindow.m */; };
+		DD29616517E4BC2700AC6831 /* MMProgressHUDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5527AF02159CD8200037D67D /* MMProgressHUDViewController.m */; };
+		DD29616617E4BC2700AC6831 /* MMProgressHUD+Animations.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F0596015A2083C00A47983 /* MMProgressHUD+Animations.m */; };
+		DD29616717E4BC2700AC6831 /* MMProgressHUD+Class.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F0596515A20BDD00A47983 /* MMProgressHUD+Class.m */; };
+		DD29616817E4BC2700AC6831 /* MMProgressHUDDefines-Private.m in Sources */ = {isa = PBXBuildFile; fileRef = DDBE93C217CA5BF300B78C77 /* MMProgressHUDDefines-Private.m */; };
+		DD29616917E4BC2700AC6831 /* MMProgressHUDOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55AC1A0415A602A500D64C1F /* MMProgressHUDOverlayView.m */; };
+		DD29616A17E4BC2700AC6831 /* MMLinearProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = DDBCC20417C2822A00C3BF8C /* MMLinearProgressView.m */; };
+		DD29616B17E4BC2700AC6831 /* MMVectorImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 46F3F73E16D1E76700E255A2 /* MMVectorImage.m */; };
+		DD29616D17E4BC2700AC6831 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A19B5F15549B0300D65BB8 /* QuartzCore.framework */; };
+		DD29616E17E4BC2700AC6831 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A19B36155492E000D65BB8 /* UIKit.framework */; };
+		DD29616F17E4BC2700AC6831 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A19B38155492E000D65BB8 /* Foundation.framework */; };
+		DD29617017E4BC2700AC6831 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A19B3A155492E000D65BB8 /* CoreGraphics.framework */; };
+		DD29617217E4BC2700AC6831 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 46A19B3F155492E000D65BB8 /* InfoPlist.strings */; };
+		DD29617317E4BC2700AC6831 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A19B6215549F5200D65BB8 /* 1.png */; };
+		DD29617417E4BC2700AC6831 /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A19B6315549F5200D65BB8 /* 2.png */; };
+		DD29617517E4BC2700AC6831 /* 3.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A19B6415549F5200D65BB8 /* 3.png */; };
+		DD29617617E4BC2700AC6831 /* 4.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A19B6515549F5200D65BB8 /* 4.png */; };
+		DD29617717E4BC2700AC6831 /* 5.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A19B6615549F5200D65BB8 /* 5.png */; };
+		DD29617817E4BC2700AC6831 /* 6.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A19B6715549F5200D65BB8 /* 6.png */; };
+		DD29617917E4BC2700AC6831 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 463AE40616B105B300A93EED /* Default-568h@2x.png */; };
+		DDBCC20617C2822A00C3BF8C /* MMLinearProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = DDBCC20417C2822A00C3BF8C /* MMLinearProgressView.m */; };
+		DDBE93BE17CA59FD00B78C77 /* MMProgressHUDDefines.m in Sources */ = {isa = PBXBuildFile; fileRef = DDBE93BD17CA561D00B78C77 /* MMProgressHUDDefines.m */; };
+		DDBE93BF17CA59FE00B78C77 /* MMProgressHUDDefines.m in Sources */ = {isa = PBXBuildFile; fileRef = DDBE93BD17CA561D00B78C77 /* MMProgressHUDDefines.m */; };
+		DDBE93C017CA59FE00B78C77 /* MMProgressHUDDefines.m in Sources */ = {isa = PBXBuildFile; fileRef = DDBE93BD17CA561D00B78C77 /* MMProgressHUDDefines.m */; };
+		DDBE93C317CA5BF300B78C77 /* MMProgressHUDDefines-Private.m in Sources */ = {isa = PBXBuildFile; fileRef = DDBE93C217CA5BF300B78C77 /* MMProgressHUDDefines-Private.m */; };
+		DDBE93C417CA5BF300B78C77 /* MMProgressHUDDefines-Private.m in Sources */ = {isa = PBXBuildFile; fileRef = DDBE93C217CA5BF300B78C77 /* MMProgressHUDDefines-Private.m */; };
+		DDBE93C517CA5BF300B78C77 /* MMProgressHUDDefines-Private.m in Sources */ = {isa = PBXBuildFile; fileRef = DDBE93C217CA5BF300B78C77 /* MMProgressHUDDefines-Private.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		69DA08DD15826291000DC29E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 46A19B29155492E000D65BB8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 69DA08C7158261EE000DC29E;
+			remoteInfo = LogicTests;
+		};
+		DD29615B17E4BC2700AC6831 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 46A19B29155492E000D65BB8 /* Project object */;
 			proxyType = 1;
@@ -103,6 +146,7 @@
 		46A19B6515549F5200D65BB8 /* 4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 4.png; sourceTree = "<group>"; };
 		46A19B6615549F5200D65BB8 /* 5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 5.png; sourceTree = "<group>"; };
 		46A19B6715549F5200D65BB8 /* 6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 6.png; sourceTree = "<group>"; };
+		46ACE86917C3C1470075C2A0 /* libOCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libOCMock.a; path = OCMock/libOCMock.a; sourceTree = "<group>"; };
 		46F3F73D16D1E76700E255A2 /* MMVectorImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMVectorImage.h; sourceTree = "<group>"; };
 		46F3F73E16D1E76700E255A2 /* MMVectorImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMVectorImage.m; sourceTree = "<group>"; };
 		550D504A15615BEF0092B975 /* MMRadialProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMRadialProgressView.h; sourceTree = "<group>"; };
@@ -122,7 +166,6 @@
 		55F05893159E048F00A47983 /* GHUnitTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GHUnitTests-Info.plist"; sourceTree = "<group>"; };
 		55F05894159E048F00A47983 /* GHUnitTests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GHUnitTests-Prefix.pch"; sourceTree = "<group>"; };
 		55F05895159E048F00A47983 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		55F05922159E291700A47983 /* libOCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libOCMock.a; path = OCMock/libOCMock.a; sourceTree = "<group>"; };
 		55F0595415A1FCEC00A47983 /* NSNotificationCenter+OCMAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotificationCenter+OCMAdditions.h"; sourceTree = "<group>"; };
 		55F0595515A1FCEC00A47983 /* OCMArg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMArg.h; sourceTree = "<group>"; };
 		55F0595615A1FCEC00A47983 /* OCMConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMConstraint.h; sourceTree = "<group>"; };
@@ -140,6 +183,14 @@
 		69DA08D1158261EE000DC29E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		69DA08D4158261EE000DC29E /* MMProgressHUDTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MMProgressHUDTests.m; sourceTree = "<group>"; };
 		69DA08D6158261EE000DC29E /* LogicTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LogicTests-Prefix.pch"; sourceTree = "<group>"; };
+		DD29617E17E4BC2700AC6831 /* MMProgressHUDDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MMProgressHUDDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DDB2DD6A17C626570077C18E /* MMProgressHUDDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMProgressHUDDefines.h; sourceTree = "<group>"; };
+		DDBCC20317C2822A00C3BF8C /* MMLinearProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMLinearProgressView.h; sourceTree = "<group>"; };
+		DDBCC20417C2822A00C3BF8C /* MMLinearProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMLinearProgressView.m; sourceTree = "<group>"; };
+		DDBCC20517C2822A00C3BF8C /* MMProgressView-Protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MMProgressView-Protocol.h"; sourceTree = "<group>"; };
+		DDBE93BD17CA561D00B78C77 /* MMProgressHUDDefines.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MMProgressHUDDefines.m; sourceTree = "<group>"; };
+		DDBE93C117CA5BF300B78C77 /* MMProgressHUDDefines-Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MMProgressHUDDefines-Private.h"; sourceTree = "<group>"; };
+		DDBE93C217CA5BF300B78C77 /* MMProgressHUDDefines-Private.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MMProgressHUDDefines-Private.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,7 +214,6 @@
 				55F05880159E02DD00A47983 /* CoreGraphics.framework in Frameworks */,
 				55F05892159E039800A47983 /* GHUnitIOS.framework in Frameworks */,
 				55F058A1159E059E00A47983 /* QuartzCore.framework in Frameworks */,
-				55F0592B159E291700A47983 /* libOCMock.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -177,6 +227,18 @@
 				6936CF0215828F6600D931E7 /* CoreGraphics.framework in Frameworks */,
 				55F0592C159E39B300A47983 /* GHUnitIOS.framework in Frameworks */,
 				55F05932159E39D500A47983 /* QuartzCore.framework in Frameworks */,
+				46ACE86A17C3C1470075C2A0 /* libOCMock.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DD29616C17E4BC2700AC6831 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DD29616D17E4BC2700AC6831 /* QuartzCore.framework in Frameworks */,
+				DD29616E17E4BC2700AC6831 /* UIKit.framework in Frameworks */,
+				DD29616F17E4BC2700AC6831 /* Foundation.framework in Frameworks */,
+				DD29617017E4BC2700AC6831 /* CoreGraphics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -203,6 +265,7 @@
 				46A19B32155492E000D65BB8 /* MMProgressHUDDemo.app */,
 				69DA08C8158261EE000DC29E /* LogicTests.octest */,
 				55F0587C159E02DD00A47983 /* GHUnitTests.app */,
+				DD29617E17E4BC2700AC6831 /* MMProgressHUDDemo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -210,7 +273,7 @@
 		46A19B35155492E000D65BB8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				55F05922159E291700A47983 /* libOCMock.a */,
+				46ACE86917C3C1470075C2A0 /* libOCMock.a */,
 				55F05891159E039800A47983 /* GHUnitIOS.framework */,
 				46A19B3A155492E000D65BB8 /* CoreGraphics.framework */,
 				46A19B38155492E000D65BB8 /* Foundation.framework */,
@@ -249,6 +312,10 @@
 			children = (
 				46F3F73D16D1E76700E255A2 /* MMVectorImage.h */,
 				46F3F73E16D1E76700E255A2 /* MMVectorImage.m */,
+				DDB2DD6A17C626570077C18E /* MMProgressHUDDefines.h */,
+				DDBE93BD17CA561D00B78C77 /* MMProgressHUDDefines.m */,
+				DDBE93C117CA5BF300B78C77 /* MMProgressHUDDefines-Private.h */,
+				DDBE93C217CA5BF300B78C77 /* MMProgressHUDDefines-Private.m */,
 				46A19B5B155493B500D65BB8 /* MMProgressHUD.h */,
 				46A19B5C155493B500D65BB8 /* MMProgressHUD.m */,
 				55AC1A0315A602A500D64C1F /* MMProgressHUDOverlayView.h */,
@@ -256,6 +323,9 @@
 				55F0596515A20BDD00A47983 /* MMProgressHUD+Class.m */,
 				55F0595F15A2083C00A47983 /* MMProgressHUD+Animations.h */,
 				55F0596015A2083C00A47983 /* MMProgressHUD+Animations.m */,
+				DDBCC20517C2822A00C3BF8C /* MMProgressView-Protocol.h */,
+				DDBCC20317C2822A00C3BF8C /* MMLinearProgressView.h */,
+				DDBCC20417C2822A00C3BF8C /* MMLinearProgressView.m */,
 				550D504A15615BEF0092B975 /* MMRadialProgressView.h */,
 				550D504B15615BEF0092B975 /* MMRadialProgressView.m */,
 				5527AEF9159CD7650037D67D /* MMHud.h */,
@@ -396,6 +466,25 @@
 			productReference = 69DA08C8158261EE000DC29E /* LogicTests.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
+		DD29615917E4BC2700AC6831 /* MMProgressHUDDemo64 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DD29617B17E4BC2700AC6831 /* Build configuration list for PBXNativeTarget "MMProgressHUDDemo64" */;
+			buildPhases = (
+				DD29615C17E4BC2700AC6831 /* Sources */,
+				DD29616C17E4BC2700AC6831 /* Frameworks */,
+				DD29617117E4BC2700AC6831 /* Resources */,
+				DD29617A17E4BC2700AC6831 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DD29615A17E4BC2700AC6831 /* PBXTargetDependency */,
+			);
+			name = MMProgressHUDDemo64;
+			productName = MMProgressHUDDemo;
+			productReference = DD29617E17E4BC2700AC6831 /* MMProgressHUDDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -403,7 +492,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = MM;
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Mutual Mobile";
 			};
 			buildConfigurationList = 46A19B2C155492E000D65BB8 /* Build configuration list for PBXProject "MMProgressHUDDemo" */;
@@ -419,6 +508,7 @@
 			projectRoot = "";
 			targets = (
 				46A19B31155492E000D65BB8 /* MMProgressHUDDemo */,
+				DD29615917E4BC2700AC6831 /* MMProgressHUDDemo64 */,
 				69DA08C7158261EE000DC29E /* LogicTests */,
 				55F0587B159E02DD00A47983 /* GHUnitTests */,
 			);
@@ -456,6 +546,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DD29617117E4BC2700AC6831 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DD29617217E4BC2700AC6831 /* InfoPlist.strings in Resources */,
+				DD29617317E4BC2700AC6831 /* 1.png in Resources */,
+				DD29617417E4BC2700AC6831 /* 2.png in Resources */,
+				DD29617517E4BC2700AC6831 /* 3.png in Resources */,
+				DD29617617E4BC2700AC6831 /* 4.png in Resources */,
+				DD29617717E4BC2700AC6831 /* 5.png in Resources */,
+				DD29617817E4BC2700AC6831 /* 6.png in Resources */,
+				DD29617917E4BC2700AC6831 /* Default-568h@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -485,6 +590,19 @@
 			shellPath = /bin/sh;
 			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
 		};
+		DD29617A17E4BC2700AC6831 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "KEYWORDS=\"TODO:|FIXME:|\\?\\?\\?:|\\!\\!\\!:\"\nfind \"${SRCROOT}/..\" \\( -name \"*.h\" -or -name \"*.m\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($KEYWORDS).*\\$\" | perl -p -e \"s/($KEYWORDS)/ warning: \\$1/\"";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -497,12 +615,15 @@
 				46A19B4A155492E000D65BB8 /* MMViewController.m in Sources */,
 				46A19B5D155493B500D65BB8 /* MMProgressHUD.m in Sources */,
 				550D504C15615BEF0092B975 /* MMRadialProgressView.m in Sources */,
+				DDBE93BE17CA59FD00B78C77 /* MMProgressHUDDefines.m in Sources */,
 				5527AEFB159CD7650037D67D /* MMHud.m in Sources */,
 				5527AEFF159CD7D50037D67D /* MMProgressHUDWindow.m in Sources */,
 				5527AF03159CD8200037D67D /* MMProgressHUDViewController.m in Sources */,
 				55F0596115A2083C00A47983 /* MMProgressHUD+Animations.m in Sources */,
 				55F0596615A20BDD00A47983 /* MMProgressHUD+Class.m in Sources */,
+				DDBE93C317CA5BF300B78C77 /* MMProgressHUDDefines-Private.m in Sources */,
 				55AC1A0515A602A500D64C1F /* MMProgressHUDOverlayView.m in Sources */,
+				DDBCC20617C2822A00C3BF8C /* MMLinearProgressView.m in Sources */,
 				46F3F73F16D1E76700E255A2 /* MMVectorImage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -516,12 +637,15 @@
 				55F0589A159E04E200A47983 /* MMHudTests.m in Sources */,
 				55F0589B159E058600A47983 /* MMProgressHUD.m in Sources */,
 				55F0589C159E058600A47983 /* MMRadialProgressView.m in Sources */,
+				DDBE93C017CA59FE00B78C77 /* MMProgressHUDDefines.m in Sources */,
 				55F0589D159E058600A47983 /* MMHud.m in Sources */,
 				55F0589E159E058600A47983 /* MMProgressHUDWindow.m in Sources */,
 				55F0589F159E058600A47983 /* MMProgressHUDViewController.m in Sources */,
 				55F0596315A2083C00A47983 /* MMProgressHUD+Animations.m in Sources */,
 				55F0596815A20BDD00A47983 /* MMProgressHUD+Class.m in Sources */,
+				DDBE93C517CA5BF300B78C77 /* MMProgressHUDDefines-Private.m in Sources */,
 				55AC1A0615A602A500D64C1F /* MMProgressHUDOverlayView.m in Sources */,
+				46ACE86C17C50A610075C2A0 /* MMLinearProgressView.m in Sources */,
 				46F3F74116D1E76700E255A2 /* MMVectorImage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -535,13 +659,38 @@
 				5527AF07159CD97A0037D67D /* MMHudTests.m in Sources */,
 				55F0592D159E39C400A47983 /* MMProgressHUD.m in Sources */,
 				55F0592E159E39CB00A47983 /* MMRadialProgressView.m in Sources */,
+				DDBE93BF17CA59FE00B78C77 /* MMProgressHUDDefines.m in Sources */,
 				55F0592F159E39CB00A47983 /* MMHud.m in Sources */,
 				55F05930159E39CB00A47983 /* MMProgressHUDWindow.m in Sources */,
 				55F05931159E39CB00A47983 /* MMProgressHUDViewController.m in Sources */,
 				55F0596215A2083C00A47983 /* MMProgressHUD+Animations.m in Sources */,
 				55F0596715A20BDD00A47983 /* MMProgressHUD+Class.m in Sources */,
+				DDBE93C417CA5BF300B78C77 /* MMProgressHUDDefines-Private.m in Sources */,
 				55AC1A0815A62B6900D64C1F /* MMProgressHUDOverlayView.m in Sources */,
+				46ACE86B17C50A580075C2A0 /* MMLinearProgressView.m in Sources */,
 				46F3F74016D1E76700E255A2 /* MMVectorImage.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DD29615C17E4BC2700AC6831 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DD29615D17E4BC2700AC6831 /* main.m in Sources */,
+				DD29615E17E4BC2700AC6831 /* MMAppDelegate.m in Sources */,
+				DD29615F17E4BC2700AC6831 /* MMViewController.m in Sources */,
+				DD29616017E4BC2700AC6831 /* MMProgressHUD.m in Sources */,
+				DD29616117E4BC2700AC6831 /* MMRadialProgressView.m in Sources */,
+				DD29616217E4BC2700AC6831 /* MMProgressHUDDefines.m in Sources */,
+				DD29616317E4BC2700AC6831 /* MMHud.m in Sources */,
+				DD29616417E4BC2700AC6831 /* MMProgressHUDWindow.m in Sources */,
+				DD29616517E4BC2700AC6831 /* MMProgressHUDViewController.m in Sources */,
+				DD29616617E4BC2700AC6831 /* MMProgressHUD+Animations.m in Sources */,
+				DD29616717E4BC2700AC6831 /* MMProgressHUD+Class.m in Sources */,
+				DD29616817E4BC2700AC6831 /* MMProgressHUDDefines-Private.m in Sources */,
+				DD29616917E4BC2700AC6831 /* MMProgressHUDOverlayView.m in Sources */,
+				DD29616A17E4BC2700AC6831 /* MMLinearProgressView.m in Sources */,
+				DD29616B17E4BC2700AC6831 /* MMVectorImage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -552,6 +701,11 @@
 			isa = PBXTargetDependency;
 			target = 69DA08C7158261EE000DC29E /* LogicTests */;
 			targetProxy = 69DA08DD15826291000DC29E /* PBXContainerItemProxy */;
+		};
+		DD29615A17E4BC2700AC6831 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 69DA08C7158261EE000DC29E /* LogicTests */;
+			targetProxy = DD29615B17E4BC2700AC6831 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -579,9 +733,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = armv7;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = YES;
@@ -598,9 +753,12 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-fobjc-arc";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = iphoneos;
@@ -612,9 +770,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = armv7;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = YES;
@@ -624,7 +783,9 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
@@ -640,7 +801,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MMProgressHUDDemo/MMProgressHUDDemo-Prefix.pch";
@@ -654,12 +818,11 @@
 					"-Wall",
 					"-Wextra",
 					"-Wobjc-interface-ivars",
-					"-Warc-repeated-use-of-weak",
 					"-Wunused-macros",
 					"-Wunreachable-code",
 					"-Wimplicit-retain-self",
-					"-Wdirect-ivar-access",
 					"-Wno-unused-parameter",
+					"-Wdeprecated-declarations",
 				);
 				WRAPPER_EXTENSION = app;
 			};
@@ -669,7 +832,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MMProgressHUDDemo/MMProgressHUDDemo-Prefix.pch";
@@ -683,12 +849,11 @@
 					"-Wall",
 					"-Wextra",
 					"-Wobjc-interface-ivars",
-					"-Warc-repeated-use-of-weak",
 					"-Wunused-macros",
 					"-Wunreachable-code",
 					"-Wimplicit-retain-self",
-					"-Wdirect-ivar-access",
 					"-Wno-unused-parameter",
+					"-Wdeprecated-declarations",
 				);
 				WRAPPER_EXTENSION = app;
 			};
@@ -770,19 +935,16 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
-					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)\"/**",
 				);
 				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LogicTests/LogicTests-Prefix.pch";
-				HEADER_SEARCH_PATHS = "\"$(PROJECT_DIR)\"/**";
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/OCMock\"/**";
 				INFOPLIST_FILE = "LogicTests/LogicTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)\"/**",
-					"\"$(SRCROOT)/OCMock\"",
-				);
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/OCMock\"";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-force_load",
@@ -801,19 +963,16 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
-					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)\"/**",
 				);
 				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LogicTests/LogicTests-Prefix.pch";
-				HEADER_SEARCH_PATHS = "\"$(PROJECT_DIR)\"/**";
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/OCMock\"/**";
 				INFOPLIST_FILE = "LogicTests/LogicTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)\"/**",
-					"\"$(SRCROOT)/OCMock\"",
-				);
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/OCMock\"";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-force_load",
@@ -821,6 +980,70 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+		DD29617C17E4BC2700AC6831 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MMProgressHUDDemo/MMProgressHUDDemo-Prefix.pch";
+				GCC_VERSION = "";
+				INFOPLIST_FILE = "MMProgressHUDDemo/MMProgressHUDDemo-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = MMProgressHUDDemo;
+				PROVISIONING_PROFILE = "";
+				WARNING_CFLAGS = (
+					"-Wall",
+					"-Wextra",
+					"-Wobjc-interface-ivars",
+					"-Wunused-macros",
+					"-Wunreachable-code",
+					"-Wimplicit-retain-self",
+					"-Wno-unused-parameter",
+					"-Wdeprecated-declarations",
+				);
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		DD29617D17E4BC2700AC6831 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MMProgressHUDDemo/MMProgressHUDDemo-Prefix.pch";
+				GCC_VERSION = "";
+				INFOPLIST_FILE = "MMProgressHUDDemo/MMProgressHUDDemo-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = MMProgressHUDDemo;
+				PROVISIONING_PROFILE = "";
+				WARNING_CFLAGS = (
+					"-Wall",
+					"-Wextra",
+					"-Wobjc-interface-ivars",
+					"-Wunused-macros",
+					"-Wunreachable-code",
+					"-Wimplicit-retain-self",
+					"-Wno-unused-parameter",
+					"-Wdeprecated-declarations",
+				);
+				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
 		};
@@ -859,6 +1082,15 @@
 			buildConfigurations = (
 				69DA08D7158261EE000DC29E /* Debug */,
 				69DA08D8158261EE000DC29E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DD29617B17E4BC2700AC6831 /* Build configuration list for PBXNativeTarget "MMProgressHUDDemo64" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DD29617C17E4BC2700AC6831 /* Debug */,
+				DD29617D17E4BC2700AC6831 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

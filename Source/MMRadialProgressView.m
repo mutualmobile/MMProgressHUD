@@ -17,11 +17,11 @@
 
 @dynamic progress;
 
-+(BOOL)needsDisplayForKey:(NSString *)key{
++(BOOL)needsDisplayForKey:(NSString *)key {
     return [key isEqualToString:@"progress"] || [super needsDisplayForKey:key];
 }
 
-- (id<CAAction>)actionForKey:(NSString *)key{
+- (id<CAAction>)actionForKey:(NSString *)key {
     if ([key isEqualToString:@"progress"]) {
         CABasicAnimation *progressAnimation = [CABasicAnimation animation];
         progressAnimation.fromValue = [self.presentationLayer valueForKey:key];
@@ -32,7 +32,7 @@
     return [super actionForKey:key];
 }
 
-- (void)drawInContext:(CGContextRef)ctx{
+- (void)drawInContext:(CGContextRef)ctx {
     CGFloat insetWidth = 1.f/[[UIScreen mainScreen] scale];
     CGFloat radiusOffset = (self.contentsScale > 1) ? 0.5f : 0.f;
     CGRect rect = CGRectInset(CGRectIntegral(self.bounds), 1.f, 1.f);
@@ -113,11 +113,15 @@
 
 @implementation MMRadialProgressView
 
-+ (Class)layerClass{
++ (CGSize)sizeThatFitsSize:(CGSize)defaultSize maximumAvailableSize:(CGSize)totalAvailableSize {
+    return defaultSize;
+}
+
++ (Class)layerClass {
     return [MMRadialProgressLayer class];
 }
 
-- (instancetype)initWithFrame:(CGRect)frame{
+- (instancetype)initWithFrame:(CGRect)frame {
     if ((self = [super initWithFrame:frame])) {
         self.backgroundColor = [UIColor clearColor];
         self.layer.contentsScale = [[UIScreen mainScreen] scale];//set this or have fuzzy drawing on retina
@@ -126,28 +130,33 @@
     return self;
 }
 
-- (void)setProgress:(CGFloat)progress{
+- (void)setProgress:(CGFloat)progress {
     [self setProgress:progress animated:NO];
 }
 
-- (void)setProgress:(CGFloat)progress animated:(BOOL)animated{
+- (void)setProgress:(CGFloat)progress animated:(BOOL)animated {
     [self setProgress:progress animated:animated withCompletion:nil];
 }
 
-- (void)setProgress:(CGFloat)progress animated:(BOOL)animated withCompletion:(void(^)(BOOL completed))completion{
-    NSUInteger options = (UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionBeginFromCurrentState);
+- (void)setProgress:(CGFloat)progress animated:(BOOL)animated withCompletion:(void(^)(BOOL completed))completion {
+    [CATransaction begin];
+    [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
+    if (animated == NO) {
+        [CATransaction setDisableActions:YES];
+    }
     
-    [UIView
-     animateWithDuration:animated ? 0.25f : 0.f
-     delay:0.f
-     options:options
-     animations:^{
-         [((MMRadialProgressLayer *)self.layer) setProgress:progress];
-     }
-     completion:completion];
+    [CATransaction setCompletionBlock:^{
+        if (completion) {
+            completion(YES);
+        }
+    }];
+    
+    [((UIView <MMProgressView>*)self.layer) setProgress:progress];
+    
+    [CATransaction commit];
 }
 
-- (CGFloat)progress{
+- (CGFloat)progress {
     return [((MMRadialProgressLayer *)self.layer) progress];
 }
 

@@ -8,9 +8,11 @@
 
 #import "MMProgressHUDWindow.h"
 
+#import "MMProgressHUDDefines-Private.h"
+
 @implementation MMProgressHUDWindow
 
-- (instancetype)init{
+- (instancetype)init {
     if ((self = [super initWithFrame:[[UIScreen mainScreen] bounds]])) {
         self.windowLevel = UIWindowLevelStatusBar;
         
@@ -19,22 +21,19 @@
     return self;
 }
 
-- (void)makeKeyAndVisible{
+- (void)makeKeyAndVisible {
     MMHudLog(@"Making key");
     
     [super makeKeyAndVisible];
 }
 
-- (UIWindow *)oldWindow{
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-repeated-use-of-weak"
+- (UIWindow *)oldWindow {
     if (_oldWindow == nil) {
-        UIResponder <UIApplicationDelegate> *appDelegate = [[UIApplication sharedApplication] delegate];
-        UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
-        if(keyWindow != nil){
-            self.oldWindow = keyWindow;
-        }
-        else if([appDelegate respondsToSelector:@selector(window)]) {
-            UIWindow *delegateWindow = appDelegate.window;
-            self.oldWindow = delegateWindow;
+        if ([[[UIApplication sharedApplication] windows] count]) {
+            self.oldWindow = [[UIApplication sharedApplication] windows][0];
         }
         else {
             self.oldWindow = nil;
@@ -45,14 +44,15 @@
     
     return _oldWindow;
 }
+#pragma clang diagnostic pop
 
-- (void)setRootViewController:(UIViewController *)rootViewController{
+- (void)setRootViewController:(UIViewController *)rootViewController {
     [super setRootViewController:rootViewController];
     
     [self orientRootViewControllerForOrientation:rootViewController.interfaceOrientation];
 }
 
-- (void)orientRootViewControllerForOrientation:(UIInterfaceOrientation)interfaceOrientation{
+- (void)orientRootViewControllerForOrientation:(UIInterfaceOrientation)interfaceOrientation {
     CGAffineTransform transform;
     
     switch (interfaceOrientation) {
@@ -74,7 +74,7 @@
     self.rootViewController.view.transform = transform;
 }
 
-- (void)dealloc{
+- (void)dealloc {
     MMHudLog(@"dealloc");
 }
 

@@ -12,6 +12,6 @@
 @interface MMProgressHUDWindow : UIWindow
 
 /** The window that was key at presentation time. Used to grab the view controller associated with the key window for rotation callbacks if they are available. */
-@property (nonatomic, strong) UIWindow *oldWindow;
+@property (nonatomic, weak) UIWindow *oldWindow;
 
 @end
