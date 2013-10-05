@@ -9,6 +9,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import "MMProgressHUD.h"
+#import "MMProgressHUDCommon.h"
 #import "MMProgressHUD+Animations.h"
 
 #import "MMProgressHUDWindow.h"
@@ -20,7 +21,24 @@
 #import "MMLinearProgressView.h"
 #import "MMRadialProgressView.h"
 
-#import "MMProgressHUDDefines-Private.h"
+#if __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_5_0
+#error MMProgressHUD uses APIs only available in iOS 5.0+
+#endif
+
+static const BOOL kMMProgressHUDDebugMode = NO;
+
+NSString * const MMProgressHUDDefaultConfirmationMessage = @"Cancel?";
+NSString * const MMProgressHUDAnimationShow = @"mm-progress-hud-present-animation";
+NSString * const MMProgressHUDAnimationDismiss = @"mm-progress-hud-dismiss-animation";
+NSString * const MMProgressHUDAnimationWindowFadeOut = @"mm-progress-hud-window-fade-out";
+NSString * const MMProgressHUDAnimationKeyShowAnimation = @"show";
+NSString * const MMProgressHUDAnimationKeyDismissAnimation = @"dismiss";
+
+NSUInteger const MMProgressHUDConfirmationPulseCount = 8;//Keep this number even
+
+CGFloat const MMProgressHUDStandardDismissDelay = 0.75f;
+
+CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
 
 #pragma mark - MMProgressHUD
 @interface MMProgressHUD () <MMHudDelegate>

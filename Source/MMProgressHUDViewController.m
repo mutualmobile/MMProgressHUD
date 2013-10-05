@@ -9,8 +9,7 @@
 #import "MMProgressHUDViewController.h"
 #import "MMProgressHUDWindow.h"
 #import "MMProgressHUD.h"
-
-#import "MMProgressHUDDefines-Private.h"
+#import "MMProgressHUDCommon.h"
 
 
 #define suppressDeprecation(Stuff) \

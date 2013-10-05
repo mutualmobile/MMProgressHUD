@@ -9,8 +9,42 @@
 #import <UIKit/UIKit.h>
 #import "MMHud.h"
 
+extern NSString * const MMProgressHUDDefaultConfirmationMessage;
+
+extern NSString * const MMProgressHUDAnimationShow;
+extern NSString * const MMProgressHUDAnimationDismiss;
+extern NSString * const MMProgressHUDAnimationWindowFadeOut;
+extern NSString * const MMProgressHUDAnimationKeyShowAnimation;
+extern NSString * const MMProgressHUDAnimationKeyDismissAnimation;
+
+extern CGFloat const MMProgressHUDStandardDismissDelay;
+
 @class MMProgressHUDWindow;
 @class MMProgressHUDOverlayView;
+
+typedef NS_ENUM(NSInteger, MMProgressHUDPresentationStyle){
+    MMProgressHUDPresentationStyleDrop = 0, //default
+    MMProgressHUDPresentationStyleExpand,
+    MMProgressHUDPresentationStyleShrink,
+    MMProgressHUDPresentationStyleSwingLeft,
+    MMProgressHUDPresentationStyleSwingRight,
+    MMProgressHUDPresentationStyleBalloon,
+    MMProgressHUDPresentationStyleFade,
+    MMProgressHUDPresentationStyleNone
+};
+
+typedef NS_ENUM(NSInteger, MMProgressHUDWindowOverlayMode){
+    MMProgressHUDWindowOverlayModeNone = -1,
+    MMProgressHUDWindowOverlayModeGradient = 0,
+    MMProgressHUDWindowOverlayModeLinear,
+    /*MMProgressHUDWindowOverlayModeBlur*/ //iOS 7 only
+};
+
+//iOS 7 only
+//typedef NS_ENUM(NSInteger, MMProgressHUDOptions) {
+//    MMProgressHUDOptionGravityEnabled = 1 << 0,
+//    MMProgressHUDOptionGyroEnabled = 1 << 1,
+//};
 
 @interface MMProgressHUD : UIView
 

@@ -7,8 +7,7 @@
 //
 #import <QuartzCore/QuartzCore.h>
 #import "MMProgressHUD+Animations.h"
-
-#import "MMProgressHUDDefines-Private.h"
+#import "MMProgressHUDCommon.h"
 
 @interface MMProgressHUD ()
 

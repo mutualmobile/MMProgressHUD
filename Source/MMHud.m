@@ -9,12 +9,45 @@
 #import <QuartzCore/QuartzCore.h>
 #import "MMHud.h"
 #import "MMProgressHUD.h"
+#import "MMProgressHUDCommon.h"
 #import "MMProgressView-Protocol.h"
 #import "MMRadialProgressView.h"
 
-#import "MMProgressHUDDefines-Private.h"
+CGFloat    const MMProgressHUDDefaultFontSize           = 16.f;
 
-@interface MMHud ()
+CGFloat    const MMProgressHUDMaximumWidth              = 300.f;
+CGFloat    const MMProgressHUDMinimumWidth              = 100.f;
+CGFloat    const MMProgressHUDContentPadding            = 5.f;
+
+CGFloat    const MMProgressHUDAnimateInDurationLong     = 1.5f;
+CGFloat    const MMProgressHUDAnimateInDurationMedium   = 0.75f;
+CGFloat    const MMProgressHUDAnimateInDurationNormal   = 0.35f;
+CGFloat    const MMProgressHUDAnimateInDurationShort    = 0.25f;
+CGFloat    const MMProgressHUDAnimateInDurationVeryShort= 0.15f;
+
+CGFloat    const MMProgressHUDAnimateOutDurationLong    = 0.75f;
+CGFloat    const MMProgressHUDAnimateOutDurationMedium  = 0.55f;
+CGFloat    const MMProgressHUDAnimateOutDurationShort   = 0.35f;
+
+CGSize const MMProgressHUDDefaultContentAreaSize = { 100.f, 100.f };
+CGSize const MMProgressHUDProgressContentAreaSize = { 40.f, 40.f };
+CGSize const MMProgressHUDProgressMaximumAreaSize = {200.0f, 200.0f};
+
+
+NSString * const MMProgressHUDFontNameBold = @"HelveticaNeue-Bold";
+NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
+
+#ifdef DEBUG
+    #ifdef MM_HUD_FRAME_DEBUG
+        static const BOOL MMProgressHUDFrameDebugModeEnabled = YES;
+    #else
+        static const BOOL MMProgressHUDFrameDebugModeEnabled = NO;
+    #endif
+#else
+    static const BOOL MMProgressHUDFrameDebugModeEnabled = NO;
+#endif
+
+@interface MMHud()
 
 @property (nonatomic, strong) UIView *progressViewContainer;
 @property (nonatomic, strong) UIView <MMProgressView> *progressView;

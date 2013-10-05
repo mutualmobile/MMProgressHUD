@@ -7,7 +7,6 @@
 //
 
 #import "MMProgressHUD.h"
-#import "MMProgressHUDDefines-Private.h"
 
 @interface MMProgressHUD()
 

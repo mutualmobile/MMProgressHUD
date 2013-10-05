@@ -7,7 +7,39 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MMProgressHUDDefines.h"
+
+#ifdef __cplusplus
+#define MMExtern extern "C"
+#else
+#define MMExtern extern
+#endif
+
+MMExtern CGFloat const MMProgressHUDAnimateInDurationLong;
+MMExtern CGFloat const MMProgressHUDAnimateInDurationNormal;
+MMExtern CGFloat const MMProgressHUDAnimateInDurationMedium;
+MMExtern CGFloat const MMProgressHUDAnimateInDurationShort;
+MMExtern CGFloat const MMProgressHUDAnimateInDurationVeryShort;
+
+MMExtern CGFloat const MMProgressHUDAnimateOutDurationLong;
+MMExtern CGFloat const MMProgressHUDAnimateOutDurationMedium;
+MMExtern CGFloat const MMProgressHUDAnimateOutDurationShort;
+
+typedef NS_ENUM(NSInteger, MMProgressHUDDisplayStyle) {
+    MMProgressHUDDisplayStylePlain = 0,
+    MMProgressHUDDisplayStyleBordered,
+};
+
+typedef NS_ENUM(NSInteger, MMProgressHUDProgressStyle) {
+    MMProgressHUDProgressStyleIndeterminate = 0,
+    MMProgressHUDProgressStyleRadial,
+    MMProgressHUDProgressStyleLinear,
+} DEPRECATED_ATTRIBUTE;
+
+typedef NS_ENUM(NSInteger, MMProgressHUDCompletionState) {
+    MMProgressHUDCompletionStateNone = 0,
+    MMProgressHUDCompletionStateError,
+    MMProgressHUDCompletionStateSuccess,
+};
 
 @class MMHud;
 

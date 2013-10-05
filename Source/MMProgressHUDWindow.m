@@ -7,8 +7,7 @@
 //
 
 #import "MMProgressHUDWindow.h"
-
-#import "MMProgressHUDDefines-Private.h"
+#import "MMProgressHUDCommon.h"
 
 @implementation MMProgressHUDWindow
 
