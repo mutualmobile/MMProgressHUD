@@ -58,6 +58,7 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
 @property (nonatomic, strong) NSTimer *confirmationTimer;
 @property (nonatomic, getter = isConfirmed) BOOL confirmed;
 @property (nonatomic, assign) BOOL presentedAnimated;
+@property (nonatomic, strong) MMProgressHUDViewController *presentationViewController;
 
 @end
 
@@ -220,6 +221,7 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
     if (self.window != nil) {
         [self.window setHidden:YES];
     }
+    self.presentationViewController = nil;
     self.window.rootViewController = nil;
     self.window = nil;
 }
@@ -361,10 +363,12 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
     if (self.window == nil) {
         self.window = [[MMProgressHUDWindow alloc] init];
         
-        MMProgressHUDViewController *vc = [[MMProgressHUDViewController alloc] init];
-        [vc setView:self];
+        if (self.presentationViewController == nil) {
+            self.presentationViewController = [[MMProgressHUDViewController alloc] init];
+            [self.presentationViewController setView:self];
+        }
         
-        [self.window setRootViewController:vc];
+        [self.window setRootViewController:self.presentationViewController];
         
         [self _buildOverlayViewForMode:self.overlayMode inView:self.window];
         [self.window setHidden:NO];
@@ -508,7 +512,9 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
             
             self.hud.center = newCenter;
             self.hud.layer.transform = CATransform3DIdentity;
+            self.hud.alpha = 1.f;
             self.overlayView.alpha = 1.0f;
+            self.visible = YES;
             
         }
             break;
@@ -608,6 +614,7 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
          self.animationImages = nil;
          self.progress = 0.f;
          self.hud.completionState = MMProgressHUDCompletionStateNone;
+         self.presentationViewController = nil;
          
          [self.window setHidden:YES], self.window = nil;
          

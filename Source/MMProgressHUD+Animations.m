@@ -585,6 +585,7 @@
     void(^showCompletion)(void) = ^(void) {
         MMProgressHUD *blockSelf = weakSelf;
         MMHudLog(@"Show animation ended: %@", blockSelf.hud);
+        self.visible = YES;
         
         blockSelf.queuedShowAnimation = nil;
         
@@ -618,10 +619,13 @@
 - (void)_executeDismissAnimation:(CAAnimation *)animation {
     [animation setValue:MMProgressHUDAnimationDismiss forKey:@"name"];
     
+    self.visible = NO;
+    
     __typeof(self) __weak weakSelf = self;
     void(^endCompletion)(void) = ^(void) {
         MMProgressHUD *blockSelf = weakSelf;
         MMHudLog(@"Dismiss animation ended");
+        self.visible = NO;
         
         if (blockSelf.dismissAnimationCompletion != nil) {
             blockSelf.dismissAnimationCompletion();
