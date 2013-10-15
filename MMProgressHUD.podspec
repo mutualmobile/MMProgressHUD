@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "MMProgressHUD"
-  s.version      = "0.1.0"
+  s.version      = "0.2.0"
   s.summary      = "An easy to use HUD interface with personality."
   s.homepage     = "https://github.com/mutualmobile/MMProgressHUD"
   s.license      = 'MIT'
