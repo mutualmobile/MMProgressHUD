@@ -27,6 +27,7 @@ typedef NS_ENUM(NSInteger, MMProgressHUDDemoAnimationType) {
     MMProgressHUDDemoAnimationTypeBalloon,
     MMProgressHUDDemoAnimationTypeDrop,
     MMProgressHUDDemoAnimationTypeFade,
+    
     MMProgressHUDDemoNumberOfAnimationTypes//I know this goes directly against coding guidelines, but makes creating static tableviews with enums easier
 };
 
@@ -35,7 +36,7 @@ typedef NS_ENUM(NSInteger, MMProgressHUDDemoOverlayType) {
     MMProgressHUDDemoOverlayTypeLinear,
 //    MMProgressHUDDemoOverlayTypeBlur,
 //    MMProgressHUDDemoOverlayTypeCoreImage,
-    MMProgressHUDDemoNumberOfOverlayTypes
+    MMProgressHUDDemoNumberOfOverlayTypes //THIS MUST REMAIN AT END
 };
 
 typedef NS_ENUM(NSInteger, MMProgressHUDDemoFeatureType) {
@@ -48,7 +49,9 @@ typedef NS_ENUM(NSInteger, MMProgressHUDDemoFeatureType) {
     MMProgressHUDDemoTypeRadialProgress,
      MMProgressHUDDemoTypeLinearProgress,
     MMProgressHUDDemoTypeOverlayColor,
-    MMProgressHUDDemoNumberOfFeatureTypes
+    MMProgressHUDDemoTypeImageRemove,
+    
+    MMProgressHUDDemoNumberOfFeatureTypes //THIS MUST REMAIN AT END
 };
 
 @implementation MMViewController
@@ -218,6 +221,17 @@ typedef NS_ENUM(NSInteger, MMProgressHUDDemoFeatureType) {
                     [MMProgressHUD showWithTitle:@"Overlay" status:@"Random Color"];
                 }
                     break;
+                case MMProgressHUDDemoTypeImageRemove:{
+                    [MMProgressHUD showWithTitle:nil status:@"Image" image:[UIImage imageNamed:@"1"]];
+                    
+                    double delayInSeconds = 2.0;
+                    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+                    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                        [MMProgressHUD showWithTitle:nil status:@"Remove Image" image:nil];
+                        [MMProgressHUD dismissAfterDelay:1.f];
+                    });
+                }
+                break;
             }
             break;
         case MMProgressHUDDemoSectionAnimations:
@@ -356,6 +370,10 @@ typedef NS_ENUM(NSInteger, MMProgressHUDDemoFeatureType) {
                     break;
                 case MMProgressHUDDemoTypeOverlayColor:
                     title = @"Custom Overlay Color (Random)";
+                    break;
+                case MMProgressHUDDemoTypeImageRemove:
+                    title = @"Mutually Exclusive States";
+                    break;
             }
             break;
         case MMProgressHUDDemoSectionAnimations:
