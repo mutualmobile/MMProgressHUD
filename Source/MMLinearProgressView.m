@@ -17,6 +17,17 @@
 
 @dynamic progress;
 
+- (id)initWithLayer:(id)layer{
+    self = [super initWithLayer:layer];
+    if (self) {
+        if ([layer isKindOfClass:[MMLinearProgressLayer class]]) {
+            MMLinearProgressLayer *layerToCopy = (MMLinearProgressLayer *)layer;
+            self.progress = layerToCopy.progress;
+        }
+    }
+    return self;
+}
+
 +(BOOL)needsDisplayForKey:(NSString *)key {
     return [key isEqualToString:@"progress"] || [super needsDisplayForKey:key];
 }
