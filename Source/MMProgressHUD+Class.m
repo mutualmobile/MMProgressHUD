@@ -202,7 +202,7 @@
                           status:status
              confirmationMessage:confirmation
                      cancelBlock:cancelBlock
-                          images:@[image]];
+                          images:image ? @[image] : nil];
 }
 
 + (void)showWithTitle:(NSString *)title
@@ -339,7 +339,7 @@
                                   status:status
                      confirmationMessage:nil
                              cancelBlock:nil
-                                  images:@[image]];
+                                  images:image ? @[image] : nil];
 }
 
 + (void)showProgressWithStyle:(MMProgressHUDProgressStyle)progressStyle
@@ -377,7 +377,7 @@
                                   status:status
                      confirmationMessage:confirmation
                              cancelBlock:cancelBlock
-                                  images:@[image]];
+                                  images:image ? @[image] : nil];
 }
 
 + (void)showProgressWithStyle:(MMProgressHUDProgressStyle)progressStyle

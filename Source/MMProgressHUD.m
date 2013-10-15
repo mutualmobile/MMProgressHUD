@@ -292,6 +292,11 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
 - (NSString *)status {
     return self.hud.messageText;
 }
+    
+- (void)setImage:(UIImage *)image{
+    _image = image;
+    [self.hud setImage:image];
+}
 
 #pragma mark - Property Overrides
 
