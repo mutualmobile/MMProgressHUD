@@ -97,12 +97,44 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
 - (CGSize)titleLabelSizeForTitleText:(NSString *)titleText {
     CGSize titleSize=CGSizeZero;
     NSInteger numberOfLines = 20;
-    CGFloat lineHeight = [titleText sizeWithFont:self.titleLabel.font].height;
+    
+    CGFloat lineHeight;
+    if ([self respondsToSelector:@selector(setTintColor:)]) {
+        NSDictionary *attributes = @{NSFontAttributeName: self.titleLabel.font};
+        lineHeight = [titleText sizeWithAttributes:attributes].height;
+    }
+    else{
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        lineHeight = [titleText sizeWithFont:self.titleLabel.font].height;
+#pragma clang diagnostic pop
+    }
     CGFloat targetWidthIncrementor = 25.f;
     for (CGFloat targetWidth = MMProgressHUDMinimumWidth; numberOfLines > 2; targetWidth += targetWidthIncrementor) {
-        if (targetWidth >= MMProgressHUDMaximumWidth)
+        if (targetWidth >= MMProgressHUDMaximumWidth){
             break;
-        titleSize = [titleText sizeWithFont:self.titleLabel.font constrainedToSize:CGSizeMake(targetWidth, 500.f)];
+        }
+        
+        CGSize boundingRect = CGSizeMake(targetWidth, 500.f);
+        if ([self respondsToSelector:@selector(setTintColor:)]) {
+            NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+            paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+            
+            NSDictionary *attributes = @{NSFontAttributeName: self.titleLabel.font,
+                                         NSParagraphStyleAttributeName : paragraphStyle};
+            
+            titleSize = [titleText boundingRectWithSize:boundingRect
+                                                options:NSStringDrawingUsesLineFragmentOrigin
+                                             attributes:attributes
+                                                context:NULL].size;
+        }
+        else {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+            titleSize = [titleText sizeWithFont:self.titleLabel.font
+                              constrainedToSize:boundingRect];
+#pragma clang diagnostic pop
+        }
         numberOfLines = titleSize.height/lineHeight;
     }
     return titleSize;
@@ -147,8 +179,27 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
     for (CGFloat targetWidth = MMProgressHUDMinimumWidth; statusSize.width < statusSize.height + additiveHeightConstant; targetWidth += targetWidthIncrementor) {
         if (targetWidth >= MMProgressHUDMaximumWidth)
             break;
-        statusSize = [self.messageText sizeWithFont:self.statusLabel.font
-                                  constrainedToSize:CGSizeMake(targetWidth, 500.f)];
+        
+        CGSize boundingRect = CGSizeMake(targetWidth, 500.f);
+        if ([self respondsToSelector:@selector(setTintColor:)]) {
+            NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+            paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+            
+            NSDictionary *attributes = @{NSFontAttributeName: self.statusLabel.font,
+                                         NSParagraphStyleAttributeName : paragraphStyle};
+            
+            statusSize = [self.messageText boundingRectWithSize:boundingRect
+                                                options:NSStringDrawingUsesLineFragmentOrigin
+                                             attributes:attributes
+                                                context:NULL].size;
+        }
+        else {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+            statusSize = [self.messageText sizeWithFont:self.statusLabel.font
+                              constrainedToSize:boundingRect];
+#pragma clang diagnostic pop
+        }
     }
     return statusSize;
 }

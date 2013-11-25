@@ -26,9 +26,17 @@ _Pragma("clang diagnostic pop") \
 - (void)setView:(UIView *)view {
     [super setView:view];
     
-    //this line is important. this tells the view controller to not resize
-    //  the view to display the status bar.
+#ifdef __IPHONE_OS_VERSION_MIN_REQUIRED
+    #ifdef __IPHONE_7_0
+        #if __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_7_0
+    /** this line is important. this tells the view controller to not resize 
+     the view to display the status bar -- unless we're on iOS 7 -- in 
+     which case it's deprecated and does nothing */
     [self setWantsFullScreenLayout:YES];
+        #endif
+    #endif
+#endif
+    
 }
 
 - (BOOL)oldRootViewControllerShouldRotateToOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
