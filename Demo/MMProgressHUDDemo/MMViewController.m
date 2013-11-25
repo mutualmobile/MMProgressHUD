@@ -419,4 +419,12 @@ typedef NS_ENUM(NSInteger, MMProgressHUDDemoFeatureType) {
     cell.textLabel.text = title;
 }
 
+//- (UIStatusBarStyle)preferredStatusBarStyle{
+//    return UIStatusBarStyleLightContent;
+//}
+//
+//- (BOOL)prefersStatusBarHidden{
+//    return YES;
+//}
+
 @end

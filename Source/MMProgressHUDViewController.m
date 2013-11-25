@@ -105,4 +105,12 @@ _Pragma("clang diagnostic pop") \
     MMHudLog(@"dealloc");
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle{
+    return [[UIApplication sharedApplication] statusBarStyle];
+}
+
+- (BOOL)prefersStatusBarHidden{
+    return [[UIApplication sharedApplication] isStatusBarHidden];
+}
+
 @end
