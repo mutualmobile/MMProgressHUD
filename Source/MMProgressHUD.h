@@ -138,6 +138,12 @@ This message will be presented to the user when a cancelBlock is present after t
 @property (nonatomic, assign) Class progressViewClass;
 
 #pragma mark - Instance Methods
+
+- (void)holdWithCompletionState:(MMProgressHUDCompletionState)completionState
+                          title:(NSString *)title
+                         status:(NSString *)status
+                     afterDelay:(NSTimeInterval)delay;
+
 - (void)showWithTitle:(NSString *)title
                status:(NSString *)status
   confirmationMessage:(NSString *)confirmationMessage
@@ -334,6 +340,39 @@ This message will be presented to the user when a cancelBlock is present after t
                status:(NSString *)status 
                images:(NSArray *)images;
 
+
+//-----------------------------------------------
+/** @name Hold prior to dismissal */
+//-----------------------------------------------
+
+/** Holds the shared HUD with the current presentationStyle in an error-state. Dismiss with tap.
+ 
+ @param message Error message to display to the user.
+ */
++ (void)holdWithError:(NSString *)message;
+
+/** Holds the shared HUD with the current presentationStyle in an error-state. Dismiss with tap.
+ 
+ @param message Error message to display to the user.
+ @param title Error title to display to the user.
+ */
++ (void)holdWithError:(NSString *)message
+                title:(NSString *)title;
+
+/** Holds the shared HUD with the current presentationStyle in an error-state. Dismiss with tap.
+ 
+ @param message Success message to display to the user.
+ */
++ (void)holdWithSuccess:(NSString *)message;
+
+/** Holds the shared HUD with the current presentationStyle in an error-state. Dismiss with tap.
+ 
+ @param message Success message to display to the user.
+ @param title Success title to display to the user.
+ */
++ (void)holdWithSuccess:(NSString *)message
+                  title:(NSString *)title;
+
 //-----------------------------------------------
 /** @name Dismissal */
 //-----------------------------------------------
@@ -346,6 +385,9 @@ This message will be presented to the user when a cancelBlock is present after t
  @param delay Delay to wait before animating the dismiss of the HUD.
  */
 + (void)dismissAfterDelay:(NSTimeInterval)delay;
+
+
+
 
 #pragma mark - Dismiss with Error
 

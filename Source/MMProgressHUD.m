@@ -149,6 +149,31 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
     }
 }
 
+- (void)holdWithCompletionState:(MMProgressHUDCompletionState)completionState
+                             title:(NSString *)title
+                            status:(NSString *)status
+                        afterDelay:(NSTimeInterval)delay
+{
+    if (title)
+    {
+        self.title = title;
+    }
+    
+    if (status)
+    {
+        self.status = status;
+    }
+    
+    self.hud.completionState = completionState;
+    
+    if (self.isVisible)
+    {
+        [self _updateHUDAnimated:YES withCompletion:^(BOOL completed) {
+            self.confirmed = YES;
+        }];
+    }
+}
+
 - (void)updateProgress:(CGFloat)progress withStatus:(NSString *)status title:(NSString *)title{
     [self setProgress:progress];
     
@@ -699,7 +724,7 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
             self.cancelBlock();
         }
         
-        self.hud.completionState = MMProgressHUDCompletionStateError;
+//        self.hud.completionState = MMProgressHUDCompletionStateNone;
         [self.hud setNeedsUpdate:YES];
         [self.hud updateAnimated:YES
                   withCompletion:^(__unused BOOL completed) {
