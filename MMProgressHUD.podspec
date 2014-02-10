@@ -6,7 +6,7 @@ Pod::Spec.new do |s|
   s.license      = 'MIT'
   s.author       = { "Lars Anderson" => "lars.anderson@mutualmobile.com" }
   s.source       = {
-     :git => "https://github.com/mutualmobile/MMProgressHUD.git",
+     :git => "https://github.com/ryanmsmith/MMProgressHUD.git",
      :tag => s.version.to_s
   }
   s.platform     = :ios, '5.0'
