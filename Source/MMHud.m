@@ -12,6 +12,7 @@
 #import "MMProgressHUDCommon.h"
 #import "MMProgressView-Protocol.h"
 #import "MMRadialProgressView.h"
+#import "NSString+CustomMetrics.h"
 
 CGFloat    const MMProgressHUDDefaultFontSize           = 16.f;
 
@@ -116,25 +117,9 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
         }
         
         CGSize boundingRect = CGSizeMake(targetWidth, 500.f);
-        if ([self respondsToSelector:@selector(setTintColor:)]) {
-            NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-            paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
-            
-            NSDictionary *attributes = @{NSFontAttributeName: self.titleLabel.font,
-                                         NSParagraphStyleAttributeName : paragraphStyle};
-            
-            titleSize = [titleText boundingRectWithSize:boundingRect
-                                                options:NSStringDrawingUsesLineFragmentOrigin
-                                             attributes:attributes
-                                                context:NULL].size;
-        }
-        else {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-            titleSize = [titleText sizeWithFont:self.titleLabel.font
-                              constrainedToSize:boundingRect];
-#pragma clang diagnostic pop
-        }
+        
+        titleSize = [titleText boundingRectWithSize:boundingRect andFont:self.titleLabel.font];
+        
         numberOfLines = titleSize.height/lineHeight;
     }
     return titleSize;
@@ -181,25 +166,7 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
             break;
         
         CGSize boundingRect = CGSizeMake(targetWidth, 500.f);
-        if ([self respondsToSelector:@selector(setTintColor:)]) {
-            NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-            paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
-            
-            NSDictionary *attributes = @{NSFontAttributeName: self.statusLabel.font,
-                                         NSParagraphStyleAttributeName : paragraphStyle};
-            
-            statusSize = [self.messageText boundingRectWithSize:boundingRect
-                                                options:NSStringDrawingUsesLineFragmentOrigin
-                                             attributes:attributes
-                                                context:NULL].size;
-        }
-        else {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-            statusSize = [self.messageText sizeWithFont:self.statusLabel.font
-                              constrainedToSize:boundingRect];
-#pragma clang diagnostic pop
-        }
+        statusSize = [self.messageText boundingRectWithSize:boundingRect andFont:self.statusLabel.font];
     }
     return statusSize;
 }
