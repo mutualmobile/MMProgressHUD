@@ -70,6 +70,8 @@
 		69DA08CC158261EE000DC29E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A19B38155492E000D65BB8 /* Foundation.framework */; };
 		69DA08D2158261EE000DC29E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 69DA08D0158261EE000DC29E /* InfoPlist.strings */; };
 		69DA08D5158261EE000DC29E /* MMProgressHUDTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 69DA08D4158261EE000DC29E /* MMProgressHUDTests.m */; };
+		784689E918AD25320071E7BC /* NSString+CustomMetrics.m in Sources */ = {isa = PBXBuildFile; fileRef = 784689E818AD25320071E7BC /* NSString+CustomMetrics.m */; };
+		784689EB18AD25AF0071E7BC /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 784689EA18AD25AF0071E7BC /* CoreText.framework */; };
 		DD29615D17E4BC2700AC6831 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A19B42155492E000D65BB8 /* main.m */; };
 		DD29615E17E4BC2700AC6831 /* MMAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A19B46155492E000D65BB8 /* MMAppDelegate.m */; };
 		DD29615F17E4BC2700AC6831 /* MMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A19B49155492E000D65BB8 /* MMViewController.m */; };
@@ -176,6 +178,9 @@
 		69DA08D1158261EE000DC29E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		69DA08D4158261EE000DC29E /* MMProgressHUDTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MMProgressHUDTests.m; sourceTree = "<group>"; };
 		69DA08D6158261EE000DC29E /* LogicTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LogicTests-Prefix.pch"; sourceTree = "<group>"; };
+		784689E718AD25320071E7BC /* NSString+CustomMetrics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+CustomMetrics.h"; sourceTree = "<group>"; };
+		784689E818AD25320071E7BC /* NSString+CustomMetrics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+CustomMetrics.m"; sourceTree = "<group>"; };
+		784689EA18AD25AF0071E7BC /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		DD29617E17E4BC2700AC6831 /* MMProgressHUDDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MMProgressHUDDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDBCC20317C2822A00C3BF8C /* MMLinearProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMLinearProgressView.h; sourceTree = "<group>"; };
 		DDBCC20417C2822A00C3BF8C /* MMLinearProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMLinearProgressView.m; sourceTree = "<group>"; };
@@ -187,6 +192,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				784689EB18AD25AF0071E7BC /* CoreText.framework in Frameworks */,
 				46A19B6015549B0300D65BB8 /* QuartzCore.framework in Frameworks */,
 				46A19B37155492E000D65BB8 /* UIKit.framework in Frameworks */,
 				46A19B39155492E000D65BB8 /* Foundation.framework in Frameworks */,
@@ -262,6 +268,7 @@
 		46A19B35155492E000D65BB8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				784689EA18AD25AF0071E7BC /* CoreText.framework */,
 				46ACE86917C3C1470075C2A0 /* libOCMock.a */,
 				55F05891159E039800A47983 /* GHUnitIOS.framework */,
 				46A19B3A155492E000D65BB8 /* CoreGraphics.framework */,
@@ -320,6 +327,8 @@
 				5527AF01159CD8200037D67D /* MMProgressHUDViewController.h */,
 				5527AF02159CD8200037D67D /* MMProgressHUDViewController.m */,
 				46F5C8F31800B2F3006C1A6F /* MMProgressHUDCommon.h */,
+				784689E718AD25320071E7BC /* NSString+CustomMetrics.h */,
+				784689E818AD25320071E7BC /* NSString+CustomMetrics.m */,
 			);
 			name = MMProgressHUD;
 			path = ../Source;
@@ -602,6 +611,7 @@
 				46A19B5D155493B500D65BB8 /* MMProgressHUD.m in Sources */,
 				550D504C15615BEF0092B975 /* MMRadialProgressView.m in Sources */,
 				5527AEFB159CD7650037D67D /* MMHud.m in Sources */,
+				784689E918AD25320071E7BC /* NSString+CustomMetrics.m in Sources */,
 				5527AEFF159CD7D50037D67D /* MMProgressHUDWindow.m in Sources */,
 				5527AF03159CD8200037D67D /* MMProgressHUDViewController.m in Sources */,
 				55F0596115A2083C00A47983 /* MMProgressHUD+Animations.m in Sources */,
