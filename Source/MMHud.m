@@ -117,9 +117,25 @@ NSString * const MMProgressHUDFontNameNormal = @"HelveticaNeue-Light";
         }
         
         CGSize boundingRect = CGSizeMake(targetWidth, 500.f);
-        
-        titleSize = [titleText boundingRectWithSize:boundingRect andFont:self.titleLabel.font];
-        
+        if ([self respondsToSelector:@selector(setTintColor:)]) {
+            NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+            paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+            
+            NSDictionary *attributes = @{NSFontAttributeName: self.titleLabel.font,
+                                         NSParagraphStyleAttributeName : paragraphStyle};
+            
+            titleSize = [titleText boundingRectWithSize:boundingRect
+                                                options:NSStringDrawingUsesLineFragmentOrigin
+                                             attributes:attributes
+                                                context:NULL].size;
+        }
+        else {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+            titleSize = [titleText sizeWithFont:self.titleLabel.font
+                              constrainedToSize:boundingRect];
+#pragma clang diagnostic pop
+        }
         numberOfLines = titleSize.height/lineHeight;
     }
     return titleSize;
