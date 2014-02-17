@@ -619,6 +619,8 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
          self.animationImages = nil;
          self.progress = 0.f;
          self.hud.completionState = MMProgressHUDCompletionStateNone;
+         [self.presentationViewController removeFromParentViewController];
+         [self removeFromSuperview];
          self.presentationViewController = nil;
          
          [self.window setHidden:YES], self.window = nil;
