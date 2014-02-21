@@ -370,8 +370,8 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
         
         if (self.presentationViewController == nil) {
             self.presentationViewController = [[MMProgressHUDViewController alloc] init];
-            [self removeFromSuperview];
-            [self.presentationViewController setView:self];
+            if (self.presentationViewController.view != self)
+                [self.presentationViewController setView:self];
         }
         
         [self.window setRootViewController:self.presentationViewController];
