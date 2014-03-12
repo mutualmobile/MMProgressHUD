@@ -370,7 +370,8 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
         
         if (self.presentationViewController == nil) {
             self.presentationViewController = [[MMProgressHUDViewController alloc] init];
-            [self.presentationViewController setView:self];
+            if (self.presentationViewController.view != self)
+                [self.presentationViewController setView:self];
         }
         
         [self.window setRootViewController:self.presentationViewController];
@@ -619,6 +620,9 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
          self.animationImages = nil;
          self.progress = 0.f;
          self.hud.completionState = MMProgressHUDCompletionStateNone;
+         [self.presentationViewController removeFromParentViewController];
+         [self removeFromSuperview];
+         self.presentationViewController.view = nil;
          self.presentationViewController = nil;
          
          [self.window setHidden:YES], self.window = nil;
