@@ -62,7 +62,9 @@ Some HUD actions can have an associated block of work attached to them to be fir
 3. `progressCompletion` - A block of work that is executed when the HUD's progress property is fed a value >= 1.f.
 
 ###Determinate Progress
-By default, MMProgressHUD displays an indeterminate spinner, but it also supports determinate tasks through the progress APIs. Feed MMProgressHUD a progress (`[0,1]`), and it will display a progress indicator visually displaying the task progress to the user. Currently, only the radial progress indicator is supported.
+By default, MMProgressHUD displays an indeterminate spinner, but it also supports determinate tasks through the progress APIs. Feed MMProgressHUD a progress (`[0,1]`), and it will display a progress indicator visually displaying the task progress to the user.
+
+Currently, both radial and linear progress indicators are provided, with an API to provide an arbitrary determinate progress class that conforms to `MMProgressView`.
 
 ```` lang:objective-c
 + (void)showProgressWithStyle:(MMProgressHUDProgressStyle)progressStyle
