@@ -542,11 +542,19 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
 }
 
 - (void)dismissAfterDelay:(NSTimeInterval)delay {
+    if (self.visible == NO) {
+        MMHudLog(@"Preventing delayed dismissal when already dismissed!");
+        return;
+    }
     [self.dismissDelayTimer invalidate];
     self.dismissDelayTimer = [NSTimer scheduledTimerWithTimeInterval:delay target:self selector:@selector(dismiss) userInfo:nil repeats:NO];
 }
 
 - (void)dismiss {
+    if (self.visible == NO) {
+        MMHudLog(@"Preventing dismissal when already dismissed!");
+        return;
+    }
     NSAssert([NSThread isMainThread], @"Dismiss method should be run on main thread!");
     
     MMHudLog(@"Dismissing...");
