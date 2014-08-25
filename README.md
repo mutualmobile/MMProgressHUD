@@ -14,14 +14,35 @@ MMProgressHUD is a part of Mutual Mobile's growing suite of open-source Objectiv
 - [MMRecord](https://github.com/mutualmobile/MMRecord)
 - [MMDrawerController](https://github.com/mutualmobile/MMDrawerController)
 
+##Dead-Simple Implementation
+Use the shared instance of `MMProgressHUD` through either the `+sharedHUD` class method or through the other suite of class convenience methods available.
+
+Usage of MMProgressHUD can be accomplished in a single line of code:
+
+```` objc
+[MMProgressHUD showWithTitle:@"Loading..." status:@"25%"];
+````
+
+Dismissing can be done in a number of ways and is just as simple:
+
+```` objc
+/** Do some work asynchronously */
+
+void (^completion)(void) = ^(){
+    [MMProgressHUD dismissWithSuccess:@"Completed!"];
+}
+````
+
+No parent views to specify -- nothing else to think about.
+
+### Customization
+Customizations on the look and feel of MMProgressHUD are optional and can be performed once during the lifetime of your application. These are shown below in the [Setup](#setup) section.
+
 ##Installation
 Use cocoapods for installation: `pod 'MMProgressHUD'`
 
 ###Manual Install
 If you really insist on doing things the hard way, simply include all of the files in the `Source/` folder in the repository in your project. If you don't already have it in your project, you'll need to link against the QuartzCore and CoreGraphics frameworks.
-
-##Usage
-Use the shared instance of `MMProgressHUD` through either the `+sharedHUD` class method or through the other suite of class convenience methods available.
 
 ##Features
 ###Animations
