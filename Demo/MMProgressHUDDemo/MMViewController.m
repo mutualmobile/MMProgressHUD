@@ -47,9 +47,10 @@ typedef NS_ENUM(NSInteger, MMProgressHUDDemoFeatureType) {
     MMProgressHUDDemoTypeAutosizing,
     MMProgressHUDDemoTypeConfirmation,
     MMProgressHUDDemoTypeRadialProgress,
-     MMProgressHUDDemoTypeLinearProgress,
+    MMProgressHUDDemoTypeLinearProgress,
     MMProgressHUDDemoTypeOverlayColor,
     MMProgressHUDDemoTypeImageRemove,
+    MMProgressHUDDemoTypeDismissThenShow,
     
     MMProgressHUDDemoNumberOfFeatureTypes //THIS MUST REMAIN AT END
 };
@@ -231,7 +232,15 @@ typedef NS_ENUM(NSInteger, MMProgressHUDDemoFeatureType) {
                         [MMProgressHUD dismissAfterDelay:1.f];
                     });
                 }
-                break;
+                    break;
+                case MMProgressHUDDemoTypeDismissThenShow : {
+                    [MMProgressHUD dismiss];
+                    [MMProgressHUD dismiss];
+                    [MMProgressHUD showWithTitle:@"hello" status:@"dismissed"];
+                    [MMProgressHUD dismiss];
+                    [MMProgressHUD showWithTitle:@"hello2" status:@"valid"];
+                }
+                    break;
             }
             break;
         case MMProgressHUDDemoSectionAnimations:
@@ -372,7 +381,10 @@ typedef NS_ENUM(NSInteger, MMProgressHUDDemoFeatureType) {
                     title = @"Custom Overlay Color (Random)";
                     break;
                 case MMProgressHUDDemoTypeImageRemove:
-                    title = @"Mutually Exclusive States";
+                    title = @"Bugfix: Mutually Exclusive States";
+                    break;
+                case MMProgressHUDDemoTypeDismissThenShow:
+                    title = @"Bugfix: Call Dismiss Before Show";
                     break;
             }
             break;

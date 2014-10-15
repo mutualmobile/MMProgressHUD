@@ -14,14 +14,35 @@ MMProgressHUD is a part of Mutual Mobile's growing suite of open-source Objectiv
 - [MMRecord](https://github.com/mutualmobile/MMRecord)
 - [MMDrawerController](https://github.com/mutualmobile/MMDrawerController)
 
+##Dead-Simple Implementation
+Use the shared instance of `MMProgressHUD` through either the `+sharedHUD` class method or through the other suite of class convenience methods available.
+
+Usage of MMProgressHUD can be accomplished in a single line of code:
+
+```` objc
+[MMProgressHUD showWithTitle:@"Loading..." status:@"25%"];
+````
+
+Dismissing can be done in a number of ways and is just as simple:
+
+```` objc
+/** Do some work asynchronously */
+
+void (^completion)(void) = ^(){
+    [MMProgressHUD dismissWithSuccess:@"Completed!"];
+}
+````
+
+No parent views to specify -- nothing else to think about.
+
+### Customization
+Customizations on the look and feel of MMProgressHUD are optional and can be performed once during the lifetime of your application. These are shown below in the [Setup](#setup) section.
+
 ##Installation
 Use cocoapods for installation: `pod 'MMProgressHUD'`
 
 ###Manual Install
 If you really insist on doing things the hard way, simply include all of the files in the `Source/` folder in the repository in your project. If you don't already have it in your project, you'll need to link against the QuartzCore and CoreGraphics frameworks.
-
-##Usage
-Use the shared instance of `MMProgressHUD` through either the `+sharedHUD` class method or through the other suite of class convenience methods available.
 
 ##Features
 ###Animations
@@ -62,7 +83,9 @@ Some HUD actions can have an associated block of work attached to them to be fir
 3. `progressCompletion` - A block of work that is executed when the HUD's progress property is fed a value >= 1.f.
 
 ###Determinate Progress
-By default, MMProgressHUD displays an indeterminate spinner, but it also supports determinate tasks through the progress APIs. Feed MMProgressHUD a progress (`[0,1]`), and it will display a progress indicator visually displaying the task progress to the user. Currently, only the radial progress indicator is supported.
+By default, MMProgressHUD displays an indeterminate spinner, but it also supports determinate tasks through the progress APIs. Feed MMProgressHUD a progress (`[0,1]`), and it will display a progress indicator visually displaying the task progress to the user.
+
+Currently, both radial and linear progress indicators are provided, with an API to provide an arbitrary determinate progress class that conforms to `MMProgressView`.
 
 ```` lang:objective-c
 + (void)showProgressWithStyle:(MMProgressHUDProgressStyle)progressStyle
@@ -129,6 +152,7 @@ Created by [Lars Anderson](http://twitter.com/theonlylars) at [Mutual Mobile](ht
 
 - Hari Karam Singh, [@Club15CC](https://github.com/club15cc) - [#5](https://github.com/mutualmobile/MMProgressHUD/pull/5)
 - Jonas Gessner, [@JonasGessner](https://github.com/JonasGessner) - [#3](https://github.com/mutualmobile/MMProgressHUD/pull/3)
+- Lucas Vidal, [@LucasVidal](https://github.com/LucasVidal) - [#22](https://github.com/mutualmobile/MMProgressHUD/pull/22)
 
 ##License
 Standard MIT License

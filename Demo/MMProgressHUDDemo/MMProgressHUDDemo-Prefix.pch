@@ -13,7 +13,4 @@
     #import <Foundation/Foundation.h>
 #endif
 
-#ifndef MM_HUD_DEBUG
-#define MM_HUD_DEBUG
-//#define MM_HUD_FRAME_DEBUG
-#endif
+#define MM_HUD_DEBUG 1
