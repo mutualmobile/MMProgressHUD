@@ -481,14 +481,15 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
     CGFloat hudHeight = CGRectGetHeight(self.hud.frame);
     
     CGPoint position;
-    if (UIInterfaceOrientationIsPortrait([[self.window rootViewController] interfaceOrientation])) {
+    CGFloat systemVersion = [[[UIDevice currentDevice] systemVersion] floatValue];
+    if (UIInterfaceOrientationIsPortrait([[self.window rootViewController] interfaceOrientation]) || systemVersion>=8) {
         
         CGFloat y = roundf(self.window.center.y + (anchor.y - 0.5f) * hudHeight);
         CGFloat x = roundf(self.window.center.x);
         
         position = CGPointMake(x, y);
     }
-    else {
+    else if (UIInterfaceOrientationIsLandscape([[self.window rootViewController] interfaceOrientation])) {
         CGFloat x = roundf(self.window.center.y);
         CGFloat y = roundf(self.window.center.x + (anchor.y - 0.5f) * hudHeight);
         
@@ -496,6 +497,7 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
     }
     
     return [self _antialiasedPositionPointForPoint:position forLayer:self.hud.layer];
+}
 }
 
 #pragma mark - Presentation
