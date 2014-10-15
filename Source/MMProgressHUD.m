@@ -497,7 +497,6 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
     
     return [self _antialiasedPositionPointForPoint:position forLayer:self.hud.layer];
 }
-}
 
 #pragma mark - Presentation
 - (void)show {
