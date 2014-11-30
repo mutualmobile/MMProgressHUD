@@ -60,6 +60,10 @@
 		469825271A2B910F008CB47F /* libPods-MMProgressHUD.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-MMProgressHUD.a"; path = "Pods/build/Debug-iphoneos/libPods-MMProgressHUD.a"; sourceTree = "<group>"; };
 		469825291A2B9118008CB47F /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		4698252B1A2B9126008CB47F /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
+		4698252D1A2B9382008CB47F /* Pods-GHUnitTests.debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Pods-GHUnitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GHUnitTests/Pods-GHUnitTests.debug.xcconfig"; sourceTree = "<group>"; };
+		4698252E1A2B9382008CB47F /* Pods-GHUnitTests.release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Pods-GHUnitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-GHUnitTests/Pods-GHUnitTests.release.xcconfig"; sourceTree = "<group>"; };
+		4698252F1A2B938D008CB47F /* Pods-LogicTests.debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Pods-LogicTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LogicTests/Pods-LogicTests.debug.xcconfig"; sourceTree = "<group>"; };
+		469825301A2B938D008CB47F /* Pods-LogicTests.release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Pods-LogicTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LogicTests/Pods-LogicTests.release.xcconfig"; sourceTree = "<group>"; };
 		46A19B32155492E000D65BB8 /* MMProgressHUDDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MMProgressHUDDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		46A19B36155492E000D65BB8 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		46A19B38155492E000D65BB8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -147,6 +151,10 @@
 			children = (
 				47F9AB02330BDD9E11E21AEB /* Pods.debug.xcconfig */,
 				D33E054C609C1C6ABB1F18C6 /* Pods.release.xcconfig */,
+				4698252D1A2B9382008CB47F /* Pods-GHUnitTests.debug.xcconfig */,
+				4698252E1A2B9382008CB47F /* Pods-GHUnitTests.release.xcconfig */,
+				4698252F1A2B938D008CB47F /* Pods-LogicTests.debug.xcconfig */,
+				469825301A2B938D008CB47F /* Pods-LogicTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -734,14 +742,17 @@
 		};
 		55F0588D159E02DD00A47983 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 47F9AB02330BDD9E11E21AEB /* Pods.debug.xcconfig */;
+			baseConfigurationReference = 4698252D1A2B9382008CB47F /* Pods-GHUnitTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GHUnitTests/GHUnitTests-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(inherited)";
@@ -762,14 +773,17 @@
 		};
 		55F0588E159E02DD00A47983 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D33E054C609C1C6ABB1F18C6 /* Pods.release.xcconfig */;
+			baseConfigurationReference = 4698252E1A2B9382008CB47F /* Pods-GHUnitTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GHUnitTests/GHUnitTests-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(inherited)";
@@ -790,12 +804,15 @@
 		};
 		69DA08D7158261EE000DC29E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 47F9AB02330BDD9E11E21AEB /* Pods.debug.xcconfig */;
+			baseConfigurationReference = 4698252F1A2B938D008CB47F /* Pods-LogicTests.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
 				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -816,12 +833,15 @@
 		};
 		69DA08D8158261EE000DC29E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D33E054C609C1C6ABB1F18C6 /* Pods.release.xcconfig */;
+			baseConfigurationReference = 469825301A2B938D008CB47F /* Pods-LogicTests.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
 				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
