@@ -10,29 +10,29 @@
 	<string>MMProgressHUDDemo</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>AD8BEC46-6469-4696-9DDC-AD18F7D7F138</key>
-		<string>ssh://github.com/mutualmobile/MMProgressHUD.git</string>
+		<key>9F8E231B674F38D7C6DC6DD0146D1D3DDCFFE5F1</key>
+		<string>github.com:mutualmobile/MMProgressHUD.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Demo/MMProgressHUDDemo.xcodeproj/project.xcworkspace</string>
+	<string>Demo/MMProgressHUDDemo.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>AD8BEC46-6469-4696-9DDC-AD18F7D7F138</key>
+		<key>9F8E231B674F38D7C6DC6DD0146D1D3DDCFFE5F1</key>
 		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>ssh://github.com/mutualmobile/MMProgressHUD.git</string>
+	<string>github.com:mutualmobile/MMProgressHUD.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>AD8BEC46-6469-4696-9DDC-AD18F7D7F138</string>
+	<string>9F8E231B674F38D7C6DC6DD0146D1D3DDCFFE5F1</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>AD8BEC46-6469-4696-9DDC-AD18F7D7F138</string>
+			<string>9F8E231B674F38D7C6DC6DD0146D1D3DDCFFE5F1</string>
 			<key>IDESourceControlWCCName</key>
 			<string>MMProgressHUD</string>
 		</dict>

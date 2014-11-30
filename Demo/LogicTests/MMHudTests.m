@@ -172,10 +172,10 @@
 - (void)testUpdateNonAnimatedFiresCompletionBlock{
     id mockHUD = [OCMockObject partialMockForObject:self.hud];
     
-    [[mockHUD expect] setProgress:0.f];
+    [(MMProgressHUD *)[mockHUD expect] setProgress:0.f];
     
     [mockHUD updateAnimated:NO withCompletion:^(BOOL completed) {
-        [mockHUD setProgress:0.f];
+        [(MMProgressHUD *)mockHUD setProgress:0.f];
     }];
     
     [mockHUD verify];

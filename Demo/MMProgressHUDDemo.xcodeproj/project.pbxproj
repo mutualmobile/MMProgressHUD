@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		463AE40716B105B300A93EED /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 463AE40616B105B300A93EED /* Default-568h@2x.png */; };
+		469825221A2B7E99008CB47F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 469825211A2B7E99008CB47F /* Images.xcassets */; };
 		46A19B37155492E000D65BB8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A19B36155492E000D65BB8 /* UIKit.framework */; };
 		46A19B39155492E000D65BB8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A19B38155492E000D65BB8 /* Foundation.framework */; };
 		46A19B3B155492E000D65BB8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A19B3A155492E000D65BB8 /* CoreGraphics.framework */; };
@@ -117,6 +118,7 @@
 
 /* Begin PBXFileReference section */
 		463AE40616B105B300A93EED /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		469825211A2B7E99008CB47F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = MMProgressHUDDemo/Images.xcassets; sourceTree = "<group>"; };
 		46A19B32155492E000D65BB8 /* MMProgressHUDDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MMProgressHUDDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		46A19B36155492E000D65BB8 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		46A19B38155492E000D65BB8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -234,11 +236,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		46A19B27155492E000D65BB8 = {
+		4698251F1A2B7E46008CB47F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				469825211A2B7E99008CB47F /* Images.xcassets */,
+				469825201A2B7E56008CB47F /* LaunchImages */,
+				46A19B6115549F5200D65BB8 /* Images */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		469825201A2B7E56008CB47F /* LaunchImages */ = {
 			isa = PBXGroup;
 			children = (
 				463AE40616B105B300A93EED /* Default-568h@2x.png */,
-				46A19B6115549F5200D65BB8 /* Images */,
+			);
+			name = LaunchImages;
+			sourceTree = "<group>";
+		};
+		46A19B27155492E000D65BB8 = {
+			isa = PBXGroup;
+			children = (
+				4698251F1A2B7E46008CB47F /* Resources */,
 				46A19B5A155493B500D65BB8 /* MMProgressHUD */,
 				46A19B3C155492E000D65BB8 /* MMProgressHUDDemo */,
 				69DA08CD158261EE000DC29E /* LogicTests */,
@@ -450,7 +469,7 @@
 			name = LogicTests;
 			productName = LogicTests;
 			productReference = 69DA08C8158261EE000DC29E /* LogicTests.octest */;
-			productType = "com.apple.product-type.bundle";
+			productType = "com.apple.product-type.bundle.ocunit-test";
 		};
 		DD29615917E4BC2700AC6831 /* MMProgressHUDDemo64 */ = {
 			isa = PBXNativeTarget;
@@ -478,6 +497,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = MM;
+				LastTestingUpgradeCheck = 0610;
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Mutual Mobile";
 			};
@@ -506,6 +526,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				469825221A2B7E99008CB47F /* Images.xcassets in Resources */,
 				46A19B41155492E000D65BB8 /* InfoPlist.strings in Resources */,
 				46A19B6815549F5200D65BB8 /* 1.png in Resources */,
 				46A19B6915549F5200D65BB8 /* 2.png in Resources */,
@@ -780,6 +801,8 @@
 		46A19B54155492E000D65BB8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
@@ -811,6 +834,8 @@
 		46A19B55155492E000D65BB8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
