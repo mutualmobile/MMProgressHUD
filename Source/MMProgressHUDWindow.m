@@ -13,11 +13,23 @@
 
 - (instancetype)init {
     if ((self = [super initWithFrame:[[UIScreen mainScreen] bounds]])) {
-        self.windowLevel = UIWindowLevelStatusBar;
-        
-        self.backgroundColor = [UIColor clearColor];
+        [self commonInit];
     }
     return self;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self commonInit];
+    }
+    return self;
+}
+
+- (void)commonInit {
+    self.windowLevel = UIWindowLevelStatusBar;
+    
+    self.backgroundColor = [UIColor clearColor];
 }
 
 - (void)makeKeyAndVisible {

@@ -41,7 +41,6 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
 #pragma mark - MMProgressHUD
 @interface MMProgressHUD () <MMHudDelegate>
 
-@property (nonatomic, strong) UIView *gradientView;
 @property (nonatomic, strong) MMProgressHUDWindow *window;
 @property (nonatomic, readwrite, getter = isVisible)  BOOL visible;
 @property (nonatomic, copy) NSString *title;
@@ -310,6 +309,8 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
     if (_overlayView == nil) {
         _overlayView = [[MMProgressHUDOverlayView alloc] init];
         _overlayView.alpha = 0.f;
+        _overlayView.autoresizingMask = (UIViewAutoresizingFlexibleHeight |
+                                         UIViewAutoresizingFlexibleWidth);
     }
     
     return _overlayView;
@@ -419,9 +420,7 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
 - (void)_updateHUDAnimated:(BOOL)animated withCompletion:(void(^)(BOOL completed))completionBlock {
     MMHudLog(@"Updating %@ with completion...", NSStringFromClass(self.class));
     
-    if (self.dismissDelayTimer != nil) {
-        [self.dismissDelayTimer invalidate], self.dismissDelayTimer = nil;
-    }
+    [self killDismissDelayTimer];
     
     if (animated) {
         [UIView
@@ -450,6 +449,14 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
     self.hud.center = [self _windowCenterForHUDAnchor:self.hud.layer.anchorPoint];
 }
 
+- (void)killDismissDelayTimer {
+    if ([self.dismissDelayTimer isValid]) {
+        [self.dismissDelayTimer invalidate];
+    }
+    
+    self.dismissDelayTimer = nil;
+}
+
 - (CGPoint)_windowCenterForHUDAnchor:(CGPoint)anchor {
     
     CGFloat hudHeight = CGRectGetHeight(self.hud.frame);
@@ -474,9 +481,7 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
 
 #pragma mark - Presentation
 - (void)show {
-    if (self.dismissDelayTimer != nil) {
-        [self.dismissDelayTimer invalidate], self.dismissDelayTimer = nil;
-    }
+    [self killDismissDelayTimer];
     
     NSAssert([NSThread isMainThread], @"Show should be run on main thread!");
     
@@ -546,7 +551,9 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
         MMHudLog(@"Preventing delayed dismissal when already dismissed!");
         return;
     }
-    [self.dismissDelayTimer invalidate];
+    
+    [self killDismissDelayTimer];
+    
     self.dismissDelayTimer = [NSTimer scheduledTimerWithTimeInterval:delay target:self selector:@selector(dismiss) userInfo:nil repeats:NO];
 }
 
