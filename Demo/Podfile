@@ -2,11 +2,12 @@ source 'https://github.com/CocoaPods/Specs.git'
 
 pod 'MMProgressHUD', :path => '../MMProgressHUD.podspec'
 
-target :GHUnitTests do
-  pod 'GHUnit', :inhibit_warnings => true
-end
+# target :LogicTests do
+#   pod 'OCMock'
+#   pod 'GHUnit', :inhibit_warnings => true
+# end
 
-target :LogicTests do
+# target :GHUnitTests do
   pod 'OCMock'
   pod 'GHUnit', :inhibit_warnings => true
-end
+# end

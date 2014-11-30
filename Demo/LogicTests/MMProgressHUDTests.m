@@ -7,12 +7,15 @@
 //
 
 #import <GHUnit/GHUnit.h>
-#import "OCMock.h"
+#import <OCMock/OCMock.h>
 
-#import "MMHud.h"
-#import "MMProgressHUD.h"
-#import "MMProgressHUDPrivate.h"
+@import XCTest;
+
+#import <MMProgressHUD/MMHud.h>
+#import <MMProgressHUD/MMProgressHUD.h>
 #import <MMProgressHUD/MMVectorImage.h>
+
+#import "MMProgressHUDPrivate.h"
 
 @interface MMProgressHUDTests : GHAsyncTestCase
 
