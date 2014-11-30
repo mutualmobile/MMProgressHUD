@@ -8,7 +8,7 @@
 
 #import "MMProgressHUDViewController.h"
 #import "MMProgressHUDWindow.h"
-#import "MMProgressHUD.h"
+#import "MMProgressHUDOverlayView.h"
 #import "MMProgressHUDCommon.h"
 
 
@@ -119,6 +119,13 @@ _Pragma("clang diagnostic pop") \
 
 - (BOOL)prefersStatusBarHidden{
     return [[UIApplication sharedApplication] isStatusBarHidden];
+}
+
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    MMProgressHUD *hud = (MMProgressHUD *)self.view;
+    hud.overlayView.frame = self.view.bounds;
+    [hud.overlayView setNeedsDisplay];
+    [super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
 @end

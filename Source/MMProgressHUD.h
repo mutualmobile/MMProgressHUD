@@ -129,7 +129,7 @@ This message will be presented to the user when a cancelBlock is present after t
 
 /** The overlay view that is placed just behind the HUD.
  */
-@property (nonatomic, strong, readonly) MMProgressHUDOverlayView *overlayView;
+@property (nonatomic, strong) MMProgressHUDOverlayView *overlayView;
 
 /** The class to use for the progress view. Instances of this class must confrom to the MMProgressView protocol. When setting a custom value this value must be set before setting the indeterminate property to YES.
  

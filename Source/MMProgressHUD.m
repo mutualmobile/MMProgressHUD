@@ -49,7 +49,6 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
 @property (nonatomic, copy) NSArray *animationImages;
 @property (nonatomic, strong) CAAnimation *queuedShowAnimation;
 @property (nonatomic, strong) CAAnimation *queuedDismissAnimation;
-@property (nonatomic, readwrite, strong) MMProgressHUDOverlayView *overlayView;
 @property (nonatomic, strong) NSTimer *dismissDelayTimer;
 @property (nonatomic, copy) NSString *tempStatus;
 @property (nonatomic, strong) NSTimer *confirmationTimer;
@@ -458,24 +457,21 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
 }
 
 - (CGPoint)_windowCenterForHUDAnchor:(CGPoint)anchor {
-    
     CGFloat hudHeight = CGRectGetHeight(self.hud.frame);
-    
-    CGPoint position;
-    if (UIInterfaceOrientationIsPortrait([[self.window rootViewController] interfaceOrientation])) {
-        
+    CGFloat systemVersion = [[[UIDevice currentDevice] systemVersion] floatValue];
+    CGPoint position = CGPointMake(0, 0);
+    if (UIInterfaceOrientationIsPortrait([[self.window rootViewController] interfaceOrientation]) || systemVersion >= 8) {
         CGFloat y = roundf(self.window.center.y + (anchor.y - 0.5f) * hudHeight);
         CGFloat x = roundf(self.window.center.x);
-        
+
         position = CGPointMake(x, y);
-    }
-    else {
+    } else if (UIInterfaceOrientationIsLandscape([[self.window rootViewController] interfaceOrientation])) {
         CGFloat x = roundf(self.window.center.y);
         CGFloat y = roundf(self.window.center.x + (anchor.y - 0.5f) * hudHeight);
-        
+
         position = CGPointMake(x, y);
     }
-    
+
     return [self _antialiasedPositionPointForPoint:position forLayer:self.hud.layer];
 }
 
