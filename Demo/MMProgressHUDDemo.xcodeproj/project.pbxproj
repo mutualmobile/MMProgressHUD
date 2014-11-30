@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		37F4108F7C35BBA30882A03C /* libPods-LogicTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EA99DB8301F4B2F6CD0CA21 /* libPods-LogicTests.a */; };
 		469825221A2B7E99008CB47F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 469825211A2B7E99008CB47F /* Images.xcassets */; };
 		469825241A2B8938008CB47F /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 469825231A2B8938008CB47F /* Default-568h@2x.png */; };
 		4698252A1A2B9118008CB47F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 469825291A2B9118008CB47F /* libPods.a */; };
@@ -25,7 +26,6 @@
 		46A19B6B15549F5200D65BB8 /* 4.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A19B6515549F5200D65BB8 /* 4.png */; };
 		46A19B6C15549F5200D65BB8 /* 5.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A19B6615549F5200D65BB8 /* 5.png */; };
 		46A19B6D15549F5200D65BB8 /* 6.png in Resources */ = {isa = PBXBuildFile; fileRef = 46A19B6715549F5200D65BB8 /* 6.png */; };
-		5527AF07159CD97A0037D67D /* MMHudTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5527AF06159CD97A0037D67D /* MMHudTests.m */; };
 		55F0587E159E02DD00A47983 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A19B36155492E000D65BB8 /* UIKit.framework */; };
 		55F0587F159E02DD00A47983 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A19B38155492E000D65BB8 /* Foundation.framework */; };
 		55F05880159E02DD00A47983 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A19B3A155492E000D65BB8 /* CoreGraphics.framework */; };
@@ -39,7 +39,7 @@
 		69DA08CB158261EE000DC29E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A19B36155492E000D65BB8 /* UIKit.framework */; };
 		69DA08CC158261EE000DC29E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A19B38155492E000D65BB8 /* Foundation.framework */; };
 		69DA08D2158261EE000DC29E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 69DA08D0158261EE000DC29E /* InfoPlist.strings */; };
-		69DA08D5158261EE000DC29E /* MMProgressHUDTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 69DA08D4158261EE000DC29E /* MMProgressHUDTests.m */; };
+		AFDFD7C99677282E887BD544 /* libPods-GHUnitTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C55A180B3C44D2AFE7AA9670 /* libPods-GHUnitTests.a */; };
 		B14C58C83A883E6328A4E1EE /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE290651A1F3A02650CBA6BC /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -122,6 +122,7 @@
 				55F0587F159E02DD00A47983 /* Foundation.framework in Frameworks */,
 				55F05880159E02DD00A47983 /* CoreGraphics.framework in Frameworks */,
 				55F058A1159E059E00A47983 /* QuartzCore.framework in Frameworks */,
+				AFDFD7C99677282E887BD544 /* libPods-GHUnitTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -134,6 +135,7 @@
 				69DA08CC158261EE000DC29E /* Foundation.framework in Frameworks */,
 				6936CF0215828F6600D931E7 /* CoreGraphics.framework in Frameworks */,
 				55F05932159E39D500A47983 /* QuartzCore.framework in Frameworks */,
+				37F4108F7C35BBA30882A03C /* libPods-LogicTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -462,7 +464,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GHUnitTests/Pods-GHUnitTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		69DA08C6158261EE000DC29E /* ShellScript */ = {
@@ -505,7 +507,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LogicTests/Pods-LogicTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		9A540F18781BB7E47DFA93FC /* Check Pods Manifest.lock */ = {
@@ -550,9 +552,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				69DA08D5158261EE000DC29E /* MMProgressHUDTests.m in Sources */,
 				6936CF06158290D200D931E7 /* CoverageFix.m in Sources */,
-				5527AF07159CD97A0037D67D /* MMHudTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

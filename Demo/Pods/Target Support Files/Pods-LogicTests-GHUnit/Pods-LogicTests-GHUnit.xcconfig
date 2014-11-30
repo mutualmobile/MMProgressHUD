@@ -1,0 +1,1 @@
+PODS_LOGICTESTS_GHUNIT_OTHER_LDFLAGS = -framework "QuartzCore"

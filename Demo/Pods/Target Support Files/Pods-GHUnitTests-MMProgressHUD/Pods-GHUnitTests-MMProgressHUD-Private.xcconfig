@@ -1,0 +1,5 @@
+#include "Pods-GHUnitTests-MMProgressHUD.xcconfig"
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Build" "${PODS_ROOT}/Headers/Build/MMProgressHUD" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/GHUnit" "${PODS_ROOT}/Headers/Public/MMProgressHUD" "${PODS_ROOT}/Headers/Public/OCMock"
+OTHER_LDFLAGS = ${PODS_GHUNITTESTS_MMPROGRESSHUD_OTHER_LDFLAGS} -ObjC
+PODS_ROOT = ${SRCROOT}
