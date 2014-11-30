@@ -3,9 +3,10 @@ source 'https://github.com/CocoaPods/Specs.git'
 pod 'MMProgressHUD', :path => '../MMProgressHUD.podspec'
 
 target :GHUnitTests do
-  pod 'GHUnit'
+  pod 'GHUnit', :inhibit_warnings => true
 end
 
-target LogicTests do
+target :LogicTests do
   pod 'OCMock'
+  pod 'GHUnit', :inhibit_warnings => true
 end

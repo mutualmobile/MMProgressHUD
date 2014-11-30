@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 Mutual Mobile. All rights reserved.
 //
 
-#import <GHUnitIOS/GHUnit.h>
+#import <GHUnit/GHUnit.h>
 #import "OCMock.h"
 
 #import "MMHud.h"

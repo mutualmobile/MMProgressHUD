@@ -1,0 +1,1 @@
+PODS_GHUNITTESTS_GHUNIT_OTHER_LDFLAGS = -framework "QuartzCore"

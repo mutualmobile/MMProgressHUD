@@ -6,13 +6,13 @@
 //  Copyright (c) 2012 Mutual Mobile. All rights reserved.
 //
 
-#import <GHUnitIOS/GHUnit.h>
+#import <GHUnit/GHUnit.h>
 #import "OCMock.h"
 
 #import "MMHud.h"
 #import "MMProgressHUD.h"
 #import "MMProgressHUDPrivate.h"
-#import "MMVectorImage.h"
+#import <MMProgressHUD/MMVectorImage.h>
 
 @interface MMProgressHUDTests : GHAsyncTestCase
 
@@ -188,8 +188,8 @@
 - (void)testGlowAnimationGroupContainsProperSubAnimations{
     CAAnimationGroup *glowAnimation = [self.progressHUD _glowAnimation];
     
-    int animationCount = glowAnimation.animations.count;
-    int validNumerOfAnimations = 3;
+    NSUInteger animationCount = glowAnimation.animations.count;
+    NSUInteger validNumerOfAnimations = 3;
     
     GHAssertTrue(animationCount == validNumerOfAnimations, @"Number of animations for glow should be %i, is %i", validNumerOfAnimations, animationCount);
 }
