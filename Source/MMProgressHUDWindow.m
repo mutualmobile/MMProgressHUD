@@ -64,25 +64,25 @@
 }
 
 - (void)orientRootViewControllerForOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    CGAffineTransform transform;
-    
-    switch (interfaceOrientation) {
-        case UIInterfaceOrientationLandscapeRight:
-            transform = CGAffineTransformMakeRotation(M_PI_2);
-            break;
-        case UIInterfaceOrientationLandscapeLeft:
-            transform = CGAffineTransformMakeRotation(-M_PI_2);
-            break;
-        case UIInterfaceOrientationPortraitUpsideDown:
-            transform = CGAffineTransformMakeRotation(M_PI);
-            break;
-        default:
-        case UIInterfaceOrientationPortrait:
-            transform = CGAffineTransformIdentity;
-            break;
-    }
-    
-    self.rootViewController.view.transform = transform;
+//    CGAffineTransform transform;
+//    
+//    switch (interfaceOrientation) {
+//        case UIInterfaceOrientationLandscapeRight:
+//            transform = CGAffineTransformMakeRotation(M_PI_2);
+//            break;
+//        case UIInterfaceOrientationLandscapeLeft:
+//            transform = CGAffineTransformMakeRotation(-M_PI_2);
+//            break;
+//        case UIInterfaceOrientationPortraitUpsideDown:
+//            transform = CGAffineTransformMakeRotation(M_PI);
+//            break;
+//        default:
+//        case UIInterfaceOrientationPortrait:
+//            transform = CGAffineTransformIdentity;
+//            break;
+//    }
+//    
+//    self.rootViewController.view.transform = transform;
 }
 
 - (void)dealloc {

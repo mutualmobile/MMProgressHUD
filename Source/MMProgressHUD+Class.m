@@ -230,7 +230,82 @@
     }
 }
 
+//hold prior to dismissal
+
++ (void)holdWithError:(NSString *)status
+{
+    [MMProgressHUD holdWithError:status
+                           title:nil];
+}
+
++ (void)holdWithError:(NSString *)status
+                title:(NSString *)title
+{
+    [MMProgressHUD holdWithError:status
+                           title:title
+                      afterDelay:MMProgressHUDStandardDismissDelay];
+}
+
++ (void)holdWithError:(NSString *)status
+                title:(NSString *)title
+           afterDelay:(NSTimeInterval)delay
+{
+    if ([NSThread isMainThread] == NO)
+    {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [[MMProgressHUD sharedHUD] holdWithCompletionState:MMProgressHUDCompletionStateError
+                                                         title:title
+                                                        status:status
+                                                    afterDelay:delay];
+        });
+    }
+    else
+    {
+        [[MMProgressHUD sharedHUD] holdWithCompletionState:MMProgressHUDCompletionStateError
+                                                     title:title
+                                                    status:status
+                                                afterDelay:delay];
+    }
+}
+
++ (void)holdWithSuccess:(NSString *)status
+{
+    [MMProgressHUD holdWithSuccess:status
+                             title:nil];
+}
+
++ (void)holdWithSuccess:(NSString *)status
+                  title:(NSString *)title
+{
+    [MMProgressHUD holdWithSuccess:status
+                             title:title
+                        afterDelay:MMProgressHUDStandardDismissDelay];
+}
+
++ (void)holdWithSuccess:(NSString *)status
+                  title:(NSString *)title
+             afterDelay:(NSTimeInterval)delay
+{
+    if ([NSThread isMainThread] == NO)
+    {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [[MMProgressHUD sharedHUD] holdWithCompletionState:MMProgressHUDCompletionStateSuccess
+                                                         title:title
+                                                        status:status
+                                                    afterDelay:delay];
+        });
+    }
+    else
+    {
+        [[MMProgressHUD sharedHUD] holdWithCompletionState:MMProgressHUDCompletionStateSuccess
+                                                     title:title
+                                                    status:status
+                                                afterDelay:delay];
+    }
+}
+
 //dismissal
+
 + (void)dismissWithError:(NSString *)status
                    title:(NSString *)title 
               afterDelay:(NSTimeInterval)delay {
@@ -269,7 +344,7 @@
                          afterDelay:delay];
 }
 
-+ (void)dismissWithSuccess:(NSString *)status 
++ (void)dismissWithSuccess:(NSString *)status
                      title:(NSString *)title 
                 afterDelay:(NSTimeInterval)delay {
     if ([NSThread isMainThread] == NO) {

@@ -146,6 +146,31 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
     }
 }
 
+- (void)holdWithCompletionState:(MMProgressHUDCompletionState)completionState
+                             title:(NSString *)title
+                            status:(NSString *)status
+                        afterDelay:(NSTimeInterval)delay
+{
+    if (title)
+    {
+        self.title = title;
+    }
+    
+    if (status)
+    {
+        self.status = status;
+    }
+    
+    self.hud.completionState = completionState;
+    
+    if (self.isVisible)
+    {
+        [self _updateHUDAnimated:YES withCompletion:^(BOOL completed) {
+            self.confirmed = YES;
+        }];
+    }
+}
+
 - (void)updateProgress:(CGFloat)progress withStatus:(NSString *)status title:(NSString *)title{
     [self setProgress:progress];
     
@@ -462,14 +487,15 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
     CGFloat hudHeight = CGRectGetHeight(self.hud.frame);
     
     CGPoint position;
-    if (UIInterfaceOrientationIsPortrait([[self.window rootViewController] interfaceOrientation])) {
+    CGFloat systemVersion = [[[UIDevice currentDevice] systemVersion] floatValue];
+    if (UIInterfaceOrientationIsPortrait([[self.window rootViewController] interfaceOrientation]) || systemVersion>=8) {
         
         CGFloat y = roundf(self.window.center.y + (anchor.y - 0.5f) * hudHeight);
         CGFloat x = roundf(self.window.center.x);
         
         position = CGPointMake(x, y);
     }
-    else {
+    else if (UIInterfaceOrientationIsLandscape([[self.window rootViewController] interfaceOrientation])) {
         CGFloat x = roundf(self.window.center.y);
         CGFloat y = roundf(self.window.center.x + (anchor.y - 0.5f) * hudHeight);
         
@@ -716,7 +742,7 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
             self.cancelBlock();
         }
         
-        self.hud.completionState = MMProgressHUDCompletionStateError;
+//        self.hud.completionState = MMProgressHUDCompletionStateNone;
         [self.hud setNeedsUpdate:YES];
         [self.hud updateAnimated:YES
                   withCompletion:^(__unused BOOL completed) {
