@@ -101,7 +101,7 @@
 - (void)dismissWithCompletionState:(MMProgressHUDCompletionState)completionState
                              title:(NSString *)title
                             status:(NSString *)status
-                        afterDelay:(float)delay;
+                        afterDelay:(CGFloat)delay;
 
 @end
 
