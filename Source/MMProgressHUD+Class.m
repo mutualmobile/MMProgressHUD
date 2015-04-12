@@ -37,6 +37,10 @@
     [hud setDisplayStyle:style];
 }
 
++ (void)setSpinAnimationImages:(NSArray *)animationImages {
+    [[MMProgressHUD sharedHUD] setSpinAnimationImages:animationImages];
+}
+
 //updates
 + (void)updateStatus:(NSString *)status {
     [MMProgressHUD updateTitle:nil status:status]; 

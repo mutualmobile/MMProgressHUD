@@ -101,6 +101,12 @@ This message will be presented to the user when a cancelBlock is present after t
  */
 @property (nonatomic, strong) UIImage *successImage;
 
+/** The array of images to be used for pending. Persistent across show calls.
+ 
+ The image size is currently fixed to 100x100. The image will scale to fit if the image is larger than 100x100, otherwise it will remain centered.
+ */
+@property (nonatomic, strong) NSArray *spinAnimationImages;
+
 /** A block to be executed when the progress fed to the HUD reaches 100%.
  
  This block will also fire when the progress exceeds 100%. This block was designed to be used by setting up your completion call before calling show: on the HUD, then simply feed progress updates to the HUD via the updateProgress: methods. When progress reaches 100%, this block is automatically fired. This block is automatically released after firing and is guaranteed to only fire once.
@@ -505,6 +511,12 @@ This message will be presented to the user when a cancelBlock is present after t
  @param displayStyle Style to set the HUD to.
  */
 + (void)setDisplayStyle:(MMProgressHUDDisplayStyle)displayStyle;
+
+/** Sets the animation images of the current shared instance.
+
+ @param animationImages UIImages to set animation of HUD.
+ */
++ (void)setSpinAnimationImages:(NSArray *)animationImages;
 
 @end
 

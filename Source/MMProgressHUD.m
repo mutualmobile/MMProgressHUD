@@ -103,6 +103,12 @@ CGSize const MMProgressHUDDefaultImageSize = {37.f, 37.f};
     else if (images.count > 0) {
         self.animationImages = images;
     }
+    else if (self.spinAnimationImages.count == 1) {
+        self.image = self.spinAnimationImages[0];
+    }
+    else if (self.spinAnimationImages.count > 0) {
+        self.animationImages = self.spinAnimationImages;
+    }
     
     self.cancelBlock = cancelBlock;
     self.title = title;
