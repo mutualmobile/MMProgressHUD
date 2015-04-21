@@ -3,10 +3,9 @@
 //  MMProgressHUDDemo
 //
 //  Created by Lars Anderson on 6/28/12.
-//  Copyright (c) 2012 Mutual Mobile. All rights reserved.
+//  CopyriXCTt (c) 2012 Mutual Mobile. All riXCTts reserved.
 //
 
-#import <GHUnit/GHUnit.h>
 #import <OCMock/OCMock.h>
 
 @import XCTest;
@@ -15,7 +14,7 @@
 #import <MMProgressHUD/MMProgressHUD.h>
 #import "MMProgressHUDPrivate.h"
 
-@interface MMHudTests : GHAsyncTestCase
+@interface MMHudTests : XCTestCase
 
 @property (nonatomic, strong) MMHud *hud;
 @property (nonatomic, strong) MMProgressHUD *progressHUD;
@@ -41,31 +40,31 @@
 }
 
 - (void)testInitNotNil{
-    GHAssertNotNil(self.hud, @"Hud is nil after init!");
+    XCTAssertNotNil(self.hud, @"Hud is nil after init!");
 }
 
 - (void)testTitleLabelIsNotNilAfterInit{
-    GHAssertNotNil(self.hud.titleLabel, @"Text label is nil!");
+    XCTAssertNotNil(self.hud.titleLabel, @"Text label is nil!");
 }
 
 - (void)testImageViewNotNilAfterInit{
-    GHAssertNotNil(self.hud.imageView, @"imageView is nil!");
+    XCTAssertNotNil(self.hud.imageView, @"imageView is nil!");
 }
 
 - (void)testBuildTitleLabelWorks{
     [self.hud _buildTitleLabel];
     
-    GHAssertNotNil(self.hud.titleLabel, @"Title label is nil after creation!");
+    XCTAssertNotNil(self.hud.titleLabel, @"Title label is nil after creation!");
 }
 
 - (void)testBuildStatusLabelWorks{
     [self.hud _buildStatusLabel];
     
-    GHAssertNotNil(self.hud.statusLabel, @"Status label is nil after creation!");
+    XCTAssertNotNil(self.hud.statusLabel, @"Status label is nil after creation!");
 }
 
 - (void)testNeedsUpdateIsYesAfterInit{
-    GHAssertTrue(self.hud.needsUpdate, @"Needs update is NO after init!");
+    XCTAssertTrue(self.hud.needsUpdate, @"Needs update is NO after init!");
 }
 
 - (void)testUpdateTitleAndMessageChangesText{
@@ -73,9 +72,8 @@
     NSString *testMessage = @"test_message";
     
     [self.hud updateTitle:testTitle message:testMessage animated:NO];
-    
-    GHAssertEqualStrings(testTitle, self.hud.titleText, @"Titles do not match after update!");
-    GHAssertEqualStrings(testMessage, self.hud.messageText, @"Messages do not match after update!");
+    XCTAssertEqualObjects(testTitle, self.hud.titleText, @"Titles do not match after update!");
+    XCTAssertEqualObjects(testMessage, self.hud.messageText, @"Messages do not match after update!");
 }
 
 - (void)testUpdateTitleAndMessageChangesTextLabels{
@@ -84,8 +82,8 @@
     
     [self.hud updateTitle:testTitle message:testMessage animated:NO];
     
-    GHAssertEqualStrings(testTitle, self.hud.titleLabel.text, @"Titles do not match after update!");
-    GHAssertEqualStrings(testMessage, self.hud.statusLabel.text, @"Messages do not match after update!");
+    XCTAssertEqualObjects(testTitle, self.hud.titleLabel.text, @"Titles do not match after update!");
+    XCTAssertEqualObjects(testMessage, self.hud.statusLabel.text, @"Messages do not match after update!");
 }
 
 - (void)testUpdateTitleOnlyChangesTitleText{
@@ -94,8 +92,8 @@
     
     [self.hud updateTitle:testTitle animated:NO];
     
-    GHAssertEqualStrings(testTitle, self.hud.titleText, @"Titles do not match after update!");
-    GHAssertEqualStrings(messageBeforeUpdate, self.hud.messageText, @"Message was changed when it wasn't supposed to!");
+    XCTAssertEqualObjects(testTitle, self.hud.titleText, @"Titles do not match after update!");
+    XCTAssertEqualObjects(messageBeforeUpdate, self.hud.messageText, @"Message was changed when it wasn't supposed to!");
 }
 
 - (void)testUpdateTitleOnlyChangesTitleTextLabel{
@@ -104,8 +102,8 @@
     
     [self.hud updateTitle:testTitle animated:NO];
     
-    GHAssertEqualStrings(testTitle, self.hud.titleLabel.text, @"Titles do not match after update!");
-    GHAssertEqualStrings(messageBeforeUpdate, self.hud.statusLabel.text, @"Message was changed when it wasn't supposed to!");
+    XCTAssertEqualObjects(testTitle, self.hud.titleLabel.text, @"Titles do not match after update!");
+    XCTAssertEqualObjects(messageBeforeUpdate, self.hud.statusLabel.text, @"Message was changed when it wasn't supposed to!");
 }
 
 - (void)testNeedsLayoutCallsUpdateLayoutFramesOnApplyLayout{
@@ -124,7 +122,7 @@
     
     self.hud.titleText = @"test_text";
     
-    GHAssertTrue(self.hud.needsUpdate, @"Needs update was not flagged on title change!");
+    XCTAssertTrue(self.hud.needsUpdate, @"Needs update was not flagged on title change!");
 }
 
 - (void)testChangingMessageSetsNeedsUpdate{
@@ -132,7 +130,7 @@
     
     self.hud.messageText = @"test_text";
     
-    GHAssertTrue(self.hud.needsUpdate, @"Needs update was not flagged on message change!");
+    XCTAssertTrue(self.hud.needsUpdate, @"Needs update was not flagged on message change!");
 }
 
 - (void)testUpdateTitleSetsNeedsUpdateAndResetsNeedsUpdate{
@@ -140,7 +138,7 @@
     
     [self.hud updateTitle:@"new_title" animated:NO];
     
-    GHAssertFalse(self.hud.needsUpdate, @"Updating title did not un-flag HUD for layout update!");
+    XCTAssertFalse(self.hud.needsUpdate, @"Updating title did not un-flag HUD for layout update!");
 }
 
 - (void)testUpdateMessageSetsNeedsUpdateAndResetsNeedsUpdate{
@@ -148,7 +146,7 @@
     
     [self.hud updateMessage:@"new_message" animated:NO];
     
-    GHAssertFalse(self.hud.needsUpdate, @"Updating message did not un-flag HUD for layout update!");
+    XCTAssertFalse(self.hud.needsUpdate, @"Updating message did not un-flag HUD for layout update!");
 }
 
 - (void)testUpdateTitleCallsUpdateLayout{
@@ -185,21 +183,24 @@
 
 - (void)testUpdateAnimatedFiresCompletionBlock{
     
-    [self prepare];
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Animation completion block test"];
     
     [self.hud updateAnimated:YES withCompletion:^(BOOL completed) {
-        [self notify:kGHUnitWaitStatusSuccess forSelector:_cmd];
+        [expectation fulfill];
     }];
     
-    [self waitForStatus:kGHUnitWaitStatusSuccess timeout:1.f];
+    [self waitForExpectationsWithTimeout:1.0
+                                 handler:^(NSError *error) {
+                                     
+                                 }];
 }
 
 - (void)testActivityIndicatorNotNil{
-    GHAssertNotNil(self.hud.activityIndicator, @"Activity indicator is nil!");
+    XCTAssertNotNil(self.hud.activityIndicator, @"Activity indicator is nil!");
 }
 
 - (void)testProgressViewContainerIsNotNil{
-    GHAssertNotNil(self.hud.progressViewContainer, @"Progress view container is nil!");
+    XCTAssertNotNil(self.hud.progressViewContainer, @"Progress view container is nil!");
 }
 
 - (void)testSetProgressSetsProgress{
@@ -207,7 +208,7 @@
     
     [self.hud setProgress:progressToSet];
     
-    GHAssertTrue(self.hud.progress == progressToSet, @"Progress did not get set properly!");
+    XCTAssertTrue(self.hud.progress == progressToSet, @"Progress did not get set properly!");
 }
 
 - (void)testPrepareForReuseResetsTitleLabel{
@@ -215,7 +216,7 @@
     
     [self.hud prepareForReuse];
     
-    GHAssertNil(self.hud.titleLabel.text, @"Title label text did not get nil'd out!");
+    XCTAssertNil(self.hud.titleLabel.text, @"Title label text did not get nil'd out!");
 }
 
 - (void)testPrepareForReuseResetsMessageLabel{
@@ -223,7 +224,7 @@
     
     [self.hud prepareForReuse];
     
-    GHAssertNil(self.hud.statusLabel.text, @"Message label text did not get nil'd out!");
+    XCTAssertNil(self.hud.statusLabel.text, @"Message label text did not get nil'd out!");
 }
 
 - (void)testPrepareForReuseResetsImageViewImage{
@@ -233,7 +234,7 @@
     
     [self.hud prepareForReuse];
     
-    GHAssertNil(self.hud.imageView.image, @"Image view's image did not get nil'd out!");
+    XCTAssertNil(self.hud.imageView.image, @"Image view's image did not get nil'd out!");
 }
 
 - (void)testPrepareForReuseResetsAnimationImages{
@@ -246,7 +247,7 @@
     
     [self.hud prepareForReuse];
     
-    GHAssertTrue(self.hud.imageView.animationImages.count == 0, @"Animation images did not get nil'd out!");
+    XCTAssertTrue(self.hud.imageView.animationImages.count == 0, @"Animation images did not get nil'd out!");
 }
 
 - (void)testPrepareForReuseResetsProgress{
@@ -254,7 +255,7 @@
     
     [self.hud prepareForReuse];
     
-    GHAssertTrue(self.hud.progress == 0.f, @"Progress did not get reset!");
+    XCTAssertTrue(self.hud.progress == 0.f, @"Progress did not get reset!");
 }
 
 - (void)testPrepareForReuseResetsTransform{
@@ -262,7 +263,7 @@
     
     [self.hud prepareForReuse];
     
-    GHAssertTrue(CATransform3DIsIdentity(self.hud.layer.transform), @"Transform did not get reset in prepareForReuse!");
+    XCTAssertTrue(CATransform3DIsIdentity(self.hud.layer.transform), @"Transform did not get reset in prepareForReuse!");
 }
 
 - (void)testPrepareForReuseResetsOpacity{
@@ -270,7 +271,7 @@
     
     [self.hud prepareForReuse];
     
-    GHAssertTrue(self.hud.layer.opacity == 1.f, @"Opacity did not get reset in prepareForReuse!");
+    XCTAssertTrue(self.hud.layer.opacity == 1.f, @"Opacity did not get reset in prepareForReuse!");
 }
 
 - (void)testPrepareForReuseResetsCompletionState{
@@ -278,17 +279,17 @@
     
     [self.hud prepareForReuse];
     
-    GHAssertTrue(self.hud.completionState == MMProgressHUDCompletionStateNone, @"Completion state did not get reset in prepareForReuse!");
+    XCTAssertTrue(self.hud.completionState == MMProgressHUDCompletionStateNone, @"Completion state did not get reset in prepareForReuse!");
 }
 
 - (void)testPrepareForReuseResetsVisibilityFlag{
     self.hud.visible = YES;
     
-    GHAssertTrue(self.hud.isVisible, @"HUD did not get flagged as visible!");
+    XCTAssertTrue(self.hud.isVisible, @"HUD did not get flagged as visible!");
     
     [self.hud prepareForReuse];
     
-    GHAssertFalse(self.hud.isVisible, @"Progress hud is still flagged as visible after prepareForReuse!");
+    XCTAssertFalse(self.hud.isVisible, @"Progress hud is still flagged as visible after prepareForReuse!");
 }
 
 @end
