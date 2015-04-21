@@ -225,8 +225,9 @@
     [[mockProgressHUD expect] dismiss];
     
     [mockProgressHUD _handleTap:nil];
-        
-    [mockProgressHUD verify];
+    
+    // Dismiss is called asynchrnously after animation completion. This is a terrible test.
+    [mockProgressHUD verifyWithDelay:1.0];
 }
 
 - (void)testTapHandlerUpdatesContentProperlyOnConfirmation{

@@ -7,10 +7,10 @@
 //
 
 #import "MMViewController.h"
-#import "MMProgressHUD.h"
-#import "MMProgressHUDOverlayView.h"
-#import "MMRadialProgressView.h"
-#import "MMLinearProgressView.h"
+#import <MMProgressHUD/MMProgressHUD.h>
+#import <MMProgressHUD/MMProgressHUDOverlayView.h>
+#import <MMProgressHUD/MMRadialProgressView.h>
+#import <MMProgressHUD/MMLinearProgressView.h>
 
 typedef NS_ENUM(NSInteger, MMProgressHUDDemoSections) {
     MMProgressHUDDemoSectionFeatures = 0,

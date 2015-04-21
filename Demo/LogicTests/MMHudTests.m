@@ -190,9 +190,7 @@
     }];
     
     [self waitForExpectationsWithTimeout:1.0
-                                 handler:^(NSError *error) {
-                                     
-                                 }];
+                                 handler:nil];
 }
 
 - (void)testActivityIndicatorNotNil{

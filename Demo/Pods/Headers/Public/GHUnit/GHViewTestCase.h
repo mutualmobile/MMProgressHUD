@@ -1,1 +1,0 @@
-../../../GHUnit/Classes-iOS/GHViewTestCase.h
