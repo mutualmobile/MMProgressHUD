@@ -153,6 +153,7 @@ Created by [Lars Anderson](http://twitter.com/theonlylars) at [Mutual Mobile](ht
 - Hari Karam Singh, [@Club15CC](https://github.com/club15cc) - [#5](https://github.com/mutualmobile/MMProgressHUD/pull/5)
 - Jonas Gessner, [@JonasGessner](https://github.com/JonasGessner) - [#3](https://github.com/mutualmobile/MMProgressHUD/pull/3)
 - Lucas Vidal, [@LucasVidal](https://github.com/LucasVidal) - [#22](https://github.com/mutualmobile/MMProgressHUD/pull/22)
+- Arthur Wang, [@Arthraim](https://github.com/Arthraim) - [#36](https://github.com/mutualmobile/MMProgressHUD/pull/36)
 
 ##License
 Standard MIT License
