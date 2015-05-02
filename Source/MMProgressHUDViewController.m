@@ -113,12 +113,16 @@ _Pragma("clang diagnostic pop") \
     MMHudLog(@"dealloc");
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle{
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    if([self.presentingViewController respondsToSelector:@selector(preferredStatusBarStyle)]){
+        return [self.presentingViewController preferredStatusBarStyle];
+    }
+    
     return [[UIApplication sharedApplication] statusBarStyle];
 }
 
 - (BOOL)prefersStatusBarHidden{
     return [[UIApplication sharedApplication] isStatusBarHidden];
 }
-
 @end
