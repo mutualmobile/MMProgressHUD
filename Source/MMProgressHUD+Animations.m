@@ -154,7 +154,7 @@
     [CATransaction commit];
 }
 
-- (void)_showWithSwingInAnimationFromLeft:(BOOL)fromLeft {
+- (void)_showWithSwingInAnimationFromLeft:(BOOL)fromLeft NS_EXTENSION_UNAVAILABLE_IOS("Not available in app extensions."){
     self.hud.layer.anchorPoint = CGPointMake(0.5f, 0.0f);
     
     [CATransaction begin];
@@ -414,7 +414,7 @@
     return animationGroup;
 }
 
-- (CAAnimation *)_swingInAnimationFromLeft:(BOOL)fromLeft {
+- (CAAnimation *)_swingInAnimationFromLeft:(BOOL)fromLeft NS_EXTENSION_UNAVAILABLE_IOS("Not available in app extensions."){
     CAKeyframeAnimation *rotate = [CAKeyframeAnimation animationWithKeyPath:@"transform.rotation"];
     
     CGPoint endPoint = [self _windowCenterForHUDAnchor:self.hud.layer.anchorPoint];

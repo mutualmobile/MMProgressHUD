@@ -41,7 +41,7 @@
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-repeated-use-of-weak"
-- (UIWindow *)oldWindow {
+- (UIWindow *)oldWindow NS_EXTENSION_UNAVAILABLE_IOS("Not available in app extensions."){
     if (_oldWindow == nil) {
         self.oldWindow = [[[UIApplication sharedApplication] windows] firstObject];
     }

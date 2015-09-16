@@ -113,11 +113,11 @@ _Pragma("clang diagnostic pop") \
     MMHudLog(@"dealloc");
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle{
+- (UIStatusBarStyle)preferredStatusBarStyle NS_EXTENSION_UNAVAILABLE_IOS("Not available in app extensions."){
     return [[UIApplication sharedApplication] statusBarStyle];
 }
 
-- (BOOL)prefersStatusBarHidden{
+- (BOOL)prefersStatusBarHidden NS_EXTENSION_UNAVAILABLE_IOS("Not available in app extensions."){
     return [[UIApplication sharedApplication] isStatusBarHidden];
 }
 
