@@ -75,7 +75,7 @@ typedef NS_ENUM(NSInteger, MMProgressHUDDemoFeatureType) {
     return YES;
 }
 
-- (NSUInteger)supportedInterfaceOrientations{
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations{
     return UIInterfaceOrientationMaskAllButUpsideDown;
 }
 

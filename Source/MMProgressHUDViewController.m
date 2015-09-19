@@ -78,7 +78,7 @@ _Pragma("clang diagnostic pop") \
     }
 }
 
-- (NSUInteger)supportedInterfaceOrientations {
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     MMProgressHUDWindow *win = (MMProgressHUDWindow *)self.view.window;
     UIViewController *rootViewController = win.oldWindow.rootViewController;
     

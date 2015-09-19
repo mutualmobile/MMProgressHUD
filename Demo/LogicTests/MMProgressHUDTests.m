@@ -190,10 +190,10 @@
 - (void)testGlowAnimationGroupContainsProperSubAnimations{
     CAAnimationGroup *glowAnimation = [self.progressHUD _glowAnimation];
     
-    NSUInteger animationCount = glowAnimation.animations.count;
-    NSUInteger validNumerOfAnimations = 3;
+    NSInteger animationCount = glowAnimation.animations.count;
+    NSInteger validNumerOfAnimations = 3;
     
-    XCTAssertTrue(animationCount == validNumerOfAnimations, @"Number of animations for glow should be %i, is %i", validNumerOfAnimations, animationCount);
+    XCTAssertTrue(animationCount == validNumerOfAnimations, @"Number of animations for glow should be %zd, is %zd", validNumerOfAnimations, animationCount);
 }
 
 - (void)testGlowAnimationGroupGetsAdded{

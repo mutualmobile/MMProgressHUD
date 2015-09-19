@@ -275,7 +275,6 @@
 				69DA08C3158261EE000DC29E /* Sources */,
 				69DA08C4158261EE000DC29E /* Frameworks */,
 				69DA08C5158261EE000DC29E /* Resources */,
-				69DA08C6158261EE000DC29E /* ShellScript */,
 				81445B9F2CEBFE8914AB4D50 /* Copy Pods Resources */,
 			);
 			buildRules = (
@@ -296,7 +295,7 @@
 			attributes = {
 				CLASSPREFIX = MM;
 				LastTestingUpgradeCheck = 0610;
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Mutual Mobile";
 				TargetAttributes = {
 					69DA08C7158261EE000DC29E = {
@@ -391,19 +390,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "KEYWORDS=\"TODO:|FIXME:|\\?\\?\\?:|\\!\\!\\!:\"\nfind \"${SRCROOT}/..\" \\( -name \"*.h\" -or -name \"*.m\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($KEYWORDS).*\\$\" | perl -p -e \"s/($KEYWORDS)/ warning: \\$1/\"";
-		};
-		69DA08C6158261EE000DC29E /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
 		};
 		81445B9F2CEBFE8914AB4D50 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -505,6 +491,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -583,6 +570,7 @@
 				INFOPLIST_FILE = "MMProgressHUDDemo/MMProgressHUDDemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_LDFLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mutualmobile.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "$(ARCHS_STANDARD)";
@@ -619,6 +607,7 @@
 				INFOPLIST_FILE = "MMProgressHUDDemo/MMProgressHUDDemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_LDFLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mutualmobile.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "$(ARCHS_STANDARD)";
@@ -661,6 +650,7 @@
 					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
 				);
 				OTHER_LDFLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mutualmobile.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MMProgressHUDDemo.app/MMProgressHUDDemo";
 				VALID_ARCHS = "$(ARCHS_STANDARD)";
@@ -692,6 +682,7 @@
 					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
 				);
 				OTHER_LDFLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mutualmobile.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MMProgressHUDDemo.app/MMProgressHUDDemo";
 				VALID_ARCHS = "$(ARCHS_STANDARD)";
