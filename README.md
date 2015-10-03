@@ -1,6 +1,8 @@
 MMProgressHUD
 ==============
 
+![Build Status Badge](https://img.shields.io/travis/mutualmobile/MMProgressHUD/master.svg) ![CocoaPods Version](https://img.shields.io/cocoapods/v/MMProgressHUD.svg) ![MIT License](https://img.shields.io/github/license/mutualmobile/MMProgressHUD.svg)
+
 An easy-to-use HUD interface with personality.
 
 It would be a shame for Mutual Mobile's in-house HUD interface to not be shared with the world. Now available for everyone!
