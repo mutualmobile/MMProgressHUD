@@ -16,4 +16,5 @@ DerivedData
 .idea/
 *.hmap
 .xccheckout
+*.gcda
 
